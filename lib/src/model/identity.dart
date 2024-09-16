@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:isar/isar.dart';
 
 part 'identity.freezed.dart';
 part 'identity.g.dart';
@@ -15,10 +16,10 @@ class Identity with _$Identity {
     required String providerUserID,
     required String userID,
     required IdentityProvider provider,
-    required String data,
+    required IdentityData data,
     required DateTime createdAt,
     required DateTime lastSignedInAt,
-    String? email,
+    String? identifier,
   }) = _Identity;
 
   /// Used to serialize [Identity] object to and from JSON.
@@ -39,7 +40,7 @@ enum IdentityProvider {
   emailOTP,
 
   /// Email-based authentication using a magic link.
-  emailLink,
+  magicLink,
 
   /// Phone number-based authentication using a password.
   phone,
@@ -279,4 +280,82 @@ sealed class IdentityData with _$IdentityData {
   /// Used to serialize [IdentityData] object to and from JSON.
   factory IdentityData.fromJson(Map<String, Object?> json) =>
       _$IdentityDataFromJson(json);
+}
+
+/// Represents an identity for Isar database storage.
+///
+/// This class is used to persist identity information in the Isar database.
+/// It mirrors the structure of the [Identity] class but is optimized for Isar
+/// storage.
+@embedded
+class IIdentity {
+  /// Unique identifier for the identity.
+  late String id;
+
+  /// User ID associated with the identity provider.
+  late String providerUserID;
+
+  /// User ID in the authentication system.
+  late String userID;
+
+  /// The identity provider used for authentication.
+  @enumValue
+  late IdentityProvider provider;
+
+  /// Serialized identity data.
+  late Map<String, dynamic> data;
+
+  /// Date and time when the identity was created.
+  @utc
+  late DateTime createdAt;
+
+  /// Date and time of the last sign-in using this identity.
+  @utc
+  late DateTime lastSignedInAt;
+
+  /// Optional identifier for the identity.
+  String? identifier;
+}
+
+/// Extension on [Identity] to provide conversion to [IIdentity].
+extension IdentityConverter on Identity {
+  /// Converts an [Identity] instance to an [IIdentity] instance.
+  ///
+  /// This method creates a new [IIdentity] object and populates it with
+  /// the data from the current [Identity] instance.
+  ///
+  /// Returns an [IIdentity] object that can be stored in the Isar database.
+  IIdentity toIIdentity() {
+    return IIdentity()
+      ..id = this.id
+      ..providerUserID = providerUserID
+      ..userID = userID
+      ..provider = provider
+      ..data = data.toJson()
+      ..createdAt = createdAt
+      ..lastSignedInAt = lastSignedInAt
+      ..identifier = identifier;
+  }
+}
+
+/// Extension on [IIdentity] to provide conversion to [Identity].
+extension IIdentityConverter on IIdentity {
+  /// Converts an [IIdentity] instance to an [Identity] instance.
+  ///
+  /// This method creates a new [Identity] object using the data
+  /// from the current [IIdentity] instance.
+  ///
+  /// Returns an [Identity] object that can be used in the application logic.
+  Identity toIdentity() {
+    return Identity(
+      id: this.id,
+      providerUserID: providerUserID,
+      userID: userID,
+      provider: provider,
+      data: IdentityData.fromJson(data),
+      createdAt: createdAt,
+      lastSignedInAt: lastSignedInAt,
+      identifier: identifier,
+    );
+  }
 }
