@@ -41,6 +41,10 @@ const ISessionSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
+        name: 'valid',
+        type: IsarType.bool,
+      ),
+      IsarPropertySchema(
         name: 'expiresAt',
         type: IsarType.dateTime,
       ),
@@ -82,14 +86,15 @@ int serializeISession(IsarWriter writer, ISession object) {
   }
   IsarCore.writeString(writer, 4, object.userID);
   IsarCore.writeString(writer, 5, object.token);
-  IsarCore.writeLong(writer, 6,
+  IsarCore.writeBool(writer, 6, object.valid);
+  IsarCore.writeLong(writer, 7,
       object.expiresAt?.toUtc().microsecondsSinceEpoch ?? -9223372036854775808);
   {
     final value = object.ipAddress;
     if (value == null) {
-      IsarCore.writeNull(writer, 7);
+      IsarCore.writeNull(writer, 8);
     } else {
-      IsarCore.writeString(writer, 7, value);
+      IsarCore.writeString(writer, 8, value);
     }
   }
   return object.isarID;
@@ -103,8 +108,9 @@ ISession deserializeISession(IsarReader reader) {
   object.deviceID = IsarCore.readString(reader, 3);
   object.userID = IsarCore.readString(reader, 4) ?? '';
   object.token = IsarCore.readString(reader, 5) ?? '';
+  object.valid = IsarCore.readBool(reader, 6);
   {
-    final value = IsarCore.readLong(reader, 6);
+    final value = IsarCore.readLong(reader, 7);
     if (value == -9223372036854775808) {
       object.expiresAt = null;
     } else {
@@ -112,7 +118,7 @@ ISession deserializeISession(IsarReader reader) {
           DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
     }
   }
-  object.ipAddress = IsarCore.readString(reader, 7);
+  object.ipAddress = IsarCore.readString(reader, 8);
   return object;
 }
 
@@ -130,16 +136,18 @@ dynamic deserializeISessionProp(IsarReader reader, int property) {
     case 5:
       return IsarCore.readString(reader, 5) ?? '';
     case 6:
+      return IsarCore.readBool(reader, 6);
+    case 7:
       {
-        final value = IsarCore.readLong(reader, 6);
+        final value = IsarCore.readLong(reader, 7);
         if (value == -9223372036854775808) {
           return null;
         } else {
           return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
         }
       }
-    case 7:
-      return IsarCore.readString(reader, 7);
+    case 8:
+      return IsarCore.readString(reader, 8);
     case 0:
       return IsarCore.readId(reader);
     default:
@@ -155,6 +163,7 @@ sealed class _ISessionUpdate {
     String? deviceID,
     String? userID,
     String? token,
+    bool? valid,
     DateTime? expiresAt,
     String? ipAddress,
   });
@@ -173,6 +182,7 @@ class _ISessionUpdateImpl implements _ISessionUpdate {
     Object? deviceID = ignore,
     Object? userID = ignore,
     Object? token = ignore,
+    Object? valid = ignore,
     Object? expiresAt = ignore,
     Object? ipAddress = ignore,
   }) {
@@ -184,8 +194,9 @@ class _ISessionUpdateImpl implements _ISessionUpdate {
           if (deviceID != ignore) 3: deviceID as String?,
           if (userID != ignore) 4: userID as String?,
           if (token != ignore) 5: token as String?,
-          if (expiresAt != ignore) 6: expiresAt as DateTime?,
-          if (ipAddress != ignore) 7: ipAddress as String?,
+          if (valid != ignore) 6: valid as bool?,
+          if (expiresAt != ignore) 7: expiresAt as DateTime?,
+          if (ipAddress != ignore) 8: ipAddress as String?,
         }) >
         0;
   }
@@ -199,6 +210,7 @@ sealed class _ISessionUpdateAll {
     String? deviceID,
     String? userID,
     String? token,
+    bool? valid,
     DateTime? expiresAt,
     String? ipAddress,
   });
@@ -217,6 +229,7 @@ class _ISessionUpdateAllImpl implements _ISessionUpdateAll {
     Object? deviceID = ignore,
     Object? userID = ignore,
     Object? token = ignore,
+    Object? valid = ignore,
     Object? expiresAt = ignore,
     Object? ipAddress = ignore,
   }) {
@@ -226,8 +239,9 @@ class _ISessionUpdateAllImpl implements _ISessionUpdateAll {
       if (deviceID != ignore) 3: deviceID as String?,
       if (userID != ignore) 4: userID as String?,
       if (token != ignore) 5: token as String?,
-      if (expiresAt != ignore) 6: expiresAt as DateTime?,
-      if (ipAddress != ignore) 7: ipAddress as String?,
+      if (valid != ignore) 6: valid as bool?,
+      if (expiresAt != ignore) 7: expiresAt as DateTime?,
+      if (ipAddress != ignore) 8: ipAddress as String?,
     });
   }
 }
@@ -245,6 +259,7 @@ sealed class _ISessionQueryUpdate {
     String? deviceID,
     String? userID,
     String? token,
+    bool? valid,
     DateTime? expiresAt,
     String? ipAddress,
   });
@@ -263,6 +278,7 @@ class _ISessionQueryUpdateImpl implements _ISessionQueryUpdate {
     Object? deviceID = ignore,
     Object? userID = ignore,
     Object? token = ignore,
+    Object? valid = ignore,
     Object? expiresAt = ignore,
     Object? ipAddress = ignore,
   }) {
@@ -272,8 +288,9 @@ class _ISessionQueryUpdateImpl implements _ISessionQueryUpdate {
       if (deviceID != ignore) 3: deviceID as String?,
       if (userID != ignore) 4: userID as String?,
       if (token != ignore) 5: token as String?,
-      if (expiresAt != ignore) 6: expiresAt as DateTime?,
-      if (ipAddress != ignore) 7: ipAddress as String?,
+      if (valid != ignore) 6: valid as bool?,
+      if (expiresAt != ignore) 7: expiresAt as DateTime?,
+      if (ipAddress != ignore) 8: ipAddress as String?,
     });
   }
 }
@@ -298,6 +315,7 @@ class _ISessionQueryBuilderUpdateImpl implements _ISessionQueryUpdate {
     Object? deviceID = ignore,
     Object? userID = ignore,
     Object? token = ignore,
+    Object? valid = ignore,
     Object? expiresAt = ignore,
     Object? ipAddress = ignore,
   }) {
@@ -309,8 +327,9 @@ class _ISessionQueryBuilderUpdateImpl implements _ISessionQueryUpdate {
         if (deviceID != ignore) 3: deviceID as String?,
         if (userID != ignore) 4: userID as String?,
         if (token != ignore) 5: token as String?,
-        if (expiresAt != ignore) 6: expiresAt as DateTime?,
-        if (ipAddress != ignore) 7: ipAddress as String?,
+        if (valid != ignore) 6: valid as bool?,
+        if (expiresAt != ignore) 7: expiresAt as DateTime?,
+        if (ipAddress != ignore) 8: ipAddress as String?,
       });
     } finally {
       q.close();
@@ -1210,15 +1229,28 @@ extension ISessionQueryFilter
     });
   }
 
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> validEqualTo(
+    bool value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 6,
+          value: value,
+        ),
+      );
+    });
+  }
+
   QueryBuilder<ISession, ISession, QAfterFilterCondition> expiresAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
+      return query.addFilterCondition(const IsNullCondition(property: 7));
     });
   }
 
   QueryBuilder<ISession, ISession, QAfterFilterCondition> expiresAtIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
+      return query.addFilterCondition(const IsNullCondition(property: 7));
     });
   }
 
@@ -1228,7 +1260,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
@@ -1241,7 +1273,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
@@ -1255,7 +1287,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
@@ -1268,7 +1300,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
@@ -1282,7 +1314,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
@@ -1296,7 +1328,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 6,
+          property: 7,
           lower: lower,
           upper: upper,
         ),
@@ -1306,13 +1338,13 @@ extension ISessionQueryFilter
 
   QueryBuilder<ISession, ISession, QAfterFilterCondition> ipAddressIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
+      return query.addFilterCondition(const IsNullCondition(property: 8));
     });
   }
 
   QueryBuilder<ISession, ISession, QAfterFilterCondition> ipAddressIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
+      return query.addFilterCondition(const IsNullCondition(property: 8));
     });
   }
 
@@ -1323,7 +1355,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1338,7 +1370,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1354,7 +1386,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1369,7 +1401,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1385,7 +1417,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1401,7 +1433,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 7,
+          property: 8,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1417,7 +1449,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1432,7 +1464,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1446,7 +1478,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1460,7 +1492,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 7,
+          property: 8,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1472,7 +1504,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 7,
+          property: 8,
           value: '',
         ),
       );
@@ -1484,7 +1516,7 @@ extension ISessionQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 7,
+          property: 8,
           value: '',
         ),
       );
@@ -1683,15 +1715,27 @@ extension ISessionQuerySortBy on QueryBuilder<ISession, ISession, QSortBy> {
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> sortByExpiresAt() {
+  QueryBuilder<ISession, ISession, QAfterSortBy> sortByValid() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(6);
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> sortByExpiresAtDesc() {
+  QueryBuilder<ISession, ISession, QAfterSortBy> sortByValidDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(6, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<ISession, ISession, QAfterSortBy> sortByExpiresAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7);
+    });
+  }
+
+  QueryBuilder<ISession, ISession, QAfterSortBy> sortByExpiresAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7, sort: Sort.desc);
     });
   }
 
@@ -1699,7 +1743,7 @@ extension ISessionQuerySortBy on QueryBuilder<ISession, ISession, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        7,
+        8,
         caseSensitive: caseSensitive,
       );
     });
@@ -1709,7 +1753,7 @@ extension ISessionQuerySortBy on QueryBuilder<ISession, ISession, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        7,
+        8,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1801,29 +1845,41 @@ extension ISessionQuerySortThenBy
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> thenByExpiresAt() {
+  QueryBuilder<ISession, ISession, QAfterSortBy> thenByValid() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(6);
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> thenByExpiresAtDesc() {
+  QueryBuilder<ISession, ISession, QAfterSortBy> thenByValidDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(6, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<ISession, ISession, QAfterSortBy> thenByExpiresAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7);
+    });
+  }
+
+  QueryBuilder<ISession, ISession, QAfterSortBy> thenByExpiresAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7, sort: Sort.desc);
     });
   }
 
   QueryBuilder<ISession, ISession, QAfterSortBy> thenByIpAddress(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(7, caseSensitive: caseSensitive);
+      return query.addSortBy(8, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<ISession, ISession, QAfterSortBy> thenByIpAddressDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(7, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(8, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
@@ -1877,16 +1933,22 @@ extension ISessionQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterDistinct> distinctByExpiresAt() {
+  QueryBuilder<ISession, ISession, QAfterDistinct> distinctByValid() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(6);
+    });
+  }
+
+  QueryBuilder<ISession, ISession, QAfterDistinct> distinctByExpiresAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(7);
     });
   }
 
   QueryBuilder<ISession, ISession, QAfterDistinct> distinctByIpAddress(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(7, caseSensitive: caseSensitive);
+      return query.addDistinctBy(8, caseSensitive: caseSensitive);
     });
   }
 }
@@ -1923,15 +1985,21 @@ extension ISessionQueryProperty1
     });
   }
 
-  QueryBuilder<ISession, DateTime?, QAfterProperty> expiresAtProperty() {
+  QueryBuilder<ISession, bool, QAfterProperty> validProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
-  QueryBuilder<ISession, String?, QAfterProperty> ipAddressProperty() {
+  QueryBuilder<ISession, DateTime?, QAfterProperty> expiresAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
+    });
+  }
+
+  QueryBuilder<ISession, String?, QAfterProperty> ipAddressProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
     });
   }
 
@@ -1974,15 +2042,21 @@ extension ISessionQueryProperty2<R>
     });
   }
 
-  QueryBuilder<ISession, (R, DateTime?), QAfterProperty> expiresAtProperty() {
+  QueryBuilder<ISession, (R, bool), QAfterProperty> validProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
-  QueryBuilder<ISession, (R, String?), QAfterProperty> ipAddressProperty() {
+  QueryBuilder<ISession, (R, DateTime?), QAfterProperty> expiresAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
+    });
+  }
+
+  QueryBuilder<ISession, (R, String?), QAfterProperty> ipAddressProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
     });
   }
 
@@ -2025,15 +2099,21 @@ extension ISessionQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<ISession, (R1, R2, DateTime?), QOperations> expiresAtProperty() {
+  QueryBuilder<ISession, (R1, R2, bool), QOperations> validProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
-  QueryBuilder<ISession, (R1, R2, String?), QOperations> ipAddressProperty() {
+  QueryBuilder<ISession, (R1, R2, DateTime?), QOperations> expiresAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
+    });
+  }
+
+  QueryBuilder<ISession, (R1, R2, String?), QOperations> ipAddressProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
     });
   }
 
@@ -2055,6 +2135,7 @@ _$SessionImpl _$$SessionImplFromJson(Map<String, dynamic> json) =>
       deviceID: json['deviceID'] as String?,
       userID: json['userID'] as String,
       token: json['token'] as String,
+      valid: json['valid'] as bool,
       expiresAt: json['expiresAt'] == null
           ? null
           : DateTime.parse(json['expiresAt'] as String),
@@ -2068,6 +2149,7 @@ Map<String, dynamic> _$$SessionImplToJson(_$SessionImpl instance) =>
       'deviceID': instance.deviceID,
       'userID': instance.userID,
       'token': instance.token,
+      'valid': instance.valid,
       'expiresAt': instance.expiresAt?.toIso8601String(),
       'ipAddress': instance.ipAddress,
     };
@@ -2079,6 +2161,7 @@ _$AuthSessionImpl _$$AuthSessionImplFromJson(Map<String, dynamic> json) =>
       deviceID: json['deviceID'] as String?,
       userID: json['userID'] as String,
       token: json['token'] as String,
+      valid: json['valid'] as bool,
       expiresAt: json['expiresAt'] == null
           ? null
           : DateTime.parse(json['expiresAt'] as String),
@@ -2093,6 +2176,7 @@ Map<String, dynamic> _$$AuthSessionImplToJson(_$AuthSessionImpl instance) =>
       'deviceID': instance.deviceID,
       'userID': instance.userID,
       'token': instance.token,
+      'valid': instance.valid,
       'expiresAt': instance.expiresAt?.toIso8601String(),
       'ipAddress': instance.ipAddress,
       'auth': instance.auth.toJson(),

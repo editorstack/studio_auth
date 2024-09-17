@@ -325,7 +325,7 @@ extension IdentityConverter on Identity {
   /// the data from the current [Identity] instance.
   ///
   /// Returns an [IIdentity] object that can be stored in the Isar database.
-  IIdentity toIIdentity() {
+  IIdentity toIsar() {
     return IIdentity()
       ..id = this.id
       ..providerUserID = providerUserID
@@ -346,7 +346,7 @@ extension IIdentityConverter on IIdentity {
   /// from the current [IIdentity] instance.
   ///
   /// Returns an [Identity] object that can be used in the application logic.
-  Identity toIdentity() {
+  Identity toObject() {
     return Identity(
       id: this.id,
       providerUserID: providerUserID,

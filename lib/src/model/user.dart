@@ -72,7 +72,7 @@ extension UserConverter on User {
   /// the data from the current [User] instance.
   ///
   /// Returns an [IUser] object that can be stored in the Isar database.
-  IUser toIUser() {
+  IUser toIsar() {
     return IUser()
       ..id = this.id
       ..createdAt = createdAt
@@ -93,7 +93,7 @@ extension IUserConverter on IUser {
   /// from the current [IUser] instance.
   ///
   /// Returns a [User] object that can be used in the application logic.
-  User toUser() {
+  User toObject() {
     return User(
       id: this.id,
       createdAt: createdAt,

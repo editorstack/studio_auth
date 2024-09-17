@@ -86,7 +86,7 @@ extension AuthConverter on Auth {
   /// the data from the current [Auth] instance.
   ///
   /// Returns an [IAuth] object that can be stored in the Isar database.
-  IAuth toIAuth() {
+  IAuth toIsar() {
     final iAuth = IAuth()
       ..id = this.id
       ..createdAt = createdAt
@@ -97,8 +97,8 @@ extension AuthConverter on Auth {
       ..phone = phone
       ..image = image;
 
-    iAuth.identities.addAll(identities.map((i) => i.toIIdentity()));
-    iAuth.devices.addAll(devices.map((d) => d.toIDevice()));
+    iAuth.identities.addAll(identities.map((i) => i.toIsar()));
+    iAuth.devices.addAll(devices.map((d) => d.toIsar()));
 
     return iAuth;
   }
@@ -112,13 +112,13 @@ extension IAuthConverter on IAuth {
   /// from the current [IAuth] instance.
   ///
   /// Returns an [Auth] object that can be used in the application logic.
-  Auth toAuth() {
+  Auth toObject() {
     return Auth(
       id: this.id,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      identities: identities.map((i) => i.toIdentity()).toList(),
-      devices: devices.map((d) => d.toDevice()).toList(),
+      identities: identities.map((i) => i.toObject()).toList(),
+      devices: devices.map((d) => d.toObject()).toList(),
       firstName: firstName,
       lastName: lastName,
       email: email,

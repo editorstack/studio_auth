@@ -84,7 +84,7 @@ extension DeviceConverter on Device {
   /// the data from the current [Device] instance.
   ///
   /// Returns an [IDevice] object that can be stored in the Isar database.
-  IDevice toIDevice() {
+  IDevice toIsar() {
     return IDevice()
       ..id = this.id
       ..name = name
@@ -103,7 +103,7 @@ extension IDeviceConverter on IDevice {
   /// from the current [IDevice] instance.
   ///
   /// Returns a [Device] object that can be used in the application logic.
-  Device toDevice() {
+  Device toObject() {
     return Device(
       id: this.id,
       name: name,

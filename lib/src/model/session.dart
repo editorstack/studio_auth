@@ -19,6 +19,7 @@ class Session with _$Session {
     required String? deviceID,
     required String userID,
     required String token,
+    required bool valid,
     required DateTime? expiresAt,
     required String? ipAddress,
   }) = _Session;
@@ -41,6 +42,7 @@ class AuthSession with _$AuthSession {
     required String? deviceID,
     required String userID,
     required String token,
+    required bool valid,
     required DateTime? expiresAt,
     required String? ipAddress,
     required Auth auth,
@@ -73,6 +75,9 @@ class ISession {
   /// Authentication token for the session.
   late String token;
 
+  /// Indicates whether the session is valid or MFA is required.
+  late bool valid;
+
   /// Expiration date and time for the session, if applicable.
   @utc
   DateTime? expiresAt;
@@ -93,13 +98,14 @@ extension SessionConverter on Session {
   /// the data from the current [Session] instance.
   ///
   /// Returns an [ISession] object that can be stored in the Isar database.
-  ISession toISession() {
+  ISession toIsar() {
     return ISession()
       ..id = this.id
       ..identityID = identityID
       ..deviceID = deviceID
       ..userID = userID
       ..token = token
+      ..valid = valid
       ..expiresAt = expiresAt
       ..ipAddress = ipAddress;
   }
@@ -113,13 +119,14 @@ extension ISessionConverter on ISession {
   /// from the current [ISession] instance.
   ///
   /// Returns a [Session] object that can be used in the application logic.
-  Session toSession() {
+  Session toObject() {
     return Session(
       id: this.id,
       identityID: identityID,
       deviceID: deviceID,
       userID: userID,
       token: token,
+      valid: valid,
       expiresAt: expiresAt,
       ipAddress: ipAddress,
     );
@@ -141,6 +148,7 @@ extension AuthSessionConverter on AuthSession {
       deviceID: deviceID,
       userID: userID,
       token: token,
+      valid: valid,
       expiresAt: expiresAt,
       ipAddress: ipAddress,
     );
