@@ -1,6 +1,6 @@
 name: studio_auth
-description: "A new Flutter package project."
-version: 0.0.1+2
+description: "Authentication package for authenticating using Studio APIs."
+version: 0.0.1+3
 homepage: https://editorstack.com
 
 environment:

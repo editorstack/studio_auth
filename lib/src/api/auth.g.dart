@@ -481,13 +481,13 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createAnonymousSession(AnonymousSessionBody body) async {
+  Future<AuthSession> createAnonymousSession(AnonymousSessionBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<AuthSession>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -505,9 +505,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late AuthSession _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = AuthSession.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -516,13 +516,13 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createEmailSession(EmailSessionBody body) async {
+  Future<AuthSession> createEmailSession(EmailSessionBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<AuthSession>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -540,9 +540,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late AuthSession _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = AuthSession.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -551,13 +551,13 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createEmailToken(CreateEmailTokenBody body) async {
+  Future<EmptyResponse> createEmailToken(CreateEmailTokenBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<EmptyResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -575,9 +575,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late EmptyResponse _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = EmptyResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -586,13 +586,14 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createEmailTokenSession(EmailTokenSessionBody body) async {
+  Future<AuthSession> createEmailTokenSession(
+      EmailTokenSessionBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<AuthSession>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -610,9 +611,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late AuthSession _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = AuthSession.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -621,13 +622,13 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createPhoneSession(PhoneSessionBody body) async {
+  Future<AuthSession> createPhoneSession(PhoneSessionBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<AuthSession>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -645,9 +646,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late AuthSession _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = AuthSession.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -656,13 +657,13 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createPhoneToken(CreatePhoneTokenBody body) async {
+  Future<EmptyResponse> createPhoneToken(CreatePhoneTokenBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<EmptyResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -680,9 +681,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late EmptyResponse _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = EmptyResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -691,13 +692,14 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> createPhoneTokenSession(PhoneTokenSessionBody body) async {
+  Future<AuthSession> createPhoneTokenSession(
+      PhoneTokenSessionBody body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
-    final _options = _setStreamType<Session>(Options(
+    final _options = _setStreamType<AuthSession>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -715,9 +717,9 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Session _value;
+    late AuthSession _value;
     try {
-      _value = Session.fromJson(_result.data!);
+      _value = AuthSession.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
