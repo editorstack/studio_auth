@@ -242,39 +242,40 @@ sealed class IdentityData with _$IdentityData {
   /// Represents identity data for email-based authentication.
   const factory IdentityData.email({
     required String email,
-    required String confirmedAt,
+    String? confirmedAt,
   }) = EmailIdentityData;
 
   /// Represents identity data for email-based one-time password (OTP)
   /// authentication.
   const factory IdentityData.emailOTP({
     required String email,
-    required String confirmedAt,
+    String? confirmedAt,
   }) = EmailOTPIdentityData;
 
   /// Represents identity data for magic link email-based authentication.
   const factory IdentityData.magicLink({
     required String email,
-    required String confirmedAt,
+    String? confirmedAt,
   }) = EmailLinkIdentityData;
 
   /// Represents identity data for phone number-based authentication.
   const factory IdentityData.phone({
     required String phone,
-    required String confirmedAt,
+    String? confirmedAt,
   }) = PhoneIdentityData;
 
   /// Represents identity data for phone number-based one-time password (OTP)
   /// authentication.
   const factory IdentityData.phoneOTP({
     required String phone,
-    required String confirmedAt,
+    String? confirmedAt,
   }) = PhoneOTPIdentityData;
 
   /// Represents identity data for OAuth-based authentication.
   const factory IdentityData.oAuth({
     required OAuthProvider provider,
     required String email,
+    String? confirmedAt,
   }) = OAuthIdentityData;
 
   /// Used to serialize [IdentityData] object to and from JSON.

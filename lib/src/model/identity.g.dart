@@ -1238,7 +1238,7 @@ _$EmailIdentityDataImpl _$$EmailIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$EmailIdentityDataImpl(
       email: json['email'] as String,
-      confirmedAt: json['confirmedAt'] as String,
+      confirmedAt: json['confirmedAt'] as String?,
       $type: json['method'] as String?,
     );
 
@@ -1254,7 +1254,7 @@ _$EmailOTPIdentityDataImpl _$$EmailOTPIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$EmailOTPIdentityDataImpl(
       email: json['email'] as String,
-      confirmedAt: json['confirmedAt'] as String,
+      confirmedAt: json['confirmedAt'] as String?,
       $type: json['method'] as String?,
     );
 
@@ -1270,7 +1270,7 @@ _$EmailLinkIdentityDataImpl _$$EmailLinkIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$EmailLinkIdentityDataImpl(
       email: json['email'] as String,
-      confirmedAt: json['confirmedAt'] as String,
+      confirmedAt: json['confirmedAt'] as String?,
       $type: json['method'] as String?,
     );
 
@@ -1286,7 +1286,7 @@ _$PhoneIdentityDataImpl _$$PhoneIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$PhoneIdentityDataImpl(
       phone: json['phone'] as String,
-      confirmedAt: json['confirmedAt'] as String,
+      confirmedAt: json['confirmedAt'] as String?,
       $type: json['method'] as String?,
     );
 
@@ -1302,7 +1302,7 @@ _$PhoneOTPIdentityDataImpl _$$PhoneOTPIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$PhoneOTPIdentityDataImpl(
       phone: json['phone'] as String,
-      confirmedAt: json['confirmedAt'] as String,
+      confirmedAt: json['confirmedAt'] as String?,
       $type: json['method'] as String?,
     );
 
@@ -1319,6 +1319,7 @@ _$OAuthIdentityDataImpl _$$OAuthIdentityDataImplFromJson(
     _$OAuthIdentityDataImpl(
       provider: $enumDecode(_$OAuthProviderEnumMap, json['provider']),
       email: json['email'] as String,
+      confirmedAt: json['confirmedAt'] as String?,
       $type: json['method'] as String?,
     );
 
@@ -1327,6 +1328,7 @@ Map<String, dynamic> _$$OAuthIdentityDataImplToJson(
     <String, dynamic>{
       'provider': _$OAuthProviderEnumMap[instance.provider]!,
       'email': instance.email,
+      'confirmedAt': instance.confirmedAt,
       'method': instance.$type,
     };
 

@@ -216,9 +216,9 @@ IdentityData _$IdentityDataFromJson(Map<String, dynamic> json) {
 mixin _$IdentityData {
 
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) => throw _privateConstructorUsedError;
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) => throw _privateConstructorUsedError;
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) => throw _privateConstructorUsedError;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) => throw _privateConstructorUsedError;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) => throw _privateConstructorUsedError;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) => throw _privateConstructorUsedError;
 @optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AnonymousIdentityData value)  anonymous,required TResult Function( EmailIdentityData value)  email,required TResult Function( EmailOTPIdentityData value)  emailOTP,required TResult Function( EmailLinkIdentityData value)  magicLink,required TResult Function( PhoneIdentityData value)  phone,required TResult Function( PhoneOTPIdentityData value)  phoneOTP,required TResult Function( OAuthIdentityData value)  oAuth,}) => throw _privateConstructorUsedError;
 @optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AnonymousIdentityData value)?  anonymous,TResult? Function( EmailIdentityData value)?  email,TResult? Function( EmailOTPIdentityData value)?  emailOTP,TResult? Function( EmailLinkIdentityData value)?  magicLink,TResult? Function( PhoneIdentityData value)?  phone,TResult? Function( PhoneOTPIdentityData value)?  phoneOTP,TResult? Function( OAuthIdentityData value)?  oAuth,}) => throw _privateConstructorUsedError;
 @optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AnonymousIdentityData value)?  anonymous,TResult Function( EmailIdentityData value)?  email,TResult Function( EmailOTPIdentityData value)?  emailOTP,TResult Function( EmailLinkIdentityData value)?  magicLink,TResult Function( PhoneIdentityData value)?  phone,TResult Function( PhoneOTPIdentityData value)?  phoneOTP,TResult Function( OAuthIdentityData value)?  oAuth,required TResult orElse(),}) => throw _privateConstructorUsedError;
@@ -303,15 +303,15 @@ int get hashCode => runtimeType.hashCode;
 
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
   return anonymous();
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
   return anonymous?.call();
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (anonymous != null) {
     return anonymous();
   }
@@ -354,7 +354,7 @@ abstract class _$$EmailIdentityDataImplCopyWith<$Res>  {
   factory _$$EmailIdentityDataImplCopyWith(_$EmailIdentityDataImpl value, $Res Function(_$EmailIdentityDataImpl) then) = __$$EmailIdentityDataImplCopyWithImpl<$Res>;
 @useResult
 $Res call({
- String email, String confirmedAt
+ String email, String? confirmedAt
 });
 
 
@@ -369,11 +369,11 @@ class __$$EmailIdentityDataImplCopyWithImpl<$Res> extends _$IdentityDataCopyWith
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? confirmedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? confirmedAt = freezed,}) {
   return _then(_$EmailIdentityDataImpl(
 email: null == email ? _value.email : email // ignore: cast_nullable_to_non_nullable
-as String,confirmedAt: null == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,confirmedAt: freezed == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -384,12 +384,12 @@ as String,
 @JsonSerializable()
 
 class _$EmailIdentityDataImpl  implements EmailIdentityData {
-  const _$EmailIdentityDataImpl({required this.email, required this.confirmedAt, final  String? $type}): $type = $type ?? 'email';
+  const _$EmailIdentityDataImpl({required this.email, this.confirmedAt, final  String? $type}): $type = $type ?? 'email';
 
   factory _$EmailIdentityDataImpl.fromJson(Map<String, dynamic> json) => _$$EmailIdentityDataImplFromJson(json);
 
 @override final  String email;
-@override final  String confirmedAt;
+@override final  String? confirmedAt;
 
 @JsonKey(name: 'method')
 final String $type;
@@ -418,15 +418,15 @@ int get hashCode => Object.hash(runtimeType,email,confirmedAt);
 _$$EmailIdentityDataImplCopyWith<_$EmailIdentityDataImpl> get copyWith => __$$EmailIdentityDataImplCopyWithImpl<_$EmailIdentityDataImpl>(this, _$identity);
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
   return email(this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
   return email?.call(this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (email != null) {
     return email(this.email,confirmedAt);
   }
@@ -455,12 +455,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class EmailIdentityData implements IdentityData {
-  const factory EmailIdentityData({required final  String email, required final  String confirmedAt}) = _$EmailIdentityDataImpl;
+  const factory EmailIdentityData({required final  String email, final  String? confirmedAt}) = _$EmailIdentityDataImpl;
   
 
   factory EmailIdentityData.fromJson(Map<String, dynamic> json) = _$EmailIdentityDataImpl.fromJson;
 
- String get email; String get confirmedAt;
+ String get email; String? get confirmedAt;
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -473,7 +473,7 @@ abstract class _$$EmailOTPIdentityDataImplCopyWith<$Res>  {
   factory _$$EmailOTPIdentityDataImplCopyWith(_$EmailOTPIdentityDataImpl value, $Res Function(_$EmailOTPIdentityDataImpl) then) = __$$EmailOTPIdentityDataImplCopyWithImpl<$Res>;
 @useResult
 $Res call({
- String email, String confirmedAt
+ String email, String? confirmedAt
 });
 
 
@@ -488,11 +488,11 @@ class __$$EmailOTPIdentityDataImplCopyWithImpl<$Res> extends _$IdentityDataCopyW
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? confirmedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? confirmedAt = freezed,}) {
   return _then(_$EmailOTPIdentityDataImpl(
 email: null == email ? _value.email : email // ignore: cast_nullable_to_non_nullable
-as String,confirmedAt: null == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,confirmedAt: freezed == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -503,12 +503,12 @@ as String,
 @JsonSerializable()
 
 class _$EmailOTPIdentityDataImpl  implements EmailOTPIdentityData {
-  const _$EmailOTPIdentityDataImpl({required this.email, required this.confirmedAt, final  String? $type}): $type = $type ?? 'emailOTP';
+  const _$EmailOTPIdentityDataImpl({required this.email, this.confirmedAt, final  String? $type}): $type = $type ?? 'emailOTP';
 
   factory _$EmailOTPIdentityDataImpl.fromJson(Map<String, dynamic> json) => _$$EmailOTPIdentityDataImplFromJson(json);
 
 @override final  String email;
-@override final  String confirmedAt;
+@override final  String? confirmedAt;
 
 @JsonKey(name: 'method')
 final String $type;
@@ -537,15 +537,15 @@ int get hashCode => Object.hash(runtimeType,email,confirmedAt);
 _$$EmailOTPIdentityDataImplCopyWith<_$EmailOTPIdentityDataImpl> get copyWith => __$$EmailOTPIdentityDataImplCopyWithImpl<_$EmailOTPIdentityDataImpl>(this, _$identity);
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
   return emailOTP(this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
   return emailOTP?.call(this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (emailOTP != null) {
     return emailOTP(this.email,confirmedAt);
   }
@@ -574,12 +574,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class EmailOTPIdentityData implements IdentityData {
-  const factory EmailOTPIdentityData({required final  String email, required final  String confirmedAt}) = _$EmailOTPIdentityDataImpl;
+  const factory EmailOTPIdentityData({required final  String email, final  String? confirmedAt}) = _$EmailOTPIdentityDataImpl;
   
 
   factory EmailOTPIdentityData.fromJson(Map<String, dynamic> json) = _$EmailOTPIdentityDataImpl.fromJson;
 
- String get email; String get confirmedAt;
+ String get email; String? get confirmedAt;
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -592,7 +592,7 @@ abstract class _$$EmailLinkIdentityDataImplCopyWith<$Res>  {
   factory _$$EmailLinkIdentityDataImplCopyWith(_$EmailLinkIdentityDataImpl value, $Res Function(_$EmailLinkIdentityDataImpl) then) = __$$EmailLinkIdentityDataImplCopyWithImpl<$Res>;
 @useResult
 $Res call({
- String email, String confirmedAt
+ String email, String? confirmedAt
 });
 
 
@@ -607,11 +607,11 @@ class __$$EmailLinkIdentityDataImplCopyWithImpl<$Res> extends _$IdentityDataCopy
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? confirmedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? confirmedAt = freezed,}) {
   return _then(_$EmailLinkIdentityDataImpl(
 email: null == email ? _value.email : email // ignore: cast_nullable_to_non_nullable
-as String,confirmedAt: null == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,confirmedAt: freezed == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -622,12 +622,12 @@ as String,
 @JsonSerializable()
 
 class _$EmailLinkIdentityDataImpl  implements EmailLinkIdentityData {
-  const _$EmailLinkIdentityDataImpl({required this.email, required this.confirmedAt, final  String? $type}): $type = $type ?? 'magicLink';
+  const _$EmailLinkIdentityDataImpl({required this.email, this.confirmedAt, final  String? $type}): $type = $type ?? 'magicLink';
 
   factory _$EmailLinkIdentityDataImpl.fromJson(Map<String, dynamic> json) => _$$EmailLinkIdentityDataImplFromJson(json);
 
 @override final  String email;
-@override final  String confirmedAt;
+@override final  String? confirmedAt;
 
 @JsonKey(name: 'method')
 final String $type;
@@ -656,15 +656,15 @@ int get hashCode => Object.hash(runtimeType,email,confirmedAt);
 _$$EmailLinkIdentityDataImplCopyWith<_$EmailLinkIdentityDataImpl> get copyWith => __$$EmailLinkIdentityDataImplCopyWithImpl<_$EmailLinkIdentityDataImpl>(this, _$identity);
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
   return magicLink(this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
   return magicLink?.call(this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (magicLink != null) {
     return magicLink(this.email,confirmedAt);
   }
@@ -693,12 +693,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class EmailLinkIdentityData implements IdentityData {
-  const factory EmailLinkIdentityData({required final  String email, required final  String confirmedAt}) = _$EmailLinkIdentityDataImpl;
+  const factory EmailLinkIdentityData({required final  String email, final  String? confirmedAt}) = _$EmailLinkIdentityDataImpl;
   
 
   factory EmailLinkIdentityData.fromJson(Map<String, dynamic> json) = _$EmailLinkIdentityDataImpl.fromJson;
 
- String get email; String get confirmedAt;
+ String get email; String? get confirmedAt;
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -711,7 +711,7 @@ abstract class _$$PhoneIdentityDataImplCopyWith<$Res>  {
   factory _$$PhoneIdentityDataImplCopyWith(_$PhoneIdentityDataImpl value, $Res Function(_$PhoneIdentityDataImpl) then) = __$$PhoneIdentityDataImplCopyWithImpl<$Res>;
 @useResult
 $Res call({
- String phone, String confirmedAt
+ String phone, String? confirmedAt
 });
 
 
@@ -726,11 +726,11 @@ class __$$PhoneIdentityDataImplCopyWithImpl<$Res> extends _$IdentityDataCopyWith
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? phone = null,Object? confirmedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? phone = null,Object? confirmedAt = freezed,}) {
   return _then(_$PhoneIdentityDataImpl(
 phone: null == phone ? _value.phone : phone // ignore: cast_nullable_to_non_nullable
-as String,confirmedAt: null == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,confirmedAt: freezed == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -741,12 +741,12 @@ as String,
 @JsonSerializable()
 
 class _$PhoneIdentityDataImpl  implements PhoneIdentityData {
-  const _$PhoneIdentityDataImpl({required this.phone, required this.confirmedAt, final  String? $type}): $type = $type ?? 'phone';
+  const _$PhoneIdentityDataImpl({required this.phone, this.confirmedAt, final  String? $type}): $type = $type ?? 'phone';
 
   factory _$PhoneIdentityDataImpl.fromJson(Map<String, dynamic> json) => _$$PhoneIdentityDataImplFromJson(json);
 
 @override final  String phone;
-@override final  String confirmedAt;
+@override final  String? confirmedAt;
 
 @JsonKey(name: 'method')
 final String $type;
@@ -775,15 +775,15 @@ int get hashCode => Object.hash(runtimeType,phone,confirmedAt);
 _$$PhoneIdentityDataImplCopyWith<_$PhoneIdentityDataImpl> get copyWith => __$$PhoneIdentityDataImplCopyWithImpl<_$PhoneIdentityDataImpl>(this, _$identity);
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
   return phone(this.phone,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
   return phone?.call(this.phone,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (phone != null) {
     return phone(this.phone,confirmedAt);
   }
@@ -812,12 +812,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class PhoneIdentityData implements IdentityData {
-  const factory PhoneIdentityData({required final  String phone, required final  String confirmedAt}) = _$PhoneIdentityDataImpl;
+  const factory PhoneIdentityData({required final  String phone, final  String? confirmedAt}) = _$PhoneIdentityDataImpl;
   
 
   factory PhoneIdentityData.fromJson(Map<String, dynamic> json) = _$PhoneIdentityDataImpl.fromJson;
 
- String get phone; String get confirmedAt;
+ String get phone; String? get confirmedAt;
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -830,7 +830,7 @@ abstract class _$$PhoneOTPIdentityDataImplCopyWith<$Res>  {
   factory _$$PhoneOTPIdentityDataImplCopyWith(_$PhoneOTPIdentityDataImpl value, $Res Function(_$PhoneOTPIdentityDataImpl) then) = __$$PhoneOTPIdentityDataImplCopyWithImpl<$Res>;
 @useResult
 $Res call({
- String phone, String confirmedAt
+ String phone, String? confirmedAt
 });
 
 
@@ -845,11 +845,11 @@ class __$$PhoneOTPIdentityDataImplCopyWithImpl<$Res> extends _$IdentityDataCopyW
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? phone = null,Object? confirmedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? phone = null,Object? confirmedAt = freezed,}) {
   return _then(_$PhoneOTPIdentityDataImpl(
 phone: null == phone ? _value.phone : phone // ignore: cast_nullable_to_non_nullable
-as String,confirmedAt: null == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,confirmedAt: freezed == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -860,12 +860,12 @@ as String,
 @JsonSerializable()
 
 class _$PhoneOTPIdentityDataImpl  implements PhoneOTPIdentityData {
-  const _$PhoneOTPIdentityDataImpl({required this.phone, required this.confirmedAt, final  String? $type}): $type = $type ?? 'phoneOTP';
+  const _$PhoneOTPIdentityDataImpl({required this.phone, this.confirmedAt, final  String? $type}): $type = $type ?? 'phoneOTP';
 
   factory _$PhoneOTPIdentityDataImpl.fromJson(Map<String, dynamic> json) => _$$PhoneOTPIdentityDataImplFromJson(json);
 
 @override final  String phone;
-@override final  String confirmedAt;
+@override final  String? confirmedAt;
 
 @JsonKey(name: 'method')
 final String $type;
@@ -894,15 +894,15 @@ int get hashCode => Object.hash(runtimeType,phone,confirmedAt);
 _$$PhoneOTPIdentityDataImplCopyWith<_$PhoneOTPIdentityDataImpl> get copyWith => __$$PhoneOTPIdentityDataImplCopyWithImpl<_$PhoneOTPIdentityDataImpl>(this, _$identity);
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
   return phoneOTP(this.phone,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
   return phoneOTP?.call(this.phone,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (phoneOTP != null) {
     return phoneOTP(this.phone,confirmedAt);
   }
@@ -931,12 +931,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class PhoneOTPIdentityData implements IdentityData {
-  const factory PhoneOTPIdentityData({required final  String phone, required final  String confirmedAt}) = _$PhoneOTPIdentityDataImpl;
+  const factory PhoneOTPIdentityData({required final  String phone, final  String? confirmedAt}) = _$PhoneOTPIdentityDataImpl;
   
 
   factory PhoneOTPIdentityData.fromJson(Map<String, dynamic> json) = _$PhoneOTPIdentityDataImpl.fromJson;
 
- String get phone; String get confirmedAt;
+ String get phone; String? get confirmedAt;
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -949,7 +949,7 @@ abstract class _$$OAuthIdentityDataImplCopyWith<$Res>  {
   factory _$$OAuthIdentityDataImplCopyWith(_$OAuthIdentityDataImpl value, $Res Function(_$OAuthIdentityDataImpl) then) = __$$OAuthIdentityDataImplCopyWithImpl<$Res>;
 @useResult
 $Res call({
- OAuthProvider provider, String email
+ OAuthProvider provider, String email, String? confirmedAt
 });
 
 
@@ -964,11 +964,12 @@ class __$$OAuthIdentityDataImplCopyWithImpl<$Res> extends _$IdentityDataCopyWith
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? provider = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? provider = null,Object? email = null,Object? confirmedAt = freezed,}) {
   return _then(_$OAuthIdentityDataImpl(
 provider: null == provider ? _value.provider : provider // ignore: cast_nullable_to_non_nullable
 as OAuthProvider,email: null == email ? _value.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,confirmedAt: freezed == confirmedAt ? _value.confirmedAt : confirmedAt // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -979,12 +980,13 @@ as String,
 @JsonSerializable()
 
 class _$OAuthIdentityDataImpl  implements OAuthIdentityData {
-  const _$OAuthIdentityDataImpl({required this.provider, required this.email, final  String? $type}): $type = $type ?? 'oAuth';
+  const _$OAuthIdentityDataImpl({required this.provider, required this.email, this.confirmedAt, final  String? $type}): $type = $type ?? 'oAuth';
 
   factory _$OAuthIdentityDataImpl.fromJson(Map<String, dynamic> json) => _$$OAuthIdentityDataImplFromJson(json);
 
 @override final  OAuthProvider provider;
 @override final  String email;
+@override final  String? confirmedAt;
 
 @JsonKey(name: 'method')
 final String $type;
@@ -992,18 +994,18 @@ final String $type;
 
 @override
 String toString() {
-  return 'IdentityData.oAuth(provider: $provider, email: $email)';
+  return 'IdentityData.oAuth(provider: $provider, email: $email, confirmedAt: $confirmedAt)';
 }
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$OAuthIdentityDataImpl&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$OAuthIdentityDataImpl&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.confirmedAt, confirmedAt) || other.confirmedAt == confirmedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,provider,email);
+int get hashCode => Object.hash(runtimeType,provider,email,confirmedAt);
 
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
@@ -1013,17 +1015,17 @@ int get hashCode => Object.hash(runtimeType,provider,email);
 _$$OAuthIdentityDataImplCopyWith<_$OAuthIdentityDataImpl> get copyWith => __$$OAuthIdentityDataImplCopyWithImpl<_$OAuthIdentityDataImpl>(this, _$identity);
 
 @override
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String confirmedAt)  email,required TResult Function( String email,  String confirmedAt)  emailOTP,required TResult Function( String email,  String confirmedAt)  magicLink,required TResult Function( String phone,  String confirmedAt)  phone,required TResult Function( String phone,  String confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email)  oAuth,}) {
-  return oAuth(provider,this.email);
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  anonymous,required TResult Function( String email,  String? confirmedAt)  email,required TResult Function( String email,  String? confirmedAt)  emailOTP,required TResult Function( String email,  String? confirmedAt)  magicLink,required TResult Function( String phone,  String? confirmedAt)  phone,required TResult Function( String phone,  String? confirmedAt)  phoneOTP,required TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)  oAuth,}) {
+  return oAuth(provider,this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String confirmedAt)?  email,TResult? Function( String email,  String confirmedAt)?  emailOTP,TResult? Function( String email,  String confirmedAt)?  magicLink,TResult? Function( String phone,  String confirmedAt)?  phone,TResult? Function( String phone,  String confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email)?  oAuth,}) {
-  return oAuth?.call(provider,this.email);
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  anonymous,TResult? Function( String email,  String? confirmedAt)?  email,TResult? Function( String email,  String? confirmedAt)?  emailOTP,TResult? Function( String email,  String? confirmedAt)?  magicLink,TResult? Function( String phone,  String? confirmedAt)?  phone,TResult? Function( String phone,  String? confirmedAt)?  phoneOTP,TResult? Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,}) {
+  return oAuth?.call(provider,this.email,confirmedAt);
 }
 @override
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String confirmedAt)?  email,TResult Function( String email,  String confirmedAt)?  emailOTP,TResult Function( String email,  String confirmedAt)?  magicLink,TResult Function( String phone,  String confirmedAt)?  phone,TResult Function( String phone,  String confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email)?  oAuth,required TResult orElse(),}) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  anonymous,TResult Function( String email,  String? confirmedAt)?  email,TResult Function( String email,  String? confirmedAt)?  emailOTP,TResult Function( String email,  String? confirmedAt)?  magicLink,TResult Function( String phone,  String? confirmedAt)?  phone,TResult Function( String phone,  String? confirmedAt)?  phoneOTP,TResult Function( OAuthProvider provider,  String email,  String? confirmedAt)?  oAuth,required TResult orElse(),}) {
   if (oAuth != null) {
-    return oAuth(provider,this.email);
+    return oAuth(provider,this.email,confirmedAt);
   }
   return orElse();
 }
@@ -1050,12 +1052,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class OAuthIdentityData implements IdentityData {
-  const factory OAuthIdentityData({required final  OAuthProvider provider, required final  String email}) = _$OAuthIdentityDataImpl;
+  const factory OAuthIdentityData({required final  OAuthProvider provider, required final  String email, final  String? confirmedAt}) = _$OAuthIdentityDataImpl;
   
 
   factory OAuthIdentityData.fromJson(Map<String, dynamic> json) = _$OAuthIdentityDataImpl.fromJson;
 
- OAuthProvider get provider; String get email;
+ OAuthProvider get provider; String get email; String? get confirmedAt;
 /// Create a copy of IdentityData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
