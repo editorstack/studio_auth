@@ -53,6 +53,7 @@ class IAuth {
   @utc
   late DateTime updatedAt;
 
+  /// Whether multi-factor authentication (MFA) is enabled for this user.
   late bool mfaEnabled;
 
   /// Collection of identities associated with this user.
@@ -97,6 +98,8 @@ extension AuthConverter on Auth {
       ..mfaEnabled = mfaEnabled
       ..firstName = firstName
       ..lastName = lastName
+      ..identities = identities.map((i) => i.toIsar()).toList()
+      ..devices = devices.map((d) => d.toIsar()).toList()
       ..email = email
       ..phone = phone
       ..image = image;
