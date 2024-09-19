@@ -250,7 +250,7 @@ _$CreateMagicLinkTokenBodyImpl _$$CreateMagicLinkTokenBodyImplFromJson(
     _$CreateMagicLinkTokenBodyImpl(
       redirectUrl: json['redirectUrl'] as String,
       email: json['email'] as String,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$CreateMagicLinkTokenBodyImplToJson(
@@ -258,21 +258,21 @@ Map<String, dynamic> _$$CreateMagicLinkTokenBodyImplToJson(
     <String, dynamic>{
       'redirectUrl': instance.redirectUrl,
       'email': instance.email,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$CreateEmailOTPTokenBodyImpl _$$CreateEmailOTPTokenBodyImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateEmailOTPTokenBodyImpl(
       email: json['email'] as String,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$CreateEmailOTPTokenBodyImplToJson(
         _$CreateEmailOTPTokenBodyImpl instance) =>
     <String, dynamic>{
       'email': instance.email,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$EmailTokenSessionBodyImpl _$$EmailTokenSessionBodyImplFromJson(

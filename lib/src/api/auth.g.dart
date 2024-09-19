@@ -953,7 +953,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          '/mfa/factors',
+          '/auth/mfa/factors',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -988,7 +988,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          '/mfa/recovery-codes',
+          '/auth/mfa/recovery-codes',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -1023,7 +1023,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          '/mfa/recovery-codes',
+          '/auth/mfa/recovery-codes',
           queryParameters: queryParameters,
           data: _data,
         )

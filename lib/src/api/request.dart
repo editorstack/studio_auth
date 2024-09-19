@@ -194,9 +194,8 @@ class EmailSessionBody with _$EmailSessionBody {
       _$EmailSessionBodyFromJson(json);
 }
 
-@freezed
-
 /// Represents the body of a create email token request.
+@Freezed(unionKey: 'type')
 class CreateEmailTokenBody with _$CreateEmailTokenBody {
   /// Creates a magic link token request. [redirectUrl] is sent to the user's
   /// email address to verify their account, it should point to your

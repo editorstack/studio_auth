@@ -2312,14 +2312,14 @@ _$$EmailSessionBodyImplCopyWith<_$EmailSessionBodyImpl> get copyWith => throw _p
 }
 
 CreateEmailTokenBody _$CreateEmailTokenBodyFromJson(Map<String, dynamic> json) {
-        switch (json['runtimeType']) {
+        switch (json['type']) {
                   case 'magicLink':
           return CreateMagicLinkTokenBody.fromJson(json);
                 case 'emailOTP':
           return CreateEmailOTPTokenBody.fromJson(json);
         
           default:
-            throw CheckedFromJsonException(json, 'runtimeType', 'CreateEmailTokenBody', 'Invalid union type "${json['runtimeType']}"!');
+            throw CheckedFromJsonException(json, 'type', 'CreateEmailTokenBody', 'Invalid union type "${json['type']}"!');
         }
       
 }
@@ -2418,7 +2418,7 @@ class _$CreateMagicLinkTokenBodyImpl  implements CreateMagicLinkTokenBody {
 @override final  String redirectUrl;
 @override final  String email;
 
-@JsonKey(name: 'runtimeType')
+@JsonKey(name: 'type')
 final String $type;
 
 
@@ -2535,7 +2535,7 @@ class _$CreateEmailOTPTokenBodyImpl  implements CreateEmailOTPTokenBody {
 
 @override final  String email;
 
-@JsonKey(name: 'runtimeType')
+@JsonKey(name: 'type')
 final String $type;
 
 

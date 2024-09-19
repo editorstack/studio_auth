@@ -152,17 +152,17 @@ abstract class AuthApi {
   );
 
   /// Retrieves a list of available MFA factors for the current user.
-  @GET('/mfa/factors')
+  @GET('/auth/mfa/factors')
   @Headers({'Content-Type': 'application/json'})
   Future<MFAFactors> getFactors();
 
   /// Retrieves a list of recovery codes of the current user.
-  @GET('/mfa/recovery-codes')
+  @GET('/auth/mfa/recovery-codes')
   @Headers({'Content-Type': 'application/json'})
   Future<List<String>> getRecoveryCodes();
 
   /// Regenerates a list of recovery codes for the current user.
-  @PATCH('/mfa/recovery-codes')
+  @PATCH('/auth/mfa/recovery-codes')
   @Headers({'Content-Type': 'application/json'})
   Future<List<String>> regenerateRecoveryCodes();
 }
