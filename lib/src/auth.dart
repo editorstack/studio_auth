@@ -198,6 +198,20 @@ class StudioAuthentication {
     return response;
   }
 
+  /// Updates user's first and last name. Last name is optional.
+  Future<Auth> updateUserDetails({
+    required String firstName,
+    String? lastName,
+  }) async {
+    _validate();
+    final auth = await _authApi!.updateUser(
+      UpdateUserBody.details(firstName: firstName, lastName: lastName),
+    );
+
+    _isar!.write((isar) => isar.auth.put(auth.toIsar()));
+    return auth;
+  }
+
   Future<StudioDevice> _device() async {
     final deviceInfo = DeviceInfoPlugin();
 
