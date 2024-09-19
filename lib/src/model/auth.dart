@@ -19,6 +19,7 @@ class Auth with _$Auth {
     required String id,
     required DateTime createdAt,
     required DateTime updatedAt,
+    required bool mfaEnabled,
     required List<Identity> identities,
     required List<Device> devices,
     String? firstName,
@@ -51,6 +52,8 @@ class IAuth {
   /// Date and time when the user account was last updated.
   @utc
   late DateTime updatedAt;
+
+  late bool mfaEnabled;
 
   /// Collection of identities associated with this user.
   late List<IIdentity> identities;
@@ -91,6 +94,7 @@ extension AuthConverter on Auth {
       ..id = this.id
       ..createdAt = createdAt
       ..updatedAt = updatedAt
+      ..mfaEnabled = mfaEnabled
       ..firstName = firstName
       ..lastName = lastName
       ..email = email
@@ -117,6 +121,7 @@ extension IAuthConverter on IAuth {
       id: this.id,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      mfaEnabled: mfaEnabled,
       identities: identities.map((i) => i.toObject()).toList(),
       devices: devices.map((d) => d.toObject()).toList(),
       firstName: firstName,

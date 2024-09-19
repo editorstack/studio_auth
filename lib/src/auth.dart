@@ -49,6 +49,8 @@ class StudioAuthentication {
   StreamSubscription<Auth?>? _authSubscription;
   StreamSubscription<Session?>? _sessionSubscription;
 
+  Timer? _sessionTimer;
+
   /// Returns a stream of Auth objects, representing changes in authentication
   /// state.
   /// This method watches the Isar database for any changes to the Auth
@@ -89,7 +91,31 @@ class StudioAuthentication {
     _sessionSubscription = sessionChanges().listen((session) {
       _updateToken(session?.token);
       _session = session;
+
+      _sessionTimer?.cancel();
+      if (session != null && session.expiresAt != null) {
+        _sessionTimer = Timer.periodic(
+          const Duration(minutes: 3),
+          (_) => _refreshSession(),
+        );
+      }
     });
+  }
+
+  Future<void> _refreshSession() async {
+    if (_session != null && _session!.expiresAt != null) {
+      final now = DateTime.now();
+      final expiresAt = _session!.expiresAt!;
+      final difference = expiresAt.difference(now);
+
+      // Check if the session expires in 4 minutes or less
+      if (difference <= const Duration(minutes: 4)) {
+        final session = await _authApi!.extendSession();
+        _isar!.write((isar) {
+          isar.sessions.put(session.toIsar());
+        });
+      }
+    }
   }
 
   /// Disposes of the StudioAuthentication instance by cancelling any active
@@ -97,6 +123,7 @@ class StudioAuthentication {
   void dispose() {
     _authSubscription?.cancel();
     _sessionSubscription?.cancel();
+    _sessionTimer?.cancel();
   }
 
   /// Updates the authorization token for API requests.

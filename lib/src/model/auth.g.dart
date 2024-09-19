@@ -33,6 +33,10 @@ const IAuthSchema = IsarGeneratedSchema(
         type: IsarType.dateTime,
       ),
       IsarPropertySchema(
+        name: 'mfaEnabled',
+        type: IsarType.bool,
+      ),
+      IsarPropertySchema(
         name: 'identities',
         type: IsarType.objectList,
         target: 'IIdentity',
@@ -89,9 +93,10 @@ int serializeIAuth(IsarWriter writer, IAuth object) {
       writer, 2, object.createdAt.toUtc().microsecondsSinceEpoch);
   IsarCore.writeLong(
       writer, 3, object.updatedAt.toUtc().microsecondsSinceEpoch);
+  IsarCore.writeBool(writer, 4, object.mfaEnabled);
   {
     final list = object.identities;
-    final listWriter = IsarCore.beginList(writer, 4, list.length);
+    final listWriter = IsarCore.beginList(writer, 5, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -104,7 +109,7 @@ int serializeIAuth(IsarWriter writer, IAuth object) {
   }
   {
     final list = object.devices;
-    final listWriter = IsarCore.beginList(writer, 5, list.length);
+    final listWriter = IsarCore.beginList(writer, 6, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -118,21 +123,13 @@ int serializeIAuth(IsarWriter writer, IAuth object) {
   {
     final value = object.firstName;
     if (value == null) {
-      IsarCore.writeNull(writer, 6);
-    } else {
-      IsarCore.writeString(writer, 6, value);
-    }
-  }
-  {
-    final value = object.lastName;
-    if (value == null) {
       IsarCore.writeNull(writer, 7);
     } else {
       IsarCore.writeString(writer, 7, value);
     }
   }
   {
-    final value = object.email;
+    final value = object.lastName;
     if (value == null) {
       IsarCore.writeNull(writer, 8);
     } else {
@@ -140,7 +137,7 @@ int serializeIAuth(IsarWriter writer, IAuth object) {
     }
   }
   {
-    final value = object.phone;
+    final value = object.email;
     if (value == null) {
       IsarCore.writeNull(writer, 9);
     } else {
@@ -148,11 +145,19 @@ int serializeIAuth(IsarWriter writer, IAuth object) {
     }
   }
   {
-    final value = object.image;
+    final value = object.phone;
     if (value == null) {
       IsarCore.writeNull(writer, 10);
     } else {
       IsarCore.writeString(writer, 10, value);
+    }
+  }
+  {
+    final value = object.image;
+    if (value == null) {
+      IsarCore.writeNull(writer, 11);
+    } else {
+      IsarCore.writeString(writer, 11, value);
     }
   }
   return object.isarID;
@@ -182,8 +187,9 @@ IAuth deserializeIAuth(IsarReader reader) {
           DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
     }
   }
+  object.mfaEnabled = IsarCore.readBool(reader, 4);
   {
-    final length = IsarCore.readList(reader, 4, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -209,7 +215,7 @@ IAuth deserializeIAuth(IsarReader reader) {
     }
   }
   {
-    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -233,11 +239,11 @@ IAuth deserializeIAuth(IsarReader reader) {
       }
     }
   }
-  object.firstName = IsarCore.readString(reader, 6);
-  object.lastName = IsarCore.readString(reader, 7);
-  object.email = IsarCore.readString(reader, 8);
-  object.phone = IsarCore.readString(reader, 9);
-  object.image = IsarCore.readString(reader, 10);
+  object.firstName = IsarCore.readString(reader, 7);
+  object.lastName = IsarCore.readString(reader, 8);
+  object.email = IsarCore.readString(reader, 9);
+  object.phone = IsarCore.readString(reader, 10);
+  object.image = IsarCore.readString(reader, 11);
   return object;
 }
 
@@ -265,8 +271,10 @@ dynamic deserializeIAuthProp(IsarReader reader, int property) {
         }
       }
     case 4:
+      return IsarCore.readBool(reader, 4);
+    case 5:
       {
-        final length = IsarCore.readList(reader, 4, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -291,9 +299,9 @@ dynamic deserializeIAuthProp(IsarReader reader, int property) {
           }
         }
       }
-    case 5:
+    case 6:
       {
-        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -318,8 +326,6 @@ dynamic deserializeIAuthProp(IsarReader reader, int property) {
           }
         }
       }
-    case 6:
-      return IsarCore.readString(reader, 6);
     case 7:
       return IsarCore.readString(reader, 7);
     case 8:
@@ -328,6 +334,8 @@ dynamic deserializeIAuthProp(IsarReader reader, int property) {
       return IsarCore.readString(reader, 9);
     case 10:
       return IsarCore.readString(reader, 10);
+    case 11:
+      return IsarCore.readString(reader, 11);
     case 0:
       return IsarCore.readId(reader);
     default:
@@ -341,6 +349,7 @@ sealed class _IAuthUpdate {
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? mfaEnabled,
     String? firstName,
     String? lastName,
     String? email,
@@ -360,6 +369,7 @@ class _IAuthUpdateImpl implements _IAuthUpdate {
     Object? id = ignore,
     Object? createdAt = ignore,
     Object? updatedAt = ignore,
+    Object? mfaEnabled = ignore,
     Object? firstName = ignore,
     Object? lastName = ignore,
     Object? email = ignore,
@@ -372,11 +382,12 @@ class _IAuthUpdateImpl implements _IAuthUpdate {
           if (id != ignore) 1: id as String?,
           if (createdAt != ignore) 2: createdAt as DateTime?,
           if (updatedAt != ignore) 3: updatedAt as DateTime?,
-          if (firstName != ignore) 6: firstName as String?,
-          if (lastName != ignore) 7: lastName as String?,
-          if (email != ignore) 8: email as String?,
-          if (phone != ignore) 9: phone as String?,
-          if (image != ignore) 10: image as String?,
+          if (mfaEnabled != ignore) 4: mfaEnabled as bool?,
+          if (firstName != ignore) 7: firstName as String?,
+          if (lastName != ignore) 8: lastName as String?,
+          if (email != ignore) 9: email as String?,
+          if (phone != ignore) 10: phone as String?,
+          if (image != ignore) 11: image as String?,
         }) >
         0;
   }
@@ -388,6 +399,7 @@ sealed class _IAuthUpdateAll {
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? mfaEnabled,
     String? firstName,
     String? lastName,
     String? email,
@@ -407,6 +419,7 @@ class _IAuthUpdateAllImpl implements _IAuthUpdateAll {
     Object? id = ignore,
     Object? createdAt = ignore,
     Object? updatedAt = ignore,
+    Object? mfaEnabled = ignore,
     Object? firstName = ignore,
     Object? lastName = ignore,
     Object? email = ignore,
@@ -417,11 +430,12 @@ class _IAuthUpdateAllImpl implements _IAuthUpdateAll {
       if (id != ignore) 1: id as String?,
       if (createdAt != ignore) 2: createdAt as DateTime?,
       if (updatedAt != ignore) 3: updatedAt as DateTime?,
-      if (firstName != ignore) 6: firstName as String?,
-      if (lastName != ignore) 7: lastName as String?,
-      if (email != ignore) 8: email as String?,
-      if (phone != ignore) 9: phone as String?,
-      if (image != ignore) 10: image as String?,
+      if (mfaEnabled != ignore) 4: mfaEnabled as bool?,
+      if (firstName != ignore) 7: firstName as String?,
+      if (lastName != ignore) 8: lastName as String?,
+      if (email != ignore) 9: email as String?,
+      if (phone != ignore) 10: phone as String?,
+      if (image != ignore) 11: image as String?,
     });
   }
 }
@@ -437,6 +451,7 @@ sealed class _IAuthQueryUpdate {
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? mfaEnabled,
     String? firstName,
     String? lastName,
     String? email,
@@ -456,6 +471,7 @@ class _IAuthQueryUpdateImpl implements _IAuthQueryUpdate {
     Object? id = ignore,
     Object? createdAt = ignore,
     Object? updatedAt = ignore,
+    Object? mfaEnabled = ignore,
     Object? firstName = ignore,
     Object? lastName = ignore,
     Object? email = ignore,
@@ -466,11 +482,12 @@ class _IAuthQueryUpdateImpl implements _IAuthQueryUpdate {
       if (id != ignore) 1: id as String?,
       if (createdAt != ignore) 2: createdAt as DateTime?,
       if (updatedAt != ignore) 3: updatedAt as DateTime?,
-      if (firstName != ignore) 6: firstName as String?,
-      if (lastName != ignore) 7: lastName as String?,
-      if (email != ignore) 8: email as String?,
-      if (phone != ignore) 9: phone as String?,
-      if (image != ignore) 10: image as String?,
+      if (mfaEnabled != ignore) 4: mfaEnabled as bool?,
+      if (firstName != ignore) 7: firstName as String?,
+      if (lastName != ignore) 8: lastName as String?,
+      if (email != ignore) 9: email as String?,
+      if (phone != ignore) 10: phone as String?,
+      if (image != ignore) 11: image as String?,
     });
   }
 }
@@ -492,6 +509,7 @@ class _IAuthQueryBuilderUpdateImpl implements _IAuthQueryUpdate {
     Object? id = ignore,
     Object? createdAt = ignore,
     Object? updatedAt = ignore,
+    Object? mfaEnabled = ignore,
     Object? firstName = ignore,
     Object? lastName = ignore,
     Object? email = ignore,
@@ -504,11 +522,12 @@ class _IAuthQueryBuilderUpdateImpl implements _IAuthQueryUpdate {
         if (id != ignore) 1: id as String?,
         if (createdAt != ignore) 2: createdAt as DateTime?,
         if (updatedAt != ignore) 3: updatedAt as DateTime?,
-        if (firstName != ignore) 6: firstName as String?,
-        if (lastName != ignore) 7: lastName as String?,
-        if (email != ignore) 8: email as String?,
-        if (phone != ignore) 9: phone as String?,
-        if (image != ignore) 10: image as String?,
+        if (mfaEnabled != ignore) 4: mfaEnabled as bool?,
+        if (firstName != ignore) 7: firstName as String?,
+        if (lastName != ignore) 8: lastName as String?,
+        if (email != ignore) 9: email as String?,
+        if (phone != ignore) 10: phone as String?,
+        if (image != ignore) 11: image as String?,
       });
     } finally {
       q.close();
@@ -856,6 +875,19 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     });
   }
 
+  QueryBuilder<IAuth, IAuth, QAfterFilterCondition> mfaEnabledEqualTo(
+    bool value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 4,
+          value: value,
+        ),
+      );
+    });
+  }
+
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> identitiesIsEmpty() {
     return not().identitiesIsNotEmpty();
   }
@@ -863,7 +895,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> identitiesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 4, value: null),
+        const GreaterOrEqualCondition(property: 5, value: null),
       );
     });
   }
@@ -875,20 +907,20 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> devicesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 5, value: null),
+        const GreaterOrEqualCondition(property: 6, value: null),
       );
     });
   }
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> firstNameIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
+      return query.addFilterCondition(const IsNullCondition(property: 7));
     });
   }
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> firstNameIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
+      return query.addFilterCondition(const IsNullCondition(property: 7));
     });
   }
 
@@ -899,7 +931,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -914,7 +946,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -930,7 +962,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -945,7 +977,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -960,7 +992,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -976,7 +1008,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 6,
+          property: 7,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -992,7 +1024,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1007,7 +1039,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1021,7 +1053,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 6,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1035,7 +1067,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 6,
+          property: 7,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1047,7 +1079,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 6,
+          property: 7,
           value: '',
         ),
       );
@@ -1058,7 +1090,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 6,
+          property: 7,
           value: '',
         ),
       );
@@ -1067,13 +1099,13 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> lastNameIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
+      return query.addFilterCondition(const IsNullCondition(property: 8));
     });
   }
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> lastNameIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
+      return query.addFilterCondition(const IsNullCondition(property: 8));
     });
   }
 
@@ -1084,7 +1116,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1099,7 +1131,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1115,7 +1147,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1130,7 +1162,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1145,7 +1177,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1161,7 +1193,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 7,
+          property: 8,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1177,7 +1209,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1192,7 +1224,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1206,7 +1238,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 7,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1220,7 +1252,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 7,
+          property: 8,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1232,7 +1264,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 7,
+          property: 8,
           value: '',
         ),
       );
@@ -1243,7 +1275,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 7,
+          property: 8,
           value: '',
         ),
       );
@@ -1252,13 +1284,13 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> emailIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
+      return query.addFilterCondition(const IsNullCondition(property: 9));
     });
   }
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> emailIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
+      return query.addFilterCondition(const IsNullCondition(property: 9));
     });
   }
 
@@ -1269,7 +1301,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1284,7 +1316,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1299,7 +1331,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1314,7 +1346,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1329,7 +1361,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1345,7 +1377,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 8,
+          property: 9,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1361,7 +1393,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1376,7 +1408,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1389,7 +1421,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 8,
+          property: 9,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1402,7 +1434,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 8,
+          property: 9,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1414,7 +1446,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 8,
+          property: 9,
           value: '',
         ),
       );
@@ -1425,7 +1457,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 8,
+          property: 9,
           value: '',
         ),
       );
@@ -1434,13 +1466,13 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> phoneIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 9));
+      return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> phoneIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 9));
+      return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
@@ -1451,7 +1483,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1466,7 +1498,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1481,7 +1513,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1496,7 +1528,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1511,7 +1543,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1527,7 +1559,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 9,
+          property: 10,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1543,7 +1575,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1558,7 +1590,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1571,7 +1603,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1584,7 +1616,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 9,
+          property: 10,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1596,7 +1628,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 9,
+          property: 10,
           value: '',
         ),
       );
@@ -1607,7 +1639,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 9,
+          property: 10,
           value: '',
         ),
       );
@@ -1616,13 +1648,13 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> imageIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 10));
+      return query.addFilterCondition(const IsNullCondition(property: 11));
     });
   }
 
   QueryBuilder<IAuth, IAuth, QAfterFilterCondition> imageIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 10));
+      return query.addFilterCondition(const IsNullCondition(property: 11));
     });
   }
 
@@ -1633,7 +1665,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1648,7 +1680,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1663,7 +1695,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1678,7 +1710,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1693,7 +1725,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1709,7 +1741,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 10,
+          property: 11,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1725,7 +1757,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1740,7 +1772,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1753,7 +1785,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1766,7 +1798,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 10,
+          property: 11,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1778,7 +1810,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 10,
+          property: 11,
           value: '',
         ),
       );
@@ -1789,7 +1821,7 @@ extension IAuthQueryFilter on QueryBuilder<IAuth, IAuth, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 10,
+          property: 11,
           value: '',
         ),
       );
@@ -1925,11 +1957,23 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
     });
   }
 
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> sortByMfaEnabled() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(4);
+    });
+  }
+
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> sortByMfaEnabledDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(4, sort: Sort.desc);
+    });
+  }
+
   QueryBuilder<IAuth, IAuth, QAfterSortBy> sortByFirstName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        6,
+        7,
         caseSensitive: caseSensitive,
       );
     });
@@ -1939,7 +1983,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        6,
+        7,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1950,7 +1994,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        7,
+        8,
         caseSensitive: caseSensitive,
       );
     });
@@ -1960,7 +2004,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        7,
+        8,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1971,7 +2015,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        8,
+        9,
         caseSensitive: caseSensitive,
       );
     });
@@ -1981,7 +2025,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        8,
+        9,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1992,7 +2036,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        9,
+        10,
         caseSensitive: caseSensitive,
       );
     });
@@ -2002,7 +2046,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        9,
+        10,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -2013,7 +2057,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        10,
+        11,
         caseSensitive: caseSensitive,
       );
     });
@@ -2023,7 +2067,7 @@ extension IAuthQuerySortBy on QueryBuilder<IAuth, IAuth, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        10,
+        11,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -2082,73 +2126,85 @@ extension IAuthQuerySortThenBy on QueryBuilder<IAuth, IAuth, QSortThenBy> {
     });
   }
 
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByMfaEnabled() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(4);
+    });
+  }
+
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByMfaEnabledDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(4, sort: Sort.desc);
+    });
+  }
+
   QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByFirstName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByFirstNameDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByLastName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(7, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByLastNameDesc(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByFirstNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(7, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByEmail(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByLastName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(8, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByEmailDesc(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByLastNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(8, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByPhone(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByEmail(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByPhoneDesc(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByEmailDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByImage(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByPhone(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(10, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByImageDesc(
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByPhoneDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(10, sort: Sort.desc, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByImage(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(11, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IAuth, IAuth, QAfterSortBy> thenByImageDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(11, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
@@ -2185,38 +2241,44 @@ extension IAuthQueryWhereDistinct on QueryBuilder<IAuth, IAuth, QDistinct> {
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByFirstName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByMfaEnabled() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(6, caseSensitive: caseSensitive);
+      return query.addDistinctBy(4);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByLastName(
+  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByFirstName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(7, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByEmail(
+  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByLastName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(8, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByPhone(
+  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(9, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByImage(
+  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByPhone(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(10, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IAuth, IAuth, QAfterDistinct> distinctByImage(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(11, caseSensitive: caseSensitive);
     });
   }
 }
@@ -2240,45 +2302,51 @@ extension IAuthQueryProperty1 on QueryBuilder<IAuth, IAuth, QProperty> {
     });
   }
 
-  QueryBuilder<IAuth, List<IIdentity>, QAfterProperty> identitiesProperty() {
+  QueryBuilder<IAuth, bool, QAfterProperty> mfaEnabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
   }
 
-  QueryBuilder<IAuth, List<IDevice>, QAfterProperty> devicesProperty() {
+  QueryBuilder<IAuth, List<IIdentity>, QAfterProperty> identitiesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
   }
 
-  QueryBuilder<IAuth, String?, QAfterProperty> firstNameProperty() {
+  QueryBuilder<IAuth, List<IDevice>, QAfterProperty> devicesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
-  QueryBuilder<IAuth, String?, QAfterProperty> lastNameProperty() {
+  QueryBuilder<IAuth, String?, QAfterProperty> firstNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 
-  QueryBuilder<IAuth, String?, QAfterProperty> emailProperty() {
+  QueryBuilder<IAuth, String?, QAfterProperty> lastNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
   }
 
-  QueryBuilder<IAuth, String?, QAfterProperty> phoneProperty() {
+  QueryBuilder<IAuth, String?, QAfterProperty> emailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
   }
 
-  QueryBuilder<IAuth, String?, QAfterProperty> imageProperty() {
+  QueryBuilder<IAuth, String?, QAfterProperty> phoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
+    });
+  }
+
+  QueryBuilder<IAuth, String?, QAfterProperty> imageProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
     });
   }
 
@@ -2308,46 +2376,52 @@ extension IAuthQueryProperty2<R> on QueryBuilder<IAuth, R, QAfterProperty> {
     });
   }
 
-  QueryBuilder<IAuth, (R, List<IIdentity>), QAfterProperty>
-      identitiesProperty() {
+  QueryBuilder<IAuth, (R, bool), QAfterProperty> mfaEnabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
   }
 
-  QueryBuilder<IAuth, (R, List<IDevice>), QAfterProperty> devicesProperty() {
+  QueryBuilder<IAuth, (R, List<IIdentity>), QAfterProperty>
+      identitiesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
   }
 
-  QueryBuilder<IAuth, (R, String?), QAfterProperty> firstNameProperty() {
+  QueryBuilder<IAuth, (R, List<IDevice>), QAfterProperty> devicesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
-  QueryBuilder<IAuth, (R, String?), QAfterProperty> lastNameProperty() {
+  QueryBuilder<IAuth, (R, String?), QAfterProperty> firstNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 
-  QueryBuilder<IAuth, (R, String?), QAfterProperty> emailProperty() {
+  QueryBuilder<IAuth, (R, String?), QAfterProperty> lastNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
   }
 
-  QueryBuilder<IAuth, (R, String?), QAfterProperty> phoneProperty() {
+  QueryBuilder<IAuth, (R, String?), QAfterProperty> emailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
   }
 
-  QueryBuilder<IAuth, (R, String?), QAfterProperty> imageProperty() {
+  QueryBuilder<IAuth, (R, String?), QAfterProperty> phoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
+    });
+  }
+
+  QueryBuilder<IAuth, (R, String?), QAfterProperty> imageProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
     });
   }
 
@@ -2378,46 +2452,52 @@ extension IAuthQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, List<IIdentity>), QOperations>
-      identitiesProperty() {
+  QueryBuilder<IAuth, (R1, R2, bool), QOperations> mfaEnabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, List<IDevice>), QOperations> devicesProperty() {
+  QueryBuilder<IAuth, (R1, R2, List<IIdentity>), QOperations>
+      identitiesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, String?), QOperations> firstNameProperty() {
+  QueryBuilder<IAuth, (R1, R2, List<IDevice>), QOperations> devicesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, String?), QOperations> lastNameProperty() {
+  QueryBuilder<IAuth, (R1, R2, String?), QOperations> firstNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, String?), QOperations> emailProperty() {
+  QueryBuilder<IAuth, (R1, R2, String?), QOperations> lastNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, String?), QOperations> phoneProperty() {
+  QueryBuilder<IAuth, (R1, R2, String?), QOperations> emailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
   }
 
-  QueryBuilder<IAuth, (R1, R2, String?), QOperations> imageProperty() {
+  QueryBuilder<IAuth, (R1, R2, String?), QOperations> phoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
+    });
+  }
+
+  QueryBuilder<IAuth, (R1, R2, String?), QOperations> imageProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
     });
   }
 
@@ -2436,6 +2516,7 @@ _$AuthImpl _$$AuthImplFromJson(Map<String, dynamic> json) => _$AuthImpl(
       id: json['id'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
+      mfaEnabled: json['mfaEnabled'] as bool,
       identities: (json['identities'] as List<dynamic>)
           .map((e) => Identity.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -2454,6 +2535,7 @@ Map<String, dynamic> _$$AuthImplToJson(_$AuthImpl instance) =>
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
+      'mfaEnabled': instance.mfaEnabled,
       'identities': instance.identities.map((e) => e.toJson()).toList(),
       'devices': instance.devices.map((e) => e.toJson()).toList(),
       'firstName': instance.firstName,

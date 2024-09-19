@@ -68,7 +68,7 @@ abstract class AuthApi {
   /// Extends the duration of a specific session.
   @PATCH('/auth/sessions')
   @Headers({'Content-Type': 'application/json'})
-  Future<Session> extendSession(@Path() String sessionID);
+  Future<Session> extendSession();
 
   /// Verifies a user's account or action.
   @POST('/auth/verify')

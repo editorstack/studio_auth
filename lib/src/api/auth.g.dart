@@ -376,7 +376,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<Session> extendSession(String sessionID) async {
+  Future<Session> extendSession() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
