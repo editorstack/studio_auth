@@ -4,12 +4,12 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:isar/isar.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:studio_auth/src/api/auth.dart';
 import 'package:studio_auth/src/api/request.dart';
 import 'package:studio_auth/src/model/auth.dart';
 import 'package:studio_auth/src/model/device.dart';
 import 'package:studio_auth/src/model/session.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
 
 /// A singleton class for managing studio authentication.
 class StudioAuthentication {
@@ -71,6 +71,7 @@ class StudioAuthentication {
     _socket!.onError(print);
 
     _socket!.on('auth:save', (data) {
+      print(data);
       final auth = Auth.fromJson(data as Map<String, dynamic>);
       _isar!.write((isar) {
         isar.auth.put(auth.toIsar());
