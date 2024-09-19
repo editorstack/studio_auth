@@ -19,6 +19,7 @@ class Session with _$Session {
     required String? deviceID,
     required String userID,
     required String token,
+    required String appID,
     required bool valid,
     required DateTime? expiresAt,
     required String? ipAddress,
@@ -42,6 +43,7 @@ class AuthSession with _$AuthSession {
     required String? deviceID,
     required String userID,
     required String token,
+    required String appID,
     required bool valid,
     required DateTime? expiresAt,
     required String? ipAddress,
@@ -75,6 +77,9 @@ class ISession {
   /// Authentication token for the session.
   late String token;
 
+  /// Application ID associated with the session.
+  late String appID;
+
   /// Indicates whether the session is valid or MFA is required.
   late bool valid;
 
@@ -105,6 +110,7 @@ extension SessionConverter on Session {
       ..deviceID = deviceID
       ..userID = userID
       ..token = token
+      ..appID = appID
       ..valid = valid
       ..expiresAt = expiresAt
       ..ipAddress = ipAddress;
@@ -126,6 +132,7 @@ extension ISessionConverter on ISession {
       deviceID: deviceID,
       userID: userID,
       token: token,
+      appID: appID,
       valid: valid,
       expiresAt: expiresAt,
       ipAddress: ipAddress,
@@ -148,6 +155,7 @@ extension AuthSessionConverter on AuthSession {
       deviceID: deviceID,
       userID: userID,
       token: token,
+      appID: appID,
       valid: valid,
       expiresAt: expiresAt,
       ipAddress: ipAddress,

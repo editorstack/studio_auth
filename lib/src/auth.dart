@@ -9,6 +9,7 @@ import 'package:studio_auth/src/api/request.dart';
 import 'package:studio_auth/src/model/auth.dart';
 import 'package:studio_auth/src/model/device.dart';
 import 'package:studio_auth/src/model/session.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 /// A singleton class for managing studio authentication.
 class StudioAuthentication {
@@ -50,6 +51,38 @@ class StudioAuthentication {
   StreamSubscription<Session?>? _sessionSubscription;
 
   Timer? _sessionTimer;
+  io.Socket? _socket;
+
+  void _initSocket(Session session) {
+    _socket = io.io(
+      _dio!.options.baseUrl,
+      io.OptionBuilder()
+          .setTransports(['websocket'])
+          .setExtraHeaders({
+            'authtoken': 'Bearer ${session.token}',
+            'appid': session.appID,
+          })
+          .disableAutoConnect()
+          .enableReconnection()
+          .build(),
+    );
+    _socket!.connect();
+    _socket!.onConnectError(print);
+    _socket!.onError(print);
+
+    _socket!.on('auth:save', (data) {
+      final auth = Auth.fromJson(data as Map<String, dynamic>);
+      _isar!.write((isar) {
+        isar.auth.put(auth.toIsar());
+      });
+    });
+    _socket!.on('auth:delete', (_) {
+      _isar!.write((isar) {
+        isar.auth.where().deleteAll();
+        isar.sessions.where().deleteAll();
+      });
+    });
+  }
 
   /// Returns a stream of Auth objects, representing changes in authentication
   /// state.
@@ -87,8 +120,22 @@ class StudioAuthentication {
     _isar = isar;
     _authApi = AuthApi(dio);
 
+    _session = _isar!.sessions.where().findFirst()?.toObject();
+    _auth = _isar!.auth.where().findFirst()?.toObject();
+
+    _updateToken(_session?.token);
+
     _authSubscription = authChanges().listen((auth) => _auth = auth);
     _sessionSubscription = sessionChanges().listen((session) {
+      if (_session?.token != session?.token) {
+        if (session == null) {
+          _socket?.disconnect();
+          _socket = null;
+        } else {
+          _socket?.disconnect();
+          _initSocket(session);
+        }
+      }
       _updateToken(session?.token);
       _session = session;
 
@@ -124,6 +171,8 @@ class StudioAuthentication {
     _authSubscription?.cancel();
     _sessionSubscription?.cancel();
     _sessionTimer?.cancel();
+    _socket?.dispose();
+    _socket = null;
   }
 
   /// Updates the authorization token for API requests.
