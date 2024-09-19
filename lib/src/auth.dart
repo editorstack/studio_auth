@@ -82,7 +82,7 @@ class StudioAuthentication {
   /// This method sets up the necessary components for authentication and
   /// starts listening
   /// for changes in auth and session states.
-  Future<void> initialize(Dio dio, Isar isar) async {
+  void initialize(Dio dio, Isar isar) {
     _dio = dio;
     _isar = isar;
     _authApi = AuthApi(dio);
