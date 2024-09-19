@@ -91,7 +91,7 @@ extension AuthConverter on Auth {
   ///
   /// Returns an [IAuth] object that can be stored in the Isar database.
   IAuth toIsar() {
-    final iAuth = IAuth()
+    return IAuth()
       ..id = this.id
       ..createdAt = createdAt
       ..updatedAt = updatedAt
@@ -103,11 +103,6 @@ extension AuthConverter on Auth {
       ..email = email
       ..phone = phone
       ..image = image;
-
-    iAuth.identities.addAll(identities.map((i) => i.toIsar()));
-    iAuth.devices.addAll(devices.map((d) => d.toIsar()));
-
-    return iAuth;
   }
 }
 

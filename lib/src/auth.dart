@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -68,7 +69,6 @@ class StudioAuthentication {
     );
 
     _socket!.on('auth:save', (data) {
-      print(data);
       final auth = Auth.fromJson(data as Map<String, dynamic>);
       _isar!.write((isar) {
         isar.auth.put(auth.toIsar());
@@ -82,8 +82,8 @@ class StudioAuthentication {
     });
 
     _socket!.connect();
-    _socket!.onConnectError(print);
-    _socket!.onError(print);
+    _socket!.onConnectError((error) => log(error.toString()));
+    _socket!.onError((error) => log(error.toString()));
   }
 
   /// Returns a stream of Auth objects, representing changes in authentication
