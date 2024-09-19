@@ -66,9 +66,6 @@ class StudioAuthentication {
           .enableReconnection()
           .build(),
     );
-    _socket!.connect();
-    _socket!.onConnectError(print);
-    _socket!.onError(print);
 
     _socket!.on('auth:save', (data) {
       print(data);
@@ -83,6 +80,10 @@ class StudioAuthentication {
         isar.sessions.where().deleteAll();
       });
     });
+
+    _socket!.connect();
+    _socket!.onConnectError(print);
+    _socket!.onError(print);
   }
 
   /// Returns a stream of Auth objects, representing changes in authentication
