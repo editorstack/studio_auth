@@ -55,6 +55,8 @@ class StudioAuthentication {
   io.Socket? _socket;
 
   void _initSocket(Session session) {
+    log('init socket');
+
     _socket = io.io(
       _dio!.options.baseUrl,
       io.OptionBuilder()
@@ -133,6 +135,7 @@ class StudioAuthentication {
     _auth = _isar!.auth.where().findFirst()?.toObject();
 
     _updateToken(_session?.token);
+    if (_session != null) _initSocket(_session!);
 
     _authSubscription = authChanges().listen((auth) => _auth = auth);
     _sessionSubscription = sessionChanges().listen((session) {
