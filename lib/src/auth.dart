@@ -83,7 +83,13 @@ class StudioAuthentication {
 
     _socket!.connect();
     _socket!.onConnectError((error) => log(error.toString()));
-    _socket!.onError((error) => log(error.toString()));
+    _socket!.onError((error) {
+      log(error.toString());
+      _isar!.write((isar) {
+        isar.sessions.where().deleteAll();
+        isar.auth.where().deleteAll();
+      });
+    });
   }
 
   /// Returns a stream of Auth objects, representing changes in authentication
