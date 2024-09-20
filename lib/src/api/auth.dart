@@ -76,7 +76,7 @@ abstract class AuthApi {
   Future<Auth> verify(@Body() VerifyBody body);
 
   /// Signs out the current user.
-  @POST('/auth/sign-out')
+  @PATCH('/auth/sign-out')
   @Headers({'Content-Type': 'application/json'})
   Future<EmptyResponse> signOut(@Body() SignOutBody body);
 

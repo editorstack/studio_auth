@@ -453,7 +453,7 @@ class _AuthApi implements AuthApi {
     _headers.removeWhere((k, v) => v == null);
     final _data = body;
     final _options = _setStreamType<EmptyResponse>(Options(
-      method: 'POST',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
       contentType: 'application/json',
