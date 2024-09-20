@@ -269,6 +269,22 @@ class StudioAuthentication {
     return auth;
   }
 
+  /// Signs the user out of the app.
+  Future<void> signOut([String? sessionID]) async {
+    _validate();
+
+    sessionID ??= session?.id;
+
+    if (sessionID != null) {
+      await _authApi!.signOut(SignOutBody.session(sessionID: session!.id));
+    }
+
+    _isar!.write((isar) {
+      isar.sessions.where().deleteAll();
+      isar.auth.where().deleteAll();
+    });
+  }
+
   Future<StudioDevice> _device() async {
     final deviceInfo = DeviceInfoPlugin();
 
