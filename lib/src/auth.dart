@@ -55,7 +55,7 @@ class StudioAuthentication {
   io.Socket? _socket;
 
   void _initSocket(Session session) {
-    log('init socket');
+    print('init socket');
 
     _socket = io.io(
       _dio!.options.baseUrl,
@@ -133,6 +133,8 @@ class StudioAuthentication {
 
     _session = _isar!.sessions.where().findFirst()?.toObject();
     _auth = _isar!.auth.where().findFirst()?.toObject();
+
+    print(_session);
 
     _updateToken(_session?.token);
     if (_session != null) _initSocket(_session!);
