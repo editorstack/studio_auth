@@ -36,7 +36,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          '/auth',
+          '/auth/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -71,7 +71,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          '/auth',
+          '/auth/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -106,7 +106,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          '/auth',
+          '/auth/',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -55,8 +55,6 @@ class StudioAuthentication {
   io.Socket? _socket;
 
   void _initSocket(Session session) {
-    print('init socket');
-
     _socket = io.io(
       _dio!.options.baseUrl,
       io.OptionBuilder()
@@ -83,9 +81,7 @@ class StudioAuthentication {
       });
     });
 
-    _socket!.onConnectError((error) => log(error.toString()));
-    _socket!.onError((error) {
-      log(error.toString());
+    _socket!.on('error', (_) {
       _isar!.write((isar) {
         isar.sessions.where().deleteAll();
         isar.auth.where().deleteAll();
@@ -134,10 +130,7 @@ class StudioAuthentication {
     _session = _isar!.sessions.where().findFirst()?.toObject();
     _auth = _isar!.auth.where().findFirst()?.toObject();
 
-    print(_session);
-
     _updateToken(_session?.token);
-    if (_session != null) _initSocket(_session!);
 
     _authSubscription = authChanges().listen((auth) => _auth = auth);
     _sessionSubscription = sessionChanges().listen((session) {

@@ -16,17 +16,17 @@ abstract class AuthApi {
   factory AuthApi(Dio dio, {String? baseUrl}) = _AuthApi;
 
   /// Retrieves the current authentication status.
-  @GET('/auth')
+  @GET('/auth/')
   @Headers({'Content-Type': 'application/json'})
   Future<Auth> getAuth();
 
   /// Logs in or signs up a user.
-  @POST('/auth')
+  @POST('/auth/')
   @Headers({'Content-Type': 'application/json'})
   Future<Auth> login(@Body() SignupBody body);
 
   /// Updates user information.
-  @PATCH('/auth')
+  @PATCH('/auth/')
   @Headers({'Content-Type': 'application/json'})
   Future<Auth> updateUser(@Body() UpdateUserBody body);
 
