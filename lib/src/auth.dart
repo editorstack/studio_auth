@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -53,6 +52,9 @@ class StudioAuthentication {
 
   Timer? _sessionTimer;
   io.Socket? _socket;
+
+  /// The socket instance used for real-time communication.
+  io.Socket get socket => _socket!;
 
   void _initSocket(Session session) {
     _socket = io.io(
