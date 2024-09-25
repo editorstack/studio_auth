@@ -17,7 +17,7 @@ class Session with _$Session {
     required String id,
     required String identityID,
     required String? deviceID,
-    required String userID,
+    required String authID,
     required String token,
     required String appID,
     required bool valid,
@@ -41,7 +41,7 @@ class AuthSession with _$AuthSession {
     required String id,
     required String identityID,
     required String? deviceID,
-    required String userID,
+    required String authID,
     required String token,
     required String appID,
     required bool valid,
@@ -72,7 +72,7 @@ class ISession {
   String? deviceID;
 
   /// Identifier for the user associated with the session.
-  late String userID;
+  late String authID;
 
   /// Authentication token for the session.
   late String token;
@@ -108,7 +108,7 @@ extension SessionConverter on Session {
       ..id = this.id
       ..identityID = identityID
       ..deviceID = deviceID
-      ..userID = userID
+      ..authID = authID
       ..token = token
       ..appID = appID
       ..valid = valid
@@ -130,7 +130,7 @@ extension ISessionConverter on ISession {
       id: this.id,
       identityID: identityID,
       deviceID: deviceID,
-      userID: userID,
+      authID: authID,
       token: token,
       appID: appID,
       valid: valid,
@@ -153,7 +153,7 @@ extension AuthSessionConverter on AuthSession {
       id: this.id,
       identityID: identityID,
       deviceID: deviceID,
-      userID: userID,
+      authID: authID,
       token: token,
       appID: appID,
       valid: valid,

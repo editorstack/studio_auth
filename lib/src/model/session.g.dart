@@ -33,7 +33,7 @@ const ISessionSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'userID',
+        name: 'authID',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -88,7 +88,7 @@ int serializeISession(IsarWriter writer, ISession object) {
       IsarCore.writeString(writer, 3, value);
     }
   }
-  IsarCore.writeString(writer, 4, object.userID);
+  IsarCore.writeString(writer, 4, object.authID);
   IsarCore.writeString(writer, 5, object.token);
   IsarCore.writeString(writer, 6, object.appID);
   IsarCore.writeBool(writer, 7, object.valid);
@@ -111,7 +111,7 @@ ISession deserializeISession(IsarReader reader) {
   object.id = IsarCore.readString(reader, 1) ?? '';
   object.identityID = IsarCore.readString(reader, 2) ?? '';
   object.deviceID = IsarCore.readString(reader, 3);
-  object.userID = IsarCore.readString(reader, 4) ?? '';
+  object.authID = IsarCore.readString(reader, 4) ?? '';
   object.token = IsarCore.readString(reader, 5) ?? '';
   object.appID = IsarCore.readString(reader, 6) ?? '';
   object.valid = IsarCore.readBool(reader, 7);
@@ -169,7 +169,7 @@ sealed class _ISessionUpdate {
     String? id,
     String? identityID,
     String? deviceID,
-    String? userID,
+    String? authID,
     String? token,
     String? appID,
     bool? valid,
@@ -189,7 +189,7 @@ class _ISessionUpdateImpl implements _ISessionUpdate {
     Object? id = ignore,
     Object? identityID = ignore,
     Object? deviceID = ignore,
-    Object? userID = ignore,
+    Object? authID = ignore,
     Object? token = ignore,
     Object? appID = ignore,
     Object? valid = ignore,
@@ -202,7 +202,7 @@ class _ISessionUpdateImpl implements _ISessionUpdate {
           if (id != ignore) 1: id as String?,
           if (identityID != ignore) 2: identityID as String?,
           if (deviceID != ignore) 3: deviceID as String?,
-          if (userID != ignore) 4: userID as String?,
+          if (authID != ignore) 4: authID as String?,
           if (token != ignore) 5: token as String?,
           if (appID != ignore) 6: appID as String?,
           if (valid != ignore) 7: valid as bool?,
@@ -219,7 +219,7 @@ sealed class _ISessionUpdateAll {
     String? id,
     String? identityID,
     String? deviceID,
-    String? userID,
+    String? authID,
     String? token,
     String? appID,
     bool? valid,
@@ -239,7 +239,7 @@ class _ISessionUpdateAllImpl implements _ISessionUpdateAll {
     Object? id = ignore,
     Object? identityID = ignore,
     Object? deviceID = ignore,
-    Object? userID = ignore,
+    Object? authID = ignore,
     Object? token = ignore,
     Object? appID = ignore,
     Object? valid = ignore,
@@ -250,7 +250,7 @@ class _ISessionUpdateAllImpl implements _ISessionUpdateAll {
       if (id != ignore) 1: id as String?,
       if (identityID != ignore) 2: identityID as String?,
       if (deviceID != ignore) 3: deviceID as String?,
-      if (userID != ignore) 4: userID as String?,
+      if (authID != ignore) 4: authID as String?,
       if (token != ignore) 5: token as String?,
       if (appID != ignore) 6: appID as String?,
       if (valid != ignore) 7: valid as bool?,
@@ -271,7 +271,7 @@ sealed class _ISessionQueryUpdate {
     String? id,
     String? identityID,
     String? deviceID,
-    String? userID,
+    String? authID,
     String? token,
     String? appID,
     bool? valid,
@@ -291,7 +291,7 @@ class _ISessionQueryUpdateImpl implements _ISessionQueryUpdate {
     Object? id = ignore,
     Object? identityID = ignore,
     Object? deviceID = ignore,
-    Object? userID = ignore,
+    Object? authID = ignore,
     Object? token = ignore,
     Object? appID = ignore,
     Object? valid = ignore,
@@ -302,7 +302,7 @@ class _ISessionQueryUpdateImpl implements _ISessionQueryUpdate {
       if (id != ignore) 1: id as String?,
       if (identityID != ignore) 2: identityID as String?,
       if (deviceID != ignore) 3: deviceID as String?,
-      if (userID != ignore) 4: userID as String?,
+      if (authID != ignore) 4: authID as String?,
       if (token != ignore) 5: token as String?,
       if (appID != ignore) 6: appID as String?,
       if (valid != ignore) 7: valid as bool?,
@@ -330,7 +330,7 @@ class _ISessionQueryBuilderUpdateImpl implements _ISessionQueryUpdate {
     Object? id = ignore,
     Object? identityID = ignore,
     Object? deviceID = ignore,
-    Object? userID = ignore,
+    Object? authID = ignore,
     Object? token = ignore,
     Object? appID = ignore,
     Object? valid = ignore,
@@ -343,7 +343,7 @@ class _ISessionQueryBuilderUpdateImpl implements _ISessionQueryUpdate {
         if (id != ignore) 1: id as String?,
         if (identityID != ignore) 2: identityID as String?,
         if (deviceID != ignore) 3: deviceID as String?,
-        if (userID != ignore) 4: userID as String?,
+        if (authID != ignore) 4: authID as String?,
         if (token != ignore) 5: token as String?,
         if (appID != ignore) 6: appID as String?,
         if (valid != ignore) 7: valid as bool?,
@@ -900,7 +900,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDEqualTo(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -915,7 +915,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDGreaterThan(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -931,7 +931,7 @@ extension ISessionQueryFilter
   }
 
   QueryBuilder<ISession, ISession, QAfterFilterCondition>
-      userIDGreaterThanOrEqualTo(
+      authIDGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -946,7 +946,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDLessThan(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -962,7 +962,7 @@ extension ISessionQueryFilter
   }
 
   QueryBuilder<ISession, ISession, QAfterFilterCondition>
-      userIDLessThanOrEqualTo(
+      authIDLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -977,7 +977,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDBetween(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -994,7 +994,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDStartsWith(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1009,7 +1009,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDEndsWith(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1024,7 +1024,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDContains(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1038,7 +1038,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDMatches(
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1052,7 +1052,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDIsEmpty() {
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -1063,7 +1063,7 @@ extension ISessionQueryFilter
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterFilterCondition> userIDIsNotEmpty() {
+  QueryBuilder<ISession, ISession, QAfterFilterCondition> authIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -1866,7 +1866,7 @@ extension ISessionQuerySortBy on QueryBuilder<ISession, ISession, QSortBy> {
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> sortByUserID(
+  QueryBuilder<ISession, ISession, QAfterSortBy> sortByAuthID(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -1876,7 +1876,7 @@ extension ISessionQuerySortBy on QueryBuilder<ISession, ISession, QSortBy> {
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> sortByUserIDDesc(
+  QueryBuilder<ISession, ISession, QAfterSortBy> sortByAuthIDDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -2031,14 +2031,14 @@ extension ISessionQuerySortThenBy
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> thenByUserID(
+  QueryBuilder<ISession, ISession, QAfterSortBy> thenByAuthID(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterSortBy> thenByUserIDDesc(
+  QueryBuilder<ISession, ISession, QAfterSortBy> thenByAuthIDDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4, sort: Sort.desc, caseSensitive: caseSensitive);
@@ -2147,7 +2147,7 @@ extension ISessionQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ISession, ISession, QAfterDistinct> distinctByUserID(
+  QueryBuilder<ISession, ISession, QAfterDistinct> distinctByAuthID(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(4, caseSensitive: caseSensitive);
@@ -2208,7 +2208,7 @@ extension ISessionQueryProperty1
     });
   }
 
-  QueryBuilder<ISession, String, QAfterProperty> userIDProperty() {
+  QueryBuilder<ISession, String, QAfterProperty> authIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
@@ -2271,7 +2271,7 @@ extension ISessionQueryProperty2<R>
     });
   }
 
-  QueryBuilder<ISession, (R, String), QAfterProperty> userIDProperty() {
+  QueryBuilder<ISession, (R, String), QAfterProperty> authIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
@@ -2334,7 +2334,7 @@ extension ISessionQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<ISession, (R1, R2, String), QOperations> userIDProperty() {
+  QueryBuilder<ISession, (R1, R2, String), QOperations> authIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
@@ -2386,7 +2386,7 @@ _$SessionImpl _$$SessionImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       identityID: json['identityID'] as String,
       deviceID: json['deviceID'] as String?,
-      userID: json['userID'] as String,
+      authID: json['authID'] as String,
       token: json['token'] as String,
       appID: json['appID'] as String,
       valid: json['valid'] as bool,
@@ -2401,7 +2401,7 @@ Map<String, dynamic> _$$SessionImplToJson(_$SessionImpl instance) =>
       'id': instance.id,
       'identityID': instance.identityID,
       'deviceID': instance.deviceID,
-      'userID': instance.userID,
+      'authID': instance.authID,
       'token': instance.token,
       'appID': instance.appID,
       'valid': instance.valid,
@@ -2414,7 +2414,7 @@ _$AuthSessionImpl _$$AuthSessionImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       identityID: json['identityID'] as String,
       deviceID: json['deviceID'] as String?,
-      userID: json['userID'] as String,
+      authID: json['authID'] as String,
       token: json['token'] as String,
       appID: json['appID'] as String,
       valid: json['valid'] as bool,
@@ -2430,7 +2430,7 @@ Map<String, dynamic> _$$AuthSessionImplToJson(_$AuthSessionImpl instance) =>
       'id': instance.id,
       'identityID': instance.identityID,
       'deviceID': instance.deviceID,
-      'userID': instance.userID,
+      'authID': instance.authID,
       'token': instance.token,
       'appID': instance.appID,
       'valid': instance.valid,

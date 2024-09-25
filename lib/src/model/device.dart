@@ -38,7 +38,7 @@ class Device with _$Device {
     required String id,
     required String name,
     required DeviceType type,
-    required String userID,
+    required String authID,
     required DateTime createdAt,
     required DateTime lastSignedInAt,
   }) = _Device;
@@ -65,7 +65,7 @@ class IDevice {
   late DeviceType type;
 
   /// Identifier of the user associated with this device.
-  late String userID;
+  late String authID;
 
   /// Date and time when the device was created.
   @utc
@@ -89,7 +89,7 @@ extension DeviceConverter on Device {
       ..id = this.id
       ..name = name
       ..type = type
-      ..userID = userID
+      ..authID = authID
       ..createdAt = createdAt
       ..lastSignedInAt = lastSignedInAt;
   }
@@ -108,7 +108,7 @@ extension IDeviceConverter on IDevice {
       id: this.id,
       name: name,
       type: type,
-      userID: userID,
+      authID: authID,
       createdAt: createdAt,
       lastSignedInAt: lastSignedInAt,
     );

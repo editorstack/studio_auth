@@ -36,7 +36,7 @@ const IDeviceSchema = IsarGeneratedSchema(
         },
       ),
       IsarPropertySchema(
-        name: 'userID',
+        name: 'authID',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -61,7 +61,7 @@ int serializeIDevice(IsarWriter writer, IDevice object) {
   IsarCore.writeString(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.name);
   IsarCore.writeByte(writer, 3, object.type.index);
-  IsarCore.writeString(writer, 4, object.userID);
+  IsarCore.writeString(writer, 4, object.authID);
   IsarCore.writeLong(
       writer, 5, object.createdAt.toUtc().microsecondsSinceEpoch);
   IsarCore.writeLong(
@@ -82,7 +82,7 @@ IDevice deserializeIDevice(IsarReader reader) {
           _iDeviceType[IsarCore.readByte(reader, 3)] ?? DeviceType.android;
     }
   }
-  object.userID = IsarCore.readString(reader, 4) ?? '';
+  object.authID = IsarCore.readString(reader, 4) ?? '';
   {
     final value = IsarCore.readLong(reader, 5);
     if (value == -9223372036854775808) {
@@ -542,7 +542,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDEqualTo(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -557,7 +557,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDGreaterThan(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -573,7 +573,7 @@ extension IDeviceQueryFilter
   }
 
   QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
-      userIDGreaterThanOrEqualTo(
+      authIDGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -588,7 +588,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDLessThan(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -603,7 +603,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDLessThanOrEqualTo(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -618,7 +618,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDBetween(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -635,7 +635,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDStartsWith(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -650,7 +650,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDEndsWith(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -665,7 +665,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDContains(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -679,7 +679,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDMatches(
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -693,7 +693,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDIsEmpty() {
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -704,7 +704,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> userIDIsNotEmpty() {
+  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -892,7 +892,7 @@ _$DeviceImpl _$$DeviceImplFromJson(Map<String, dynamic> json) => _$DeviceImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       type: $enumDecode(_$DeviceTypeEnumMap, json['type']),
-      userID: json['userID'] as String,
+      authID: json['authID'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       lastSignedInAt: DateTime.parse(json['lastSignedInAt'] as String),
     );
@@ -902,7 +902,7 @@ Map<String, dynamic> _$$DeviceImplToJson(_$DeviceImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'type': _$DeviceTypeEnumMap[instance.type]!,
-      'userID': instance.userID,
+      'authID': instance.authID,
       'createdAt': instance.createdAt.toIso8601String(),
       'lastSignedInAt': instance.lastSignedInAt.toIso8601String(),
     };

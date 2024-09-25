@@ -51,46 +51,36 @@ class StudioAuthentication {
   StreamSubscription<Session?>? _sessionSubscription;
 
   Timer? _sessionTimer;
-  io.Socket? _socket;
 
   /// The socket instance used for real-time communication.
-  io.Socket get socket => _socket!;
+  late io.Socket socket;
 
   void _initSocket(Session session) {
-    _socket = io.io(
-      _dio!.options.baseUrl,
-      io.OptionBuilder()
-          .setTransports(['websocket'])
-          .setExtraHeaders({
-            'authtoken': 'Bearer ${session.token}',
-            'appid': session.appID,
-          })
-          .disableAutoConnect()
-          .enableReconnection()
-          .build(),
-    );
+    socket.io.options?['extraHeaders'] = {
+      'authtoken': 'Bearer ${session.token}',
+      'appid': session.appID,
+    };
 
-    _socket!.on('auth:save', (data) {
-      final auth = Auth.fromJson(data as Map<String, dynamic>);
-      _isar!.write((isar) {
-        isar.auth.put(auth.toIsar());
-      });
-    });
-    _socket!.on('auth:delete', (_) {
-      _isar!.write((isar) {
-        isar.auth.where().deleteAll();
-        isar.sessions.where().deleteAll();
-      });
-    });
-
-    _socket!.on('error', (_) {
-      _isar!.write((isar) {
-        isar.sessions.where().deleteAll();
-        isar.auth.where().deleteAll();
-      });
-    });
-
-    _socket!.connect();
+    socket
+      ..on('auth:save', (data) {
+        final auth = Auth.fromJson(data as Map<String, dynamic>);
+        _isar!.write((isar) {
+          isar.auth.put(auth.toIsar());
+        });
+      })
+      ..on('auth:delete', (_) {
+        _isar!.write((isar) {
+          isar.auth.where().deleteAll();
+          isar.sessions.where().deleteAll();
+        });
+      })
+      ..on('error', (_) {
+        _isar!.write((isar) {
+          isar.sessions.where().deleteAll();
+          isar.auth.where().deleteAll();
+        });
+      })
+      ..connect();
   }
 
   /// Returns a stream of Auth objects, representing changes in authentication
@@ -124,24 +114,59 @@ class StudioAuthentication {
   /// This method sets up the necessary components for authentication and
   /// starts listening
   /// for changes in auth and session states.
-  void initialize(Dio dio, Isar isar) {
+  Future<void> initialize(Dio dio, Isar isar) async {
     _dio = dio;
     _isar = isar;
     _authApi = AuthApi(dio);
+
+    socket = io.io(
+      _dio!.options.baseUrl,
+      io.OptionBuilder()
+          .setTransports(['websocket'])
+          .disableAutoConnect()
+          .enableReconnection()
+          .build(),
+    );
 
     _session = _isar!.sessions.where().findFirst()?.toObject();
     _auth = _isar!.auth.where().findFirst()?.toObject();
 
     _updateToken(_session?.token);
 
+    if (_session != null) {
+      try {
+        final session = await _authApi!.newSession();
+        _isar!.write((isar) {
+          isar.sessions.put(session.toIsar());
+        });
+        _session = session;
+
+        final auth = await _authApi!.getAuth();
+        _isar!.write((isar) {
+          isar.auth.put(auth.toIsar());
+        });
+        _auth = auth;
+      } catch (e) {
+        _isar!.write((isar) {
+          isar.auth.where().deleteAll();
+          isar.sessions.where().deleteAll();
+        });
+      }
+    }
+
+    _updateToken(_session?.token);
+
+    if (_session != null) {
+      _initSocket(_session!);
+    }
+
     _authSubscription = authChanges().listen((auth) => _auth = auth);
     _sessionSubscription = sessionChanges().listen((session) {
       if (_session?.token != session?.token) {
         if (session == null) {
-          _socket?.disconnect();
-          _socket = null;
+          socket.disconnect();
         } else {
-          _socket?.disconnect();
+          socket.disconnect();
           _initSocket(session);
         }
       }
@@ -180,8 +205,7 @@ class StudioAuthentication {
     _authSubscription?.cancel();
     _sessionSubscription?.cancel();
     _sessionTimer?.cancel();
-    _socket?.dispose();
-    _socket = null;
+    socket.dispose();
   }
 
   /// Updates the authorization token for API requests.
@@ -276,14 +300,18 @@ class StudioAuthentication {
 
     sessionID ??= session?.id;
 
-    if (sessionID != null) {
-      await _authApi!.signOut(SignOutBody.session(sessionID: session!.id));
+    try {
+      if (sessionID != null) {
+        await _authApi!.signOut(SignOutBody.session(sessionID: session!.id));
+      }
+    } catch (e) {
+      rethrow;
+    } finally {
+      _isar!.write((isar) {
+        isar.sessions.where().deleteAll();
+        isar.auth.where().deleteAll();
+      });
     }
-
-    _isar!.write((isar) {
-      isar.sessions.where().deleteAll();
-      isar.auth.where().deleteAll();
-    });
   }
 
   Future<StudioDevice> _device() async {

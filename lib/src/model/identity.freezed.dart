@@ -21,7 +21,7 @@ return _Identity.fromJson(json);
 /// @nodoc
 mixin _$Identity {
 
- String get id => throw _privateConstructorUsedError; String get providerUserID => throw _privateConstructorUsedError; String get userID => throw _privateConstructorUsedError; IdentityProvider get provider => throw _privateConstructorUsedError; IdentityData get data => throw _privateConstructorUsedError; DateTime get createdAt => throw _privateConstructorUsedError; DateTime get lastSignedInAt => throw _privateConstructorUsedError; String? get identifier => throw _privateConstructorUsedError;
+ String get id => throw _privateConstructorUsedError; String get providerUserID => throw _privateConstructorUsedError; String get authID => throw _privateConstructorUsedError; IdentityProvider get provider => throw _privateConstructorUsedError; IdentityData get data => throw _privateConstructorUsedError; DateTime get createdAt => throw _privateConstructorUsedError; DateTime get lastSignedInAt => throw _privateConstructorUsedError; String? get identifier => throw _privateConstructorUsedError;
 
 
 
@@ -42,7 +42,7 @@ abstract class $IdentityCopyWith<$Res>  {
   factory $IdentityCopyWith(Identity value, $Res Function(Identity) then) = _$IdentityCopyWithImpl<$Res, Identity>;
 @useResult
 $Res call({
- String id, String providerUserID, String userID, IdentityProvider provider, IdentityData data, DateTime createdAt, DateTime lastSignedInAt, String? identifier
+ String id, String providerUserID, String authID, IdentityProvider provider, IdentityData data, DateTime createdAt, DateTime lastSignedInAt, String? identifier
 });
 
 
@@ -60,11 +60,11 @@ class _$IdentityCopyWithImpl<$Res,$Val extends Identity> implements $IdentityCop
 
 /// Create a copy of Identity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? providerUserID = null,Object? userID = null,Object? provider = null,Object? data = null,Object? createdAt = null,Object? lastSignedInAt = null,Object? identifier = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? providerUserID = null,Object? authID = null,Object? provider = null,Object? data = null,Object? createdAt = null,Object? lastSignedInAt = null,Object? identifier = freezed,}) {
   return _then(_value.copyWith(
 id: null == id ? _value.id : id // ignore: cast_nullable_to_non_nullable
 as String,providerUserID: null == providerUserID ? _value.providerUserID : providerUserID // ignore: cast_nullable_to_non_nullable
-as String,userID: null == userID ? _value.userID : userID // ignore: cast_nullable_to_non_nullable
+as String,authID: null == authID ? _value.authID : authID // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _value.provider : provider // ignore: cast_nullable_to_non_nullable
 as IdentityProvider,data: null == data ? _value.data : data // ignore: cast_nullable_to_non_nullable
 as IdentityData,createdAt: null == createdAt ? _value.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -91,7 +91,7 @@ abstract class _$$IdentityImplCopyWith<$Res> implements $IdentityCopyWith<$Res> 
   factory _$$IdentityImplCopyWith(_$IdentityImpl value, $Res Function(_$IdentityImpl) then) = __$$IdentityImplCopyWithImpl<$Res>;
 @override @useResult
 $Res call({
- String id, String providerUserID, String userID, IdentityProvider provider, IdentityData data, DateTime createdAt, DateTime lastSignedInAt, String? identifier
+ String id, String providerUserID, String authID, IdentityProvider provider, IdentityData data, DateTime createdAt, DateTime lastSignedInAt, String? identifier
 });
 
 
@@ -106,11 +106,11 @@ class __$$IdentityImplCopyWithImpl<$Res> extends _$IdentityCopyWithImpl<$Res, _$
 
 /// Create a copy of Identity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? providerUserID = null,Object? userID = null,Object? provider = null,Object? data = null,Object? createdAt = null,Object? lastSignedInAt = null,Object? identifier = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? providerUserID = null,Object? authID = null,Object? provider = null,Object? data = null,Object? createdAt = null,Object? lastSignedInAt = null,Object? identifier = freezed,}) {
   return _then(_$IdentityImpl(
 id: null == id ? _value.id : id // ignore: cast_nullable_to_non_nullable
 as String,providerUserID: null == providerUserID ? _value.providerUserID : providerUserID // ignore: cast_nullable_to_non_nullable
-as String,userID: null == userID ? _value.userID : userID // ignore: cast_nullable_to_non_nullable
+as String,authID: null == authID ? _value.authID : authID // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _value.provider : provider // ignore: cast_nullable_to_non_nullable
 as IdentityProvider,data: null == data ? _value.data : data // ignore: cast_nullable_to_non_nullable
 as IdentityData,createdAt: null == createdAt ? _value.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -127,13 +127,13 @@ as String?,
 @JsonSerializable()
 
 class _$IdentityImpl  implements _Identity {
-  const _$IdentityImpl({required this.id, required this.providerUserID, required this.userID, required this.provider, required this.data, required this.createdAt, required this.lastSignedInAt, this.identifier});
+  const _$IdentityImpl({required this.id, required this.providerUserID, required this.authID, required this.provider, required this.data, required this.createdAt, required this.lastSignedInAt, this.identifier});
 
   factory _$IdentityImpl.fromJson(Map<String, dynamic> json) => _$$IdentityImplFromJson(json);
 
 @override final  String id;
 @override final  String providerUserID;
-@override final  String userID;
+@override final  String authID;
 @override final  IdentityProvider provider;
 @override final  IdentityData data;
 @override final  DateTime createdAt;
@@ -142,18 +142,18 @@ class _$IdentityImpl  implements _Identity {
 
 @override
 String toString() {
-  return 'Identity(id: $id, providerUserID: $providerUserID, userID: $userID, provider: $provider, data: $data, createdAt: $createdAt, lastSignedInAt: $lastSignedInAt, identifier: $identifier)';
+  return 'Identity(id: $id, providerUserID: $providerUserID, authID: $authID, provider: $provider, data: $data, createdAt: $createdAt, lastSignedInAt: $lastSignedInAt, identifier: $identifier)';
 }
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$IdentityImpl&&(identical(other.id, id) || other.id == id)&&(identical(other.providerUserID, providerUserID) || other.providerUserID == providerUserID)&&(identical(other.userID, userID) || other.userID == userID)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.data, data) || other.data == data)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastSignedInAt, lastSignedInAt) || other.lastSignedInAt == lastSignedInAt)&&(identical(other.identifier, identifier) || other.identifier == identifier));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$IdentityImpl&&(identical(other.id, id) || other.id == id)&&(identical(other.providerUserID, providerUserID) || other.providerUserID == providerUserID)&&(identical(other.authID, authID) || other.authID == authID)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.data, data) || other.data == data)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastSignedInAt, lastSignedInAt) || other.lastSignedInAt == lastSignedInAt)&&(identical(other.identifier, identifier) || other.identifier == identifier));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,providerUserID,userID,provider,data,createdAt,lastSignedInAt,identifier);
+int get hashCode => Object.hash(runtimeType,id,providerUserID,authID,provider,data,createdAt,lastSignedInAt,identifier);
 
 /// Create a copy of Identity
 /// with the given fields replaced by the non-null parameter values.
@@ -176,12 +176,12 @@ Map<String, dynamic> toJson() {
 
 
 abstract class _Identity implements Identity {
-  const factory _Identity({required final  String id, required final  String providerUserID, required final  String userID, required final  IdentityProvider provider, required final  IdentityData data, required final  DateTime createdAt, required final  DateTime lastSignedInAt, final  String? identifier}) = _$IdentityImpl;
+  const factory _Identity({required final  String id, required final  String providerUserID, required final  String authID, required final  IdentityProvider provider, required final  IdentityData data, required final  DateTime createdAt, required final  DateTime lastSignedInAt, final  String? identifier}) = _$IdentityImpl;
   
 
   factory _Identity.fromJson(Map<String, dynamic> json) = _$IdentityImpl.fromJson;
 
-@override String get id;@override String get providerUserID;@override String get userID;@override IdentityProvider get provider;@override IdentityData get data;@override DateTime get createdAt;@override DateTime get lastSignedInAt;@override String? get identifier;
+@override String get id;@override String get providerUserID;@override String get authID;@override IdentityProvider get provider;@override IdentityData get data;@override DateTime get createdAt;@override DateTime get lastSignedInAt;@override String? get identifier;
 /// Create a copy of Identity
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)

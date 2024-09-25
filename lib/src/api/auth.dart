@@ -81,6 +81,11 @@ abstract class AuthApi {
   Future<EmptyResponse> signOut(@Body() SignOutBody body);
 
   /// Creates an anonymous session.
+  @GET('/auth/sessions/new')
+  @Headers({'Content-Type': 'application/json'})
+  Future<Session> newSession();
+
+  /// Creates an anonymous session.
   @POST('/auth/sessions/anonymous')
   @Headers({'Content-Type': 'application/json'})
   Future<AuthSession> createAnonymousSession(@Body() AnonymousSessionBody body);
@@ -99,7 +104,8 @@ abstract class AuthApi {
   @PATCH('/auth/sessions/email-token')
   @Headers({'Content-Type': 'application/json'})
   Future<AuthSession> createEmailTokenSession(
-      @Body() EmailTokenSessionBody body);
+    @Body() EmailTokenSessionBody body,
+  );
 
   /// Creates a session using phone number and password.
   @POST('/auth/sessions/phone')

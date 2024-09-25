@@ -1,6 +1,6 @@
 name: studio_auth
 description: "Authentication package for authenticating using Studio APIs."
-version: 0.0.2+10
+version: 0.0.2+14
 homepage: https://editorstack.com
 
 environment:
@@ -19,7 +19,7 @@ dependencies:
     version: 4.0.3
   json_annotation: ^4.9.0
   retrofit: ^4.4.1
-  socket_io_client: ^2.0.3+1
+  socket_io_client: ^3.0.0-beta.4
 
 dev_dependencies:
   build_runner: ^2.4.12

@@ -24,7 +24,7 @@ const IIdentitySchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'userID',
+        name: 'authID',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -91,7 +91,7 @@ const IIdentitySchema = IsarGeneratedSchema(
 int serializeIIdentity(IsarWriter writer, IIdentity object) {
   IsarCore.writeString(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.providerUserID);
-  IsarCore.writeString(writer, 3, object.userID);
+  IsarCore.writeString(writer, 3, object.authID);
   IsarCore.writeByte(writer, 4, object.provider.index);
   IsarCore.writeString(writer, 5, isarJsonEncode(object.data));
   IsarCore.writeLong(
@@ -114,7 +114,7 @@ IIdentity deserializeIIdentity(IsarReader reader) {
   final object = IIdentity();
   object.id = IsarCore.readString(reader, 1) ?? '';
   object.providerUserID = IsarCore.readString(reader, 2) ?? '';
-  object.userID = IsarCore.readString(reader, 3) ?? '';
+  object.authID = IsarCore.readString(reader, 3) ?? '';
   {
     if (IsarCore.readNull(reader, 4)) {
       object.provider = IdentityProvider.anonymous;
@@ -542,7 +542,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDEqualTo(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -557,7 +557,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDGreaterThan(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -573,7 +573,7 @@ extension IIdentityQueryFilter
   }
 
   QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      userIDGreaterThanOrEqualTo(
+      authIDGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -588,7 +588,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDLessThan(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -604,7 +604,7 @@ extension IIdentityQueryFilter
   }
 
   QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      userIDLessThanOrEqualTo(
+      authIDLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -619,7 +619,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDBetween(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -636,7 +636,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDStartsWith(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -651,7 +651,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDEndsWith(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -666,7 +666,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDContains(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -680,7 +680,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDMatches(
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -694,7 +694,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDIsEmpty() {
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -705,7 +705,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> userIDIsNotEmpty() {
+  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -1170,7 +1170,7 @@ _$IdentityImpl _$$IdentityImplFromJson(Map<String, dynamic> json) =>
     _$IdentityImpl(
       id: json['id'] as String,
       providerUserID: json['providerUserID'] as String,
-      userID: json['userID'] as String,
+      authID: json['authID'] as String,
       provider: $enumDecode(_$IdentityProviderEnumMap, json['provider']),
       data: IdentityData.fromJson(json['data'] as Map<String, dynamic>),
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -1182,7 +1182,7 @@ Map<String, dynamic> _$$IdentityImplToJson(_$IdentityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'providerUserID': instance.providerUserID,
-      'userID': instance.userID,
+      'authID': instance.authID,
       'provider': _$IdentityProviderEnumMap[instance.provider]!,
       'data': instance.data.toJson(),
       'createdAt': instance.createdAt.toIso8601String(),

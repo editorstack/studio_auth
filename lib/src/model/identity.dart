@@ -14,7 +14,7 @@ class Identity with _$Identity {
   const factory Identity({
     required String id,
     required String providerUserID,
-    required String userID,
+    required String authID,
     required IdentityProvider provider,
     required IdentityData data,
     required DateTime createdAt,
@@ -297,7 +297,7 @@ class IIdentity {
   late String providerUserID;
 
   /// User ID in the authentication system.
-  late String userID;
+  late String authID;
 
   /// The identity provider used for authentication.
   @enumValue
@@ -330,7 +330,7 @@ extension IdentityConverter on Identity {
     return IIdentity()
       ..id = this.id
       ..providerUserID = providerUserID
-      ..userID = userID
+      ..authID = authID
       ..provider = provider
       ..data = data.toJson()
       ..createdAt = createdAt
@@ -351,7 +351,7 @@ extension IIdentityConverter on IIdentity {
     return Identity(
       id: this.id,
       providerUserID: providerUserID,
-      userID: userID,
+      authID: authID,
       provider: provider,
       data: IdentityData.fromJson(data),
       createdAt: createdAt,
