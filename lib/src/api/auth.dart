@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:studio_auth/src/api/request.dart';
-import 'package:studio_auth/src/api/response.dart';
-import 'package:studio_auth/src/model/auth.dart';
-import 'package:studio_auth/src/model/identity.dart';
+import 'package:studio_auth/src/model/device.dart';
+import 'package:studio_auth/src/model/factor.dart';
 import 'package:studio_auth/src/model/session.dart';
+import 'package:studio_auth/src/model/user.dart';
 
+part 'auth.freezed.dart';
 part 'auth.g.dart';
+
+part 'request.dart';
+part 'response.dart';
 
 /// Provides an interface for authentication and user management API calls.
 @RestApi()
@@ -16,159 +20,161 @@ abstract class AuthApi {
   factory AuthApi(Dio dio, {String? baseUrl}) = _AuthApi;
 
   /// Retrieves the current authentication status.
-  @GET('/auth/')
+  @GET('/sign-up/')
   @Headers({'Content-Type': 'application/json'})
-  Future<Auth> getAuth();
+  Future<StudioUserSession> signUp(@Body() SignUpBody body);
 
-  /// Logs in or signs up a user.
-  @POST('/auth/')
+  /// Prepares verification for sign up
+  @POST('/sign-up/prepare-verification')
   @Headers({'Content-Type': 'application/json'})
-  Future<Auth> login(@Body() SignupBody body);
-
-  /// Updates user information.
-  @PATCH('/auth/')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Auth> updateUser(@Body() UpdateUserBody body);
-
-  /// Retrieves a list of user identities.
-  @GET('/auth/identities')
-  @Headers({'Content-Type': 'application/json'})
-  Future<List<Identity>> getIdentities();
-
-  /// Deletes a specific user identity.
-  @DELETE('/auth/identities/{identityID}')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Auth> deleteIdentity(@Path() String identityID);
-
-  /// Updates the user's password.
-  @PATCH('/auth/password')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Auth> updatePassword(@Body() UpdatePasswordBody body);
-
-  /// Initiates the account recovery process.
-  @POST('/auth/recovery')
-  @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> createRecovery(@Body() CreateRecoveryBody body);
-
-  /// Confirms and completes the account recovery process.
-  @PATCH('/auth/recovery')
-  @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> confirmRecovery(@Body() ConfirmRecoveryBody body);
-
-  /// Retrieves a list of active sessions for the current user.
-  @GET('/auth/sessions')
-  @Headers({'Content-Type': 'application/json'})
-  Future<List<Session>> getSessions();
-
-  /// Retrieves details of a specific session.
-  @GET('/auth/sessions/{sessionID}')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Session> getSession(@Path() String sessionID);
-
-  /// Extends the duration of a specific session.
-  @PATCH('/auth/sessions')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Session> extendSession();
-
-  /// Verifies a user's account or action.
-  @POST('/auth/verify')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Auth> verify(@Body() VerifyBody body);
-
-  /// Signs out the current user.
-  @PATCH('/auth/sign-out')
-  @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> signOut(@Body() SignOutBody body);
-
-  /// Creates an anonymous session.
-  @GET('/auth/sessions/new')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Session> newSession();
-
-  /// Creates an anonymous session.
-  @POST('/auth/sessions/anonymous')
-  @Headers({'Content-Type': 'application/json'})
-  Future<AuthSession> createAnonymousSession(@Body() AnonymousSessionBody body);
-
-  /// Creates a session using an email address and password.
-  @POST('/auth/sessions/email')
-  @Headers({'Content-Type': 'application/json'})
-  Future<AuthSession> createEmailSession(@Body() EmailSessionBody body);
-
-  /// Creates and sends a one-time use email with a login link or OTP.
-  @POST('/auth/sessions/email-token')
-  @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> createEmailToken(@Body() CreateEmailTokenBody body);
-
-  /// Creates a session using email address and token.
-  @PATCH('/auth/sessions/email-token')
-  @Headers({'Content-Type': 'application/json'})
-  Future<AuthSession> createEmailTokenSession(
-    @Body() EmailTokenSessionBody body,
+  Future<bool> signUpPrepareVerification(
+    @Body() SignUpPrepareVerificationBody body,
   );
 
-  /// Creates a session using phone number and password.
-  @POST('/auth/sessions/phone')
+  /// Attempts verification for sign up
+  @POST('/sign-up/attempt-verification')
   @Headers({'Content-Type': 'application/json'})
-  Future<AuthSession> createPhoneSession(@Body() PhoneSessionBody body);
-
-  /// Creates and sends a one-time use phone with  OTP.
-  @POST('/auth/sessions/phone-token')
-  @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> createPhoneToken(@Body() CreatePhoneTokenBody body);
-
-  /// Creates a session using phone number and token.
-  @PATCH('/auth/sessions/phone-token')
-  @Headers({'Content-Type': 'application/json'})
-  Future<AuthSession> createPhoneTokenSession(
-      @Body() PhoneTokenSessionBody body);
-
-  /// Enables or disables multi-factor authentication for the current user.
-  @PATCH('/auth/mfa')
-  @Headers({'Content-Type': 'application/json'})
-  Future<Auth> updateMfa(@Body() UpdateMfaBody body);
-
-  /// Creates an authenticator app for the current user.
-  @POST('/auth/mfa/authenticator')
-  @Headers({'Content-Type': 'application/json'})
-  Future<MFAType> createAuthenticator(@Body() CreateAuthenticatorBody body);
-
-  /// Verifies the authenticator app for the current user.
-  @PUT('/auth/mfa/authenticator')
-  @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> verifyAuthenticator(
-    @Body() VerifyAuthenticatorBody body,
+  Future<StudioUserSession> signUpAttemptVerification(
+    @Body() SignUpAttemptVerificationBody body,
   );
 
-  /// Deletes the authenticator app for the current user.
-  @DELETE('/auth/mfa/authenticator')
+  /// Gets the factors that can be used for sign in
+  @GET('/sign-in/factors')
   @Headers({'Content-Type': 'application/json'})
-  Future<EmptyResponse> deleteAuthenticator();
-
-  /// Creates a challenge for the current user.
-  @POST('/auth/mfa/challenges')
-  @Headers({'Content-Type': 'application/json'})
-  Future<MFAChallenge> createMfaChallenge(@Body() CreateMfaChallengeBody body);
-
-  /// Confirms a challenge for the current user.
-  @PUT('/auth/mfa/challenges')
-  @Headers({'Content-Type': 'application/json'})
-  Future<AuthSession> confirmMfaChallenge(
-    @Body() ConfirmMfaChallengeBody body,
+  Future<UserFactorsResponse> signInFactors(
+    @Query('identifier') String identifier,
   );
 
-  /// Retrieves a list of available MFA factors for the current user.
-  @GET('/auth/mfa/factors')
+  /// Prepares first factor for sign in
+  @POST('/sign-in/prepare-first-factor')
   @Headers({'Content-Type': 'application/json'})
-  Future<MFAFactors> getFactors();
+  Future<StudioUserSession> signInPrepareFirstFactor(
+    @Body() PrepareFirstFactorBody body,
+  );
 
-  /// Retrieves a list of recovery codes of the current user.
-  @GET('/auth/mfa/recovery-codes')
+  /// Attempts first factor for sign in
+  @POST('/sign-in/attempt-first-factor')
   @Headers({'Content-Type': 'application/json'})
-  Future<List<String>> getRecoveryCodes();
+  Future<StudioUserSession> signInAttemptFirstFactor(
+    @Body() AttemptFirstFactorBody body,
+  );
 
-  /// Regenerates a list of recovery codes for the current user.
-  @PATCH('/auth/mfa/recovery-codes')
+  /// Prepares second factor for sign in
+  @POST('/sign-in/prepare-second-factor')
   @Headers({'Content-Type': 'application/json'})
-  Future<List<String>> regenerateRecoveryCodes();
+  Future<bool> signInPrepareSecondFactor(
+    @Body() PrepareSecondFactorBody body,
+  );
+
+  /// Attempts second factor for sign in
+  @POST('/sign-in/attempt-second-factor')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioUserSession> signInAttemptSecondFactor(
+    @Body() AttemptSecondFactorBody body,
+  );
+
+  /// Add a new email to the user's account
+  @POST('/factors/email')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioFactor> createEmail(
+    @Body() CreateEmailBody body,
+  );
+
+  /// Add a new phone number to the user's account
+  @POST('/factors/phone-number')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioFactor> createPhoneNumber(
+    @Body() CreatePhoneNumberBody body,
+  );
+
+  /// Prepares verification for a factor
+  @POST('/factors/{factorID}/prepare-verification')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> factorPrepareVerification(
+    @Path() String factorID,
+    @Body() FactorPrepareVerificationBody body,
+  );
+
+  /// Attempts verification for a factor
+  @POST('/factors/{factorID}/attempt-verification')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioUser> factorAttemptVerification(
+    @Path() String factorID,
+    @Body() FactorAttemptVerificationBody body,
+  );
+
+  /// Deletes a factor from the user's account
+  @DELETE('/factors/{factorID}')
+  @Headers({'Content-Type': 'application/json'})
+  Future<void> deleteFactor(@Path() String factorID);
+
+  /// Gets all sessions for the user
+  @GET('/sessions/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<List<StudioSession>> getSessions();
+
+  /// Gets a session by ID
+  @GET('/sessions/{sessionID}')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioSession?> getSession(@Path() String sessionID);
+
+  /// Deletes all sessions for the user
+  @DELETE('/sessions/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> deleteAllSessions();
+
+  /// Deletes other sessions for the user
+  @DELETE('/sessions/others')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> deleteOtherSessions();
+
+  /// Deletes a session by ID
+  @DELETE('/sessions/{sessionID}')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> deleteSession(@Path() String sessionID);
+
+  /// Generates a new TOTP secret
+  @POST('/totp/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<TOTPResponse> createTOTP();
+
+  /// Verifies a TOTP code
+  @POST('/totp/verify')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> verifyTOTP(@Body() VerifyTOTPBody body);
+
+  /// Regenerates backup codes for a TOTP secret
+  @POST('/totp/generate-backup-codes')
+  @Headers({'Content-Type': 'application/json'})
+  Future<List<String>> regenerateBackupCodes();
+
+  /// Deletes a TOTP secret
+  @DELETE('/totp/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> deleteTOTP();
+
+  /// Get the current user's details
+  @GET('/users/me')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioUser> getUser();
+
+  /// Update the current user's details
+  @PATCH('/users/me')
+  @Headers({'Content-Type': 'application/json'})
+  Future<StudioUser> updateUser(@Body() UpdateUserBody body);
+
+  /// Change the current user's password
+  @PATCH('/users/me/change-password')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> changePassword(@Body() ChangePasswordBody body);
+
+  /// Remove the current user's password
+  @PATCH('/users/me/remove-password')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> removePassword(@Body() RemovePasswordBody body);
+
+  /// Delete the current user
+  @DELETE('/users/me')
+  @Headers({'Content-Type': 'application/json'})
+  Future<bool> deleteUser();
 }

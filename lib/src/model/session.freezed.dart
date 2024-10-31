@@ -14,35 +14,35 @@ T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError('It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Session _$SessionFromJson(Map<String, dynamic> json) {
-return _Session.fromJson(json);
+StudioSession _$StudioSessionFromJson(Map<String, dynamic> json) {
+return _StudioSession.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Session {
+mixin _$StudioSession {
 
- String get id => throw _privateConstructorUsedError; String get identityID => throw _privateConstructorUsedError; String? get deviceID => throw _privateConstructorUsedError; String get authID => throw _privateConstructorUsedError; String get token => throw _privateConstructorUsedError; String get appID => throw _privateConstructorUsedError; bool get valid => throw _privateConstructorUsedError; DateTime? get expiresAt => throw _privateConstructorUsedError; String? get ipAddress => throw _privateConstructorUsedError;
-
-
+ String get id => throw _privateConstructorUsedError; String get appID => throw _privateConstructorUsedError; String get userID => throw _privateConstructorUsedError; String get deviceID => throw _privateConstructorUsedError; String get factorID => throw _privateConstructorUsedError; SessionStatus get status => throw _privateConstructorUsedError; String get token => throw _privateConstructorUsedError; String? get ipAddress => throw _privateConstructorUsedError; String? get city => throw _privateConstructorUsedError; String? get state => throw _privateConstructorUsedError; String? get country => throw _privateConstructorUsedError; DateTime? get expiresAt => throw _privateConstructorUsedError; DateTime get createdAt => throw _privateConstructorUsedError; DateTime get updatedAt => throw _privateConstructorUsedError;
 
 
 
 
-/// Serializes this Session to a JSON map.
+
+
+/// Serializes this StudioSession to a JSON map.
 Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-/// Create a copy of Session
+/// Create a copy of StudioSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
-$SessionCopyWith<Session> get copyWith => throw _privateConstructorUsedError;
+$StudioSessionCopyWith<StudioSession> get copyWith => throw _privateConstructorUsedError;
 
 }
 
 /// @nodoc
-abstract class $SessionCopyWith<$Res>  {
-  factory $SessionCopyWith(Session value, $Res Function(Session) then) = _$SessionCopyWithImpl<$Res, Session>;
+abstract class $StudioSessionCopyWith<$Res>  {
+  factory $StudioSessionCopyWith(StudioSession value, $Res Function(StudioSession) then) = _$StudioSessionCopyWithImpl<$Res, StudioSession>;
 @useResult
 $Res call({
- String id, String identityID, String? deviceID, String authID, String token, String appID, bool valid, DateTime? expiresAt, String? ipAddress
+ String id, String appID, String userID, String deviceID, String factorID, SessionStatus status, String token, String? ipAddress, String? city, String? state, String? country, DateTime? expiresAt, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -50,28 +50,33 @@ $Res call({
 }
 
 /// @nodoc
-class _$SessionCopyWithImpl<$Res,$Val extends Session> implements $SessionCopyWith<$Res> {
-  _$SessionCopyWithImpl(this._value, this._then);
+class _$StudioSessionCopyWithImpl<$Res,$Val extends StudioSession> implements $StudioSessionCopyWith<$Res> {
+  _$StudioSessionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-/// Create a copy of Session
+/// Create a copy of StudioSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? identityID = null,Object? deviceID = freezed,Object? authID = null,Object? token = null,Object? appID = null,Object? valid = null,Object? expiresAt = freezed,Object? ipAddress = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? appID = null,Object? userID = null,Object? deviceID = null,Object? factorID = null,Object? status = null,Object? token = null,Object? ipAddress = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? expiresAt = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_value.copyWith(
 id: null == id ? _value.id : id // ignore: cast_nullable_to_non_nullable
-as String,identityID: null == identityID ? _value.identityID : identityID // ignore: cast_nullable_to_non_nullable
-as String,deviceID: freezed == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
-as String?,authID: null == authID ? _value.authID : authID // ignore: cast_nullable_to_non_nullable
-as String,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
 as String,appID: null == appID ? _value.appID : appID // ignore: cast_nullable_to_non_nullable
-as String,valid: null == valid ? _value.valid : valid // ignore: cast_nullable_to_non_nullable
-as bool,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,userID: null == userID ? _value.userID : userID // ignore: cast_nullable_to_non_nullable
+as String,deviceID: null == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
+as String,factorID: null == factorID ? _value.factorID : factorID // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _value.status : status // ignore: cast_nullable_to_non_nullable
+as SessionStatus,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
+as String,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _value.city : city // ignore: cast_nullable_to_non_nullable
+as String?,state: freezed == state ? _value.state : state // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _value.country : country // ignore: cast_nullable_to_non_nullable
+as String?,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: null == createdAt ? _value.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _value.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   )as $Val);
 }
 
@@ -79,11 +84,11 @@ as String?,
 
 
 /// @nodoc
-abstract class _$$SessionImplCopyWith<$Res> implements $SessionCopyWith<$Res> {
-  factory _$$SessionImplCopyWith(_$SessionImpl value, $Res Function(_$SessionImpl) then) = __$$SessionImplCopyWithImpl<$Res>;
+abstract class _$$StudioSessionImplCopyWith<$Res> implements $StudioSessionCopyWith<$Res> {
+  factory _$$StudioSessionImplCopyWith(_$StudioSessionImpl value, $Res Function(_$StudioSessionImpl) then) = __$$StudioSessionImplCopyWithImpl<$Res>;
 @override @useResult
 $Res call({
- String id, String identityID, String? deviceID, String authID, String token, String appID, bool valid, DateTime? expiresAt, String? ipAddress
+ String id, String appID, String userID, String deviceID, String factorID, SessionStatus status, String token, String? ipAddress, String? city, String? state, String? country, DateTime? expiresAt, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -91,25 +96,30 @@ $Res call({
 }
 
 /// @nodoc
-class __$$SessionImplCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res, _$SessionImpl> implements _$$SessionImplCopyWith<$Res> {
-  __$$SessionImplCopyWithImpl(_$SessionImpl _value, $Res Function(_$SessionImpl) _then)
+class __$$StudioSessionImplCopyWithImpl<$Res> extends _$StudioSessionCopyWithImpl<$Res, _$StudioSessionImpl> implements _$$StudioSessionImplCopyWith<$Res> {
+  __$$StudioSessionImplCopyWithImpl(_$StudioSessionImpl _value, $Res Function(_$StudioSessionImpl) _then)
       : super(_value, _then);
 
 
-/// Create a copy of Session
+/// Create a copy of StudioSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? identityID = null,Object? deviceID = freezed,Object? authID = null,Object? token = null,Object? appID = null,Object? valid = null,Object? expiresAt = freezed,Object? ipAddress = freezed,}) {
-  return _then(_$SessionImpl(
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? appID = null,Object? userID = null,Object? deviceID = null,Object? factorID = null,Object? status = null,Object? token = null,Object? ipAddress = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? expiresAt = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+  return _then(_$StudioSessionImpl(
 id: null == id ? _value.id : id // ignore: cast_nullable_to_non_nullable
-as String,identityID: null == identityID ? _value.identityID : identityID // ignore: cast_nullable_to_non_nullable
-as String,deviceID: freezed == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
-as String?,authID: null == authID ? _value.authID : authID // ignore: cast_nullable_to_non_nullable
-as String,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
 as String,appID: null == appID ? _value.appID : appID // ignore: cast_nullable_to_non_nullable
-as String,valid: null == valid ? _value.valid : valid // ignore: cast_nullable_to_non_nullable
-as bool,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,userID: null == userID ? _value.userID : userID // ignore: cast_nullable_to_non_nullable
+as String,deviceID: null == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
+as String,factorID: null == factorID ? _value.factorID : factorID // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _value.status : status // ignore: cast_nullable_to_non_nullable
+as SessionStatus,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
+as String,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _value.city : city // ignore: cast_nullable_to_non_nullable
+as String?,state: freezed == state ? _value.state : state // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _value.country : country // ignore: cast_nullable_to_non_nullable
+as String?,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: null == createdAt ? _value.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _value.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
@@ -119,42 +129,47 @@ as String?,
 /// @nodoc
 @JsonSerializable()
 
-class _$SessionImpl  implements _Session {
-  const _$SessionImpl({required this.id, required this.identityID, required this.deviceID, required this.authID, required this.token, required this.appID, required this.valid, required this.expiresAt, required this.ipAddress});
+class _$StudioSessionImpl  implements _StudioSession {
+  const _$StudioSessionImpl({required this.id, required this.appID, required this.userID, required this.deviceID, required this.factorID, required this.status, required this.token, required this.ipAddress, required this.city, required this.state, required this.country, required this.expiresAt, required this.createdAt, required this.updatedAt});
 
-  factory _$SessionImpl.fromJson(Map<String, dynamic> json) => _$$SessionImplFromJson(json);
+  factory _$StudioSessionImpl.fromJson(Map<String, dynamic> json) => _$$StudioSessionImplFromJson(json);
 
 @override final  String id;
-@override final  String identityID;
-@override final  String? deviceID;
-@override final  String authID;
-@override final  String token;
 @override final  String appID;
-@override final  bool valid;
-@override final  DateTime? expiresAt;
+@override final  String userID;
+@override final  String deviceID;
+@override final  String factorID;
+@override final  SessionStatus status;
+@override final  String token;
 @override final  String? ipAddress;
+@override final  String? city;
+@override final  String? state;
+@override final  String? country;
+@override final  DateTime? expiresAt;
+@override final  DateTime createdAt;
+@override final  DateTime updatedAt;
 
 @override
 String toString() {
-  return 'Session(id: $id, identityID: $identityID, deviceID: $deviceID, authID: $authID, token: $token, appID: $appID, valid: $valid, expiresAt: $expiresAt, ipAddress: $ipAddress)';
+  return 'StudioSession(id: $id, appID: $appID, userID: $userID, deviceID: $deviceID, factorID: $factorID, status: $status, token: $token, ipAddress: $ipAddress, city: $city, state: $state, country: $country, expiresAt: $expiresAt, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$SessionImpl&&(identical(other.id, id) || other.id == id)&&(identical(other.identityID, identityID) || other.identityID == identityID)&&(identical(other.deviceID, deviceID) || other.deviceID == deviceID)&&(identical(other.authID, authID) || other.authID == authID)&&(identical(other.token, token) || other.token == token)&&(identical(other.appID, appID) || other.appID == appID)&&(identical(other.valid, valid) || other.valid == valid)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$StudioSessionImpl&&(identical(other.id, id) || other.id == id)&&(identical(other.appID, appID) || other.appID == appID)&&(identical(other.userID, userID) || other.userID == userID)&&(identical(other.deviceID, deviceID) || other.deviceID == deviceID)&&(identical(other.factorID, factorID) || other.factorID == factorID)&&(identical(other.status, status) || other.status == status)&&(identical(other.token, token) || other.token == token)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,identityID,deviceID,authID,token,appID,valid,expiresAt,ipAddress);
+int get hashCode => Object.hash(runtimeType,id,appID,userID,deviceID,factorID,status,token,ipAddress,city,state,country,expiresAt,createdAt,updatedAt);
 
-/// Create a copy of Session
+/// Create a copy of StudioSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 @pragma('vm:prefer-inline')
-_$$SessionImplCopyWith<_$SessionImpl> get copyWith => __$$SessionImplCopyWithImpl<_$SessionImpl>(this, _$identity);
+_$$StudioSessionImplCopyWith<_$StudioSessionImpl> get copyWith => __$$StudioSessionImplCopyWithImpl<_$StudioSessionImpl>(this, _$identity);
 
 
 
@@ -164,132 +179,142 @@ _$$SessionImplCopyWith<_$SessionImpl> get copyWith => __$$SessionImplCopyWithImp
 
 @override
 Map<String, dynamic> toJson() {
-  return _$$SessionImplToJson(this, );
+  return _$$StudioSessionImplToJson(this, );
 }
 }
 
 
-abstract class _Session implements Session {
-  const factory _Session({required final  String id, required final  String identityID, required final  String? deviceID, required final  String authID, required final  String token, required final  String appID, required final  bool valid, required final  DateTime? expiresAt, required final  String? ipAddress}) = _$SessionImpl;
+abstract class _StudioSession implements StudioSession {
+  const factory _StudioSession({required final  String id, required final  String appID, required final  String userID, required final  String deviceID, required final  String factorID, required final  SessionStatus status, required final  String token, required final  String? ipAddress, required final  String? city, required final  String? state, required final  String? country, required final  DateTime? expiresAt, required final  DateTime createdAt, required final  DateTime updatedAt}) = _$StudioSessionImpl;
   
 
-  factory _Session.fromJson(Map<String, dynamic> json) = _$SessionImpl.fromJson;
+  factory _StudioSession.fromJson(Map<String, dynamic> json) = _$StudioSessionImpl.fromJson;
 
-@override String get id;@override String get identityID;@override String? get deviceID;@override String get authID;@override String get token;@override String get appID;@override bool get valid;@override DateTime? get expiresAt;@override String? get ipAddress;
-/// Create a copy of Session
+@override String get id;@override String get appID;@override String get userID;@override String get deviceID;@override String get factorID;@override SessionStatus get status;@override String get token;@override String? get ipAddress;@override String? get city;@override String? get state;@override String? get country;@override DateTime? get expiresAt;@override DateTime get createdAt;@override DateTime get updatedAt;
+/// Create a copy of StudioSession
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
-_$$SessionImplCopyWith<_$SessionImpl> get copyWith => throw _privateConstructorUsedError;
+_$$StudioSessionImplCopyWith<_$StudioSessionImpl> get copyWith => throw _privateConstructorUsedError;
 
 }
 
-AuthSession _$AuthSessionFromJson(Map<String, dynamic> json) {
-return _AuthSession.fromJson(json);
+StudioUserSession _$StudioUserSessionFromJson(Map<String, dynamic> json) {
+return _StudioUserSession.fromJson(json);
 }
 
 /// @nodoc
-mixin _$AuthSession {
+mixin _$StudioUserSession {
 
- String get id => throw _privateConstructorUsedError; String get identityID => throw _privateConstructorUsedError; String? get deviceID => throw _privateConstructorUsedError; String get authID => throw _privateConstructorUsedError; String get token => throw _privateConstructorUsedError; String get appID => throw _privateConstructorUsedError; bool get valid => throw _privateConstructorUsedError; DateTime? get expiresAt => throw _privateConstructorUsedError; String? get ipAddress => throw _privateConstructorUsedError; Auth get auth => throw _privateConstructorUsedError;
-
-
+ String get id => throw _privateConstructorUsedError; String get appID => throw _privateConstructorUsedError; String get userID => throw _privateConstructorUsedError; String get deviceID => throw _privateConstructorUsedError; String get factorID => throw _privateConstructorUsedError; SessionStatus get status => throw _privateConstructorUsedError; String get token => throw _privateConstructorUsedError; String? get ipAddress => throw _privateConstructorUsedError; String? get city => throw _privateConstructorUsedError; String? get state => throw _privateConstructorUsedError; String? get country => throw _privateConstructorUsedError; DateTime? get expiresAt => throw _privateConstructorUsedError; DateTime get createdAt => throw _privateConstructorUsedError; DateTime get updatedAt => throw _privateConstructorUsedError; StudioUser get user => throw _privateConstructorUsedError;
 
 
 
 
-/// Serializes this AuthSession to a JSON map.
+
+
+/// Serializes this StudioUserSession to a JSON map.
 Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-/// Create a copy of AuthSession
+/// Create a copy of StudioUserSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
-$AuthSessionCopyWith<AuthSession> get copyWith => throw _privateConstructorUsedError;
+$StudioUserSessionCopyWith<StudioUserSession> get copyWith => throw _privateConstructorUsedError;
 
 }
 
 /// @nodoc
-abstract class $AuthSessionCopyWith<$Res>  {
-  factory $AuthSessionCopyWith(AuthSession value, $Res Function(AuthSession) then) = _$AuthSessionCopyWithImpl<$Res, AuthSession>;
+abstract class $StudioUserSessionCopyWith<$Res>  {
+  factory $StudioUserSessionCopyWith(StudioUserSession value, $Res Function(StudioUserSession) then) = _$StudioUserSessionCopyWithImpl<$Res, StudioUserSession>;
 @useResult
 $Res call({
- String id, String identityID, String? deviceID, String authID, String token, String appID, bool valid, DateTime? expiresAt, String? ipAddress, Auth auth
+ String id, String appID, String userID, String deviceID, String factorID, SessionStatus status, String token, String? ipAddress, String? city, String? state, String? country, DateTime? expiresAt, DateTime createdAt, DateTime updatedAt, StudioUser user
 });
 
 
-$AuthCopyWith<$Res> get auth;
+$StudioUserCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class _$AuthSessionCopyWithImpl<$Res,$Val extends AuthSession> implements $AuthSessionCopyWith<$Res> {
-  _$AuthSessionCopyWithImpl(this._value, this._then);
+class _$StudioUserSessionCopyWithImpl<$Res,$Val extends StudioUserSession> implements $StudioUserSessionCopyWith<$Res> {
+  _$StudioUserSessionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-/// Create a copy of AuthSession
+/// Create a copy of StudioUserSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? identityID = null,Object? deviceID = freezed,Object? authID = null,Object? token = null,Object? appID = null,Object? valid = null,Object? expiresAt = freezed,Object? ipAddress = freezed,Object? auth = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? appID = null,Object? userID = null,Object? deviceID = null,Object? factorID = null,Object? status = null,Object? token = null,Object? ipAddress = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? expiresAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,}) {
   return _then(_value.copyWith(
 id: null == id ? _value.id : id // ignore: cast_nullable_to_non_nullable
-as String,identityID: null == identityID ? _value.identityID : identityID // ignore: cast_nullable_to_non_nullable
-as String,deviceID: freezed == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
-as String?,authID: null == authID ? _value.authID : authID // ignore: cast_nullable_to_non_nullable
-as String,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
 as String,appID: null == appID ? _value.appID : appID // ignore: cast_nullable_to_non_nullable
-as String,valid: null == valid ? _value.valid : valid // ignore: cast_nullable_to_non_nullable
-as bool,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
-as String?,auth: null == auth ? _value.auth : auth // ignore: cast_nullable_to_non_nullable
-as Auth,
+as String,userID: null == userID ? _value.userID : userID // ignore: cast_nullable_to_non_nullable
+as String,deviceID: null == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
+as String,factorID: null == factorID ? _value.factorID : factorID // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _value.status : status // ignore: cast_nullable_to_non_nullable
+as SessionStatus,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
+as String,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _value.city : city // ignore: cast_nullable_to_non_nullable
+as String?,state: freezed == state ? _value.state : state // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _value.country : country // ignore: cast_nullable_to_non_nullable
+as String?,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: null == createdAt ? _value.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _value.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,user: null == user ? _value.user : user // ignore: cast_nullable_to_non_nullable
+as StudioUser,
   )as $Val);
 }
-/// Create a copy of AuthSession
+/// Create a copy of StudioUserSession
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AuthCopyWith<$Res> get auth {
+$StudioUserCopyWith<$Res> get user {
   
-  return $AuthCopyWith<$Res>(_value.auth, (value) {
-    return _then(_value.copyWith(auth: value) as $Val);
+  return $StudioUserCopyWith<$Res>(_value.user, (value) {
+    return _then(_value.copyWith(user: value) as $Val);
   });
 }
 }
 
 
 /// @nodoc
-abstract class _$$AuthSessionImplCopyWith<$Res> implements $AuthSessionCopyWith<$Res> {
-  factory _$$AuthSessionImplCopyWith(_$AuthSessionImpl value, $Res Function(_$AuthSessionImpl) then) = __$$AuthSessionImplCopyWithImpl<$Res>;
+abstract class _$$StudioUserSessionImplCopyWith<$Res> implements $StudioUserSessionCopyWith<$Res> {
+  factory _$$StudioUserSessionImplCopyWith(_$StudioUserSessionImpl value, $Res Function(_$StudioUserSessionImpl) then) = __$$StudioUserSessionImplCopyWithImpl<$Res>;
 @override @useResult
 $Res call({
- String id, String identityID, String? deviceID, String authID, String token, String appID, bool valid, DateTime? expiresAt, String? ipAddress, Auth auth
+ String id, String appID, String userID, String deviceID, String factorID, SessionStatus status, String token, String? ipAddress, String? city, String? state, String? country, DateTime? expiresAt, DateTime createdAt, DateTime updatedAt, StudioUser user
 });
 
 
-@override $AuthCopyWith<$Res> get auth;
+@override $StudioUserCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class __$$AuthSessionImplCopyWithImpl<$Res> extends _$AuthSessionCopyWithImpl<$Res, _$AuthSessionImpl> implements _$$AuthSessionImplCopyWith<$Res> {
-  __$$AuthSessionImplCopyWithImpl(_$AuthSessionImpl _value, $Res Function(_$AuthSessionImpl) _then)
+class __$$StudioUserSessionImplCopyWithImpl<$Res> extends _$StudioUserSessionCopyWithImpl<$Res, _$StudioUserSessionImpl> implements _$$StudioUserSessionImplCopyWith<$Res> {
+  __$$StudioUserSessionImplCopyWithImpl(_$StudioUserSessionImpl _value, $Res Function(_$StudioUserSessionImpl) _then)
       : super(_value, _then);
 
 
-/// Create a copy of AuthSession
+/// Create a copy of StudioUserSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? identityID = null,Object? deviceID = freezed,Object? authID = null,Object? token = null,Object? appID = null,Object? valid = null,Object? expiresAt = freezed,Object? ipAddress = freezed,Object? auth = null,}) {
-  return _then(_$AuthSessionImpl(
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? appID = null,Object? userID = null,Object? deviceID = null,Object? factorID = null,Object? status = null,Object? token = null,Object? ipAddress = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? expiresAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,}) {
+  return _then(_$StudioUserSessionImpl(
 id: null == id ? _value.id : id // ignore: cast_nullable_to_non_nullable
-as String,identityID: null == identityID ? _value.identityID : identityID // ignore: cast_nullable_to_non_nullable
-as String,deviceID: freezed == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
-as String?,authID: null == authID ? _value.authID : authID // ignore: cast_nullable_to_non_nullable
-as String,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
 as String,appID: null == appID ? _value.appID : appID // ignore: cast_nullable_to_non_nullable
-as String,valid: null == valid ? _value.valid : valid // ignore: cast_nullable_to_non_nullable
-as bool,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
-as String?,auth: null == auth ? _value.auth : auth // ignore: cast_nullable_to_non_nullable
-as Auth,
+as String,userID: null == userID ? _value.userID : userID // ignore: cast_nullable_to_non_nullable
+as String,deviceID: null == deviceID ? _value.deviceID : deviceID // ignore: cast_nullable_to_non_nullable
+as String,factorID: null == factorID ? _value.factorID : factorID // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _value.status : status // ignore: cast_nullable_to_non_nullable
+as SessionStatus,token: null == token ? _value.token : token // ignore: cast_nullable_to_non_nullable
+as String,ipAddress: freezed == ipAddress ? _value.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _value.city : city // ignore: cast_nullable_to_non_nullable
+as String?,state: freezed == state ? _value.state : state // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _value.country : country // ignore: cast_nullable_to_non_nullable
+as String?,expiresAt: freezed == expiresAt ? _value.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: null == createdAt ? _value.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _value.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,user: null == user ? _value.user : user // ignore: cast_nullable_to_non_nullable
+as StudioUser,
   ));
 }
 
@@ -299,43 +324,48 @@ as Auth,
 /// @nodoc
 @JsonSerializable()
 
-class _$AuthSessionImpl  implements _AuthSession {
-  const _$AuthSessionImpl({required this.id, required this.identityID, required this.deviceID, required this.authID, required this.token, required this.appID, required this.valid, required this.expiresAt, required this.ipAddress, required this.auth});
+class _$StudioUserSessionImpl  implements _StudioUserSession {
+  const _$StudioUserSessionImpl({required this.id, required this.appID, required this.userID, required this.deviceID, required this.factorID, required this.status, required this.token, required this.ipAddress, required this.city, required this.state, required this.country, required this.expiresAt, required this.createdAt, required this.updatedAt, required this.user});
 
-  factory _$AuthSessionImpl.fromJson(Map<String, dynamic> json) => _$$AuthSessionImplFromJson(json);
+  factory _$StudioUserSessionImpl.fromJson(Map<String, dynamic> json) => _$$StudioUserSessionImplFromJson(json);
 
 @override final  String id;
-@override final  String identityID;
-@override final  String? deviceID;
-@override final  String authID;
-@override final  String token;
 @override final  String appID;
-@override final  bool valid;
-@override final  DateTime? expiresAt;
+@override final  String userID;
+@override final  String deviceID;
+@override final  String factorID;
+@override final  SessionStatus status;
+@override final  String token;
 @override final  String? ipAddress;
-@override final  Auth auth;
+@override final  String? city;
+@override final  String? state;
+@override final  String? country;
+@override final  DateTime? expiresAt;
+@override final  DateTime createdAt;
+@override final  DateTime updatedAt;
+@override final  StudioUser user;
 
 @override
 String toString() {
-  return 'AuthSession(id: $id, identityID: $identityID, deviceID: $deviceID, authID: $authID, token: $token, appID: $appID, valid: $valid, expiresAt: $expiresAt, ipAddress: $ipAddress, auth: $auth)';
+  return 'StudioUserSession(id: $id, appID: $appID, userID: $userID, deviceID: $deviceID, factorID: $factorID, status: $status, token: $token, ipAddress: $ipAddress, city: $city, state: $state, country: $country, expiresAt: $expiresAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user)';
 }
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$AuthSessionImpl&&(identical(other.id, id) || other.id == id)&&(identical(other.identityID, identityID) || other.identityID == identityID)&&(identical(other.deviceID, deviceID) || other.deviceID == deviceID)&&(identical(other.authID, authID) || other.authID == authID)&&(identical(other.token, token) || other.token == token)&&(identical(other.appID, appID) || other.appID == appID)&&(identical(other.valid, valid) || other.valid == valid)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.auth, auth) || other.auth == auth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _$StudioUserSessionImpl&&(identical(other.id, id) || other.id == id)&&(identical(other.appID, appID) || other.appID == appID)&&(identical(other.userID, userID) || other.userID == userID)&&(identical(other.deviceID, deviceID) || other.deviceID == deviceID)&&(identical(other.factorID, factorID) || other.factorID == factorID)&&(identical(other.status, status) || other.status == status)&&(identical(other.token, token) || other.token == token)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,identityID,deviceID,authID,token,appID,valid,expiresAt,ipAddress,auth);
+int get hashCode => Object.hash(runtimeType,id,appID,userID,deviceID,factorID,status,token,ipAddress,city,state,country,expiresAt,createdAt,updatedAt,user);
 
-/// Create a copy of AuthSession
+/// Create a copy of StudioUserSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 @pragma('vm:prefer-inline')
-_$$AuthSessionImplCopyWith<_$AuthSessionImpl> get copyWith => __$$AuthSessionImplCopyWithImpl<_$AuthSessionImpl>(this, _$identity);
+_$$StudioUserSessionImplCopyWith<_$StudioUserSessionImpl> get copyWith => __$$StudioUserSessionImplCopyWithImpl<_$StudioUserSessionImpl>(this, _$identity);
 
 
 
@@ -345,21 +375,21 @@ _$$AuthSessionImplCopyWith<_$AuthSessionImpl> get copyWith => __$$AuthSessionImp
 
 @override
 Map<String, dynamic> toJson() {
-  return _$$AuthSessionImplToJson(this, );
+  return _$$StudioUserSessionImplToJson(this, );
 }
 }
 
 
-abstract class _AuthSession implements AuthSession {
-  const factory _AuthSession({required final  String id, required final  String identityID, required final  String? deviceID, required final  String authID, required final  String token, required final  String appID, required final  bool valid, required final  DateTime? expiresAt, required final  String? ipAddress, required final  Auth auth}) = _$AuthSessionImpl;
+abstract class _StudioUserSession implements StudioUserSession {
+  const factory _StudioUserSession({required final  String id, required final  String appID, required final  String userID, required final  String deviceID, required final  String factorID, required final  SessionStatus status, required final  String token, required final  String? ipAddress, required final  String? city, required final  String? state, required final  String? country, required final  DateTime? expiresAt, required final  DateTime createdAt, required final  DateTime updatedAt, required final  StudioUser user}) = _$StudioUserSessionImpl;
   
 
-  factory _AuthSession.fromJson(Map<String, dynamic> json) = _$AuthSessionImpl.fromJson;
+  factory _StudioUserSession.fromJson(Map<String, dynamic> json) = _$StudioUserSessionImpl.fromJson;
 
-@override String get id;@override String get identityID;@override String? get deviceID;@override String get authID;@override String get token;@override String get appID;@override bool get valid;@override DateTime? get expiresAt;@override String? get ipAddress;@override Auth get auth;
-/// Create a copy of AuthSession
+@override String get id;@override String get appID;@override String get userID;@override String get deviceID;@override String get factorID;@override SessionStatus get status;@override String get token;@override String? get ipAddress;@override String? get city;@override String? get state;@override String? get country;@override DateTime? get expiresAt;@override DateTime get createdAt;@override DateTime get updatedAt;@override StudioUser get user;
+/// Create a copy of StudioUserSession
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
-_$$AuthSessionImplCopyWith<_$AuthSessionImpl> get copyWith => throw _privateConstructorUsedError;
+_$$StudioUserSessionImplCopyWith<_$StudioUserSessionImpl> get copyWith => throw _privateConstructorUsedError;
 
 }

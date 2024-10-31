@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'identity.dart';
+part of 'factor.dart';
 
 // **************************************************************************
 // _IsarEmbeddedGenerator
@@ -10,9 +10,9 @@ part of 'identity.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const IIdentitySchema = IsarGeneratedSchema(
+const IStudioFactorSchema = IsarGeneratedSchema(
   schema: IsarSchema(
-    name: 'IIdentity',
+    name: 'IStudioFactor',
     embedded: true,
     properties: [
       IsarPropertySchema(
@@ -24,43 +24,17 @@ const IIdentitySchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'authID',
+        name: 'userID',
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'provider',
+        name: 'factor',
         type: IsarType.byte,
-        enumMap: {
-          "anonymous": 0,
-          "email": 1,
-          "emailOTP": 2,
-          "magicLink": 3,
-          "phone": 4,
-          "phoneOTP": 5,
-          "apple": 6,
-          "atlassian": 7,
-          "auth0": 8,
-          "authentik": 9,
-          "discord": 10,
-          "dropbox": 11,
-          "facebook": 12,
-          "figma": 13,
-          "github": 14,
-          "gitlab": 15,
-          "google": 16,
-          "kakao": 17,
-          "linear": 18,
-          "linkedIn": 19,
-          "microsoft": 20,
-          "notion": 21,
-          "okta": 22,
-          "salesforce": 23,
-          "slack": 24,
-          "spotify": 25,
-          "twitch": 26,
-          "workOS": 27,
-          "zoom": 28
-        },
+        enumMap: {"email": 0, "phone": 1, "oAuth": 2},
+      ),
+      IsarPropertySchema(
+        name: 'identifier',
+        type: IsarType.string,
       ),
       IsarPropertySchema(
         name: 'data',
@@ -74,122 +48,100 @@ const IIdentitySchema = IsarGeneratedSchema(
         name: 'lastSignedInAt',
         type: IsarType.dateTime,
       ),
-      IsarPropertySchema(
-        name: 'identifier',
-        type: IsarType.string,
-      ),
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, IIdentity>(
-    serialize: serializeIIdentity,
-    deserialize: deserializeIIdentity,
+  converter: IsarObjectConverter<void, IStudioFactor>(
+    serialize: serializeIStudioFactor,
+    deserialize: deserializeIStudioFactor,
   ),
 );
 
 @isarProtected
-int serializeIIdentity(IsarWriter writer, IIdentity object) {
+int serializeIStudioFactor(IsarWriter writer, IStudioFactor object) {
   IsarCore.writeString(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.providerUserID);
-  IsarCore.writeString(writer, 3, object.authID);
-  IsarCore.writeByte(writer, 4, object.provider.index);
-  IsarCore.writeString(writer, 5, isarJsonEncode(object.data));
+  IsarCore.writeString(writer, 3, object.userID);
+  IsarCore.writeByte(writer, 4, object.factor.index);
+  IsarCore.writeString(writer, 5, object.identifier);
+  IsarCore.writeString(writer, 6, isarJsonEncode(object.data));
   IsarCore.writeLong(
-      writer, 6, object.createdAt.toUtc().microsecondsSinceEpoch);
+      writer, 7, object.createdAt.toUtc().microsecondsSinceEpoch);
   IsarCore.writeLong(
-      writer, 7, object.lastSignedInAt.toUtc().microsecondsSinceEpoch);
-  {
-    final value = object.identifier;
-    if (value == null) {
-      IsarCore.writeNull(writer, 8);
-    } else {
-      IsarCore.writeString(writer, 8, value);
-    }
-  }
+      writer, 8, object.lastSignedInAt.toUtc().microsecondsSinceEpoch);
   return 0;
 }
 
 @isarProtected
-IIdentity deserializeIIdentity(IsarReader reader) {
-  final object = IIdentity();
-  object.id = IsarCore.readString(reader, 1) ?? '';
-  object.providerUserID = IsarCore.readString(reader, 2) ?? '';
-  object.authID = IsarCore.readString(reader, 3) ?? '';
+IStudioFactor deserializeIStudioFactor(IsarReader reader) {
+  final String _id;
+  _id = IsarCore.readString(reader, 1) ?? '';
+  final String _providerUserID;
+  _providerUserID = IsarCore.readString(reader, 2) ?? '';
+  final String _userID;
+  _userID = IsarCore.readString(reader, 3) ?? '';
+  final StudioFactorType _factor;
   {
     if (IsarCore.readNull(reader, 4)) {
-      object.provider = IdentityProvider.anonymous;
+      _factor = StudioFactorType.email;
     } else {
-      object.provider = _iIdentityProvider[IsarCore.readByte(reader, 4)] ??
-          IdentityProvider.anonymous;
+      _factor = _iStudioFactorFactor[IsarCore.readByte(reader, 4)] ??
+          StudioFactorType.email;
     }
   }
+  final String _identifier;
+  _identifier = IsarCore.readString(reader, 5) ?? '';
+  final Map<String, dynamic> _data;
   {
-    final json = isarJsonDecode(IsarCore.readString(reader, 5) ?? 'null');
+    final json = isarJsonDecode(IsarCore.readString(reader, 6) ?? 'null');
     if (json is Map<String, dynamic>) {
-      object.data = json;
+      _data = json;
     } else {
-      object.data = const <String, dynamic>{};
+      _data = const <String, dynamic>{};
     }
   }
-  {
-    final value = IsarCore.readLong(reader, 6);
-    if (value == -9223372036854775808) {
-      object.createdAt =
-          DateTime.fromMillisecondsSinceEpoch(0, isUtc: true).toLocal();
-    } else {
-      object.createdAt =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
-    }
-  }
+  final DateTime _createdAt;
   {
     final value = IsarCore.readLong(reader, 7);
     if (value == -9223372036854775808) {
-      object.lastSignedInAt =
+      _createdAt =
           DateTime.fromMillisecondsSinceEpoch(0, isUtc: true).toLocal();
     } else {
-      object.lastSignedInAt =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
+      _createdAt = DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
     }
   }
-  object.identifier = IsarCore.readString(reader, 8);
+  final DateTime _lastSignedInAt;
+  {
+    final value = IsarCore.readLong(reader, 8);
+    if (value == -9223372036854775808) {
+      _lastSignedInAt =
+          DateTime.fromMillisecondsSinceEpoch(0, isUtc: true).toLocal();
+    } else {
+      _lastSignedInAt = DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
+    }
+  }
+  final object = IStudioFactor(
+    id: _id,
+    providerUserID: _providerUserID,
+    userID: _userID,
+    factor: _factor,
+    identifier: _identifier,
+    data: _data,
+    createdAt: _createdAt,
+    lastSignedInAt: _lastSignedInAt,
+  );
   return object;
 }
 
-const _iIdentityProvider = {
-  0: IdentityProvider.anonymous,
-  1: IdentityProvider.email,
-  2: IdentityProvider.emailOTP,
-  3: IdentityProvider.magicLink,
-  4: IdentityProvider.phone,
-  5: IdentityProvider.phoneOTP,
-  6: IdentityProvider.apple,
-  7: IdentityProvider.atlassian,
-  8: IdentityProvider.auth0,
-  9: IdentityProvider.authentik,
-  10: IdentityProvider.discord,
-  11: IdentityProvider.dropbox,
-  12: IdentityProvider.facebook,
-  13: IdentityProvider.figma,
-  14: IdentityProvider.github,
-  15: IdentityProvider.gitlab,
-  16: IdentityProvider.google,
-  17: IdentityProvider.kakao,
-  18: IdentityProvider.linear,
-  19: IdentityProvider.linkedIn,
-  20: IdentityProvider.microsoft,
-  21: IdentityProvider.notion,
-  22: IdentityProvider.okta,
-  23: IdentityProvider.salesforce,
-  24: IdentityProvider.slack,
-  25: IdentityProvider.spotify,
-  26: IdentityProvider.twitch,
-  27: IdentityProvider.workOS,
-  28: IdentityProvider.zoom,
+const _iStudioFactorFactor = {
+  0: StudioFactorType.email,
+  1: StudioFactorType.phone,
+  2: StudioFactorType.oAuth,
 };
 
-extension IIdentityQueryFilter
-    on QueryBuilder<IIdentity, IIdentity, QFilterCondition> {
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idEqualTo(
+extension IStudioFactorQueryFilter
+    on QueryBuilder<IStudioFactor, IStudioFactor, QFilterCondition> {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition> idEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -204,7 +156,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      idGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -219,7 +172,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       idGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -235,7 +188,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idLessThan(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition> idLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -250,7 +203,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idLessThanOrEqualTo(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      idLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -265,7 +219,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idBetween(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition> idBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -282,7 +236,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idStartsWith(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      idStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -297,7 +252,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idEndsWith(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition> idEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -312,7 +267,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idContains(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition> idContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -326,7 +281,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idMatches(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition> idMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -340,7 +295,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -351,7 +307,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -362,7 +319,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -378,7 +335,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -394,7 +351,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -410,7 +367,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDLessThan(
     String value, {
     bool caseSensitive = true,
@@ -426,7 +383,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -442,7 +399,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDBetween(
     String lower,
     String upper, {
@@ -460,7 +417,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -476,7 +433,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -492,7 +449,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -505,7 +462,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -518,7 +475,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -530,7 +487,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       providerUserIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -542,7 +499,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDEqualTo(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -557,7 +515,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDGreaterThan(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -572,8 +531,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      authIDGreaterThanOrEqualTo(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -588,7 +547,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDLessThan(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -603,8 +563,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      authIDLessThanOrEqualTo(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -619,7 +579,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDBetween(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -636,7 +597,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDStartsWith(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -651,7 +613,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDEndsWith(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -666,9 +629,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -680,9 +642,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -694,7 +655,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDIsEmpty() {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -705,7 +667,8 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> authIDIsNotEmpty() {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      userIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -716,8 +679,9 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> providerEqualTo(
-    IdentityProvider value,
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      factorEqualTo(
+    StudioFactorType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -729,8 +693,9 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> providerGreaterThan(
-    IdentityProvider value,
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      factorGreaterThan(
+    StudioFactorType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -742,9 +707,9 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      providerGreaterThanOrEqualTo(
-    IdentityProvider value,
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      factorGreaterThanOrEqualTo(
+    StudioFactorType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -756,8 +721,9 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> providerLessThan(
-    IdentityProvider value,
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      factorLessThan(
+    StudioFactorType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -769,9 +735,9 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      providerLessThanOrEqualTo(
-    IdentityProvider value,
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      factorLessThanOrEqualTo(
+    StudioFactorType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -783,9 +749,10 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> providerBetween(
-    IdentityProvider lower,
-    IdentityProvider upper,
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      factorBetween(
+    StudioFactorType lower,
+    StudioFactorType upper,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -798,196 +765,15 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> createdAtEqualTo(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      createdAtGreaterThan(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 6,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      createdAtGreaterThanOrEqualTo(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> createdAtLessThan(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 6,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      createdAtLessThanOrEqualTo(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> createdAtBetween(
-    DateTime lower,
-    DateTime upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 6,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      lastSignedInAtEqualTo(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      lastSignedInAtGreaterThan(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      lastSignedInAtGreaterThanOrEqualTo(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      lastSignedInAtLessThan(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      lastSignedInAtLessThanOrEqualTo(
-    DateTime value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      lastSignedInAtBetween(
-    DateTime lower,
-    DateTime upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 7,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
-      identifierIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
-    });
-  }
-
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierEqualTo(
-    String? value, {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      identifierEqualTo(
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -995,15 +781,15 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       identifierGreaterThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1011,15 +797,15 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       identifierGreaterThanOrEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1027,14 +813,15 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierLessThan(
-    String? value, {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      identifierLessThan(
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1042,15 +829,15 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       identifierLessThanOrEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1058,15 +845,16 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierBetween(
-    String? lower,
-    String? upper, {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      identifierBetween(
+    String lower,
+    String upper, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 8,
+          property: 5,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1075,7 +863,7 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       identifierStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1083,7 +871,7 @@ extension IIdentityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1091,14 +879,15 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierEndsWith(
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      identifierEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1106,13 +895,12 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      identifierContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 8,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1120,13 +908,12 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition> identifierMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      identifierMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 8,
+          property: 5,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1134,112 +921,246 @@ extension IIdentityQueryFilter
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       identifierIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 8,
+          property: 5,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<IIdentity, IIdentity, QAfterFilterCondition>
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
       identifierIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 8,
+          property: 5,
           value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      createdAtEqualTo(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 7,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      createdAtGreaterThan(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 7,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      createdAtGreaterThanOrEqualTo(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 7,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      createdAtLessThan(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 7,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      createdAtLessThanOrEqualTo(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 7,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      createdAtBetween(
+    DateTime lower,
+    DateTime upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 7,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      lastSignedInAtEqualTo(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      lastSignedInAtGreaterThan(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      lastSignedInAtGreaterThanOrEqualTo(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      lastSignedInAtLessThan(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      lastSignedInAtLessThanOrEqualTo(
+    DateTime value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioFactor, IStudioFactor, QAfterFilterCondition>
+      lastSignedInAtBetween(
+    DateTime lower,
+    DateTime upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 8,
+          lower: lower,
+          upper: upper,
         ),
       );
     });
   }
 }
 
-extension IIdentityQueryObject
-    on QueryBuilder<IIdentity, IIdentity, QFilterCondition> {}
+extension IStudioFactorQueryObject
+    on QueryBuilder<IStudioFactor, IStudioFactor, QFilterCondition> {}
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$IdentityImpl _$$IdentityImplFromJson(Map<String, dynamic> json) =>
-    _$IdentityImpl(
+_$StudioFactorImpl _$$StudioFactorImplFromJson(Map<String, dynamic> json) =>
+    _$StudioFactorImpl(
       id: json['id'] as String,
       providerUserID: json['providerUserID'] as String,
-      authID: json['authID'] as String,
-      provider: $enumDecode(_$IdentityProviderEnumMap, json['provider']),
-      data: IdentityData.fromJson(json['data'] as Map<String, dynamic>),
+      userID: json['userID'] as String,
+      factor: $enumDecode(_$StudioFactorTypeEnumMap, json['factor']),
+      identifier: json['identifier'] as String,
+      data: StudioFactorData.fromJson(json['data'] as Map<String, dynamic>),
       createdAt: DateTime.parse(json['createdAt'] as String),
       lastSignedInAt: DateTime.parse(json['lastSignedInAt'] as String),
-      identifier: json['identifier'] as String?,
     );
 
-Map<String, dynamic> _$$IdentityImplToJson(_$IdentityImpl instance) =>
+Map<String, dynamic> _$$StudioFactorImplToJson(_$StudioFactorImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'providerUserID': instance.providerUserID,
-      'authID': instance.authID,
-      'provider': _$IdentityProviderEnumMap[instance.provider]!,
+      'userID': instance.userID,
+      'factor': _$StudioFactorTypeEnumMap[instance.factor]!,
+      'identifier': instance.identifier,
       'data': instance.data.toJson(),
       'createdAt': instance.createdAt.toIso8601String(),
       'lastSignedInAt': instance.lastSignedInAt.toIso8601String(),
-      'identifier': instance.identifier,
     };
 
-const _$IdentityProviderEnumMap = {
-  IdentityProvider.anonymous: 'anonymous',
-  IdentityProvider.email: 'email',
-  IdentityProvider.emailOTP: 'emailOTP',
-  IdentityProvider.magicLink: 'magicLink',
-  IdentityProvider.phone: 'phone',
-  IdentityProvider.phoneOTP: 'phoneOTP',
-  IdentityProvider.apple: 'apple',
-  IdentityProvider.atlassian: 'atlassian',
-  IdentityProvider.auth0: 'auth0',
-  IdentityProvider.authentik: 'authentik',
-  IdentityProvider.discord: 'discord',
-  IdentityProvider.dropbox: 'dropbox',
-  IdentityProvider.facebook: 'facebook',
-  IdentityProvider.figma: 'figma',
-  IdentityProvider.github: 'github',
-  IdentityProvider.gitlab: 'gitlab',
-  IdentityProvider.google: 'google',
-  IdentityProvider.kakao: 'kakao',
-  IdentityProvider.linear: 'linear',
-  IdentityProvider.linkedIn: 'linkedIn',
-  IdentityProvider.microsoft: 'microsoft',
-  IdentityProvider.notion: 'notion',
-  IdentityProvider.okta: 'okta',
-  IdentityProvider.salesforce: 'salesforce',
-  IdentityProvider.slack: 'slack',
-  IdentityProvider.spotify: 'spotify',
-  IdentityProvider.twitch: 'twitch',
-  IdentityProvider.workOS: 'workOS',
-  IdentityProvider.zoom: 'zoom',
+const _$StudioFactorTypeEnumMap = {
+  StudioFactorType.email: 'email',
+  StudioFactorType.phone: 'phone',
+  StudioFactorType.oAuth: 'oAuth',
 };
-
-_$AnonymousIdentityDataImpl _$$AnonymousIdentityDataImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AnonymousIdentityDataImpl(
-      $type: json['method'] as String?,
-    );
-
-Map<String, dynamic> _$$AnonymousIdentityDataImplToJson(
-        _$AnonymousIdentityDataImpl instance) =>
-    <String, dynamic>{
-      'method': instance.$type,
-    };
 
 _$EmailIdentityDataImpl _$$EmailIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$EmailIdentityDataImpl(
       email: json['email'] as String,
       confirmedAt: json['confirmedAt'] as String?,
-      $type: json['method'] as String?,
+      $type: json['factor'] as String?,
     );
 
 Map<String, dynamic> _$$EmailIdentityDataImplToJson(
@@ -1247,39 +1168,7 @@ Map<String, dynamic> _$$EmailIdentityDataImplToJson(
     <String, dynamic>{
       'email': instance.email,
       'confirmedAt': instance.confirmedAt,
-      'method': instance.$type,
-    };
-
-_$EmailOTPIdentityDataImpl _$$EmailOTPIdentityDataImplFromJson(
-        Map<String, dynamic> json) =>
-    _$EmailOTPIdentityDataImpl(
-      email: json['email'] as String,
-      confirmedAt: json['confirmedAt'] as String?,
-      $type: json['method'] as String?,
-    );
-
-Map<String, dynamic> _$$EmailOTPIdentityDataImplToJson(
-        _$EmailOTPIdentityDataImpl instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-      'confirmedAt': instance.confirmedAt,
-      'method': instance.$type,
-    };
-
-_$EmailLinkIdentityDataImpl _$$EmailLinkIdentityDataImplFromJson(
-        Map<String, dynamic> json) =>
-    _$EmailLinkIdentityDataImpl(
-      email: json['email'] as String,
-      confirmedAt: json['confirmedAt'] as String?,
-      $type: json['method'] as String?,
-    );
-
-Map<String, dynamic> _$$EmailLinkIdentityDataImplToJson(
-        _$EmailLinkIdentityDataImpl instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-      'confirmedAt': instance.confirmedAt,
-      'method': instance.$type,
+      'factor': instance.$type,
     };
 
 _$PhoneIdentityDataImpl _$$PhoneIdentityDataImplFromJson(
@@ -1287,7 +1176,7 @@ _$PhoneIdentityDataImpl _$$PhoneIdentityDataImplFromJson(
     _$PhoneIdentityDataImpl(
       phone: json['phone'] as String,
       confirmedAt: json['confirmedAt'] as String?,
-      $type: json['method'] as String?,
+      $type: json['factor'] as String?,
     );
 
 Map<String, dynamic> _$$PhoneIdentityDataImplToJson(
@@ -1295,65 +1184,46 @@ Map<String, dynamic> _$$PhoneIdentityDataImplToJson(
     <String, dynamic>{
       'phone': instance.phone,
       'confirmedAt': instance.confirmedAt,
-      'method': instance.$type,
-    };
-
-_$PhoneOTPIdentityDataImpl _$$PhoneOTPIdentityDataImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PhoneOTPIdentityDataImpl(
-      phone: json['phone'] as String,
-      confirmedAt: json['confirmedAt'] as String?,
-      $type: json['method'] as String?,
-    );
-
-Map<String, dynamic> _$$PhoneOTPIdentityDataImplToJson(
-        _$PhoneOTPIdentityDataImpl instance) =>
-    <String, dynamic>{
-      'phone': instance.phone,
-      'confirmedAt': instance.confirmedAt,
-      'method': instance.$type,
+      'factor': instance.$type,
     };
 
 _$OAuthIdentityDataImpl _$$OAuthIdentityDataImplFromJson(
         Map<String, dynamic> json) =>
     _$OAuthIdentityDataImpl(
-      provider: $enumDecode(_$OAuthProviderEnumMap, json['provider']),
+      provider: $enumDecode(_$StudioOAuthProviderEnumMap, json['provider']),
+      sub: json['sub'] as String,
       email: json['email'] as String,
+      refreshToken: json['refreshToken'] as String?,
+      accessToken: json['accessToken'] as String?,
+      expiresAt: json['expiresAt'] == null
+          ? null
+          : DateTime.parse(json['expiresAt'] as String),
       confirmedAt: json['confirmedAt'] as String?,
-      $type: json['method'] as String?,
+      $type: json['factor'] as String?,
     );
 
 Map<String, dynamic> _$$OAuthIdentityDataImplToJson(
         _$OAuthIdentityDataImpl instance) =>
     <String, dynamic>{
-      'provider': _$OAuthProviderEnumMap[instance.provider]!,
+      'provider': _$StudioOAuthProviderEnumMap[instance.provider]!,
+      'sub': instance.sub,
       'email': instance.email,
+      'refreshToken': instance.refreshToken,
+      'accessToken': instance.accessToken,
+      'expiresAt': instance.expiresAt?.toIso8601String(),
       'confirmedAt': instance.confirmedAt,
-      'method': instance.$type,
+      'factor': instance.$type,
     };
 
-const _$OAuthProviderEnumMap = {
-  OAuthProvider.apple: 'apple',
-  OAuthProvider.atlassian: 'atlassian',
-  OAuthProvider.auth0: 'auth0',
-  OAuthProvider.authentik: 'authentik',
-  OAuthProvider.discord: 'discord',
-  OAuthProvider.dropbox: 'dropbox',
-  OAuthProvider.facebook: 'facebook',
-  OAuthProvider.figma: 'figma',
-  OAuthProvider.github: 'github',
-  OAuthProvider.gitlab: 'gitlab',
-  OAuthProvider.google: 'google',
-  OAuthProvider.kakao: 'kakao',
-  OAuthProvider.linear: 'linear',
-  OAuthProvider.linkedIn: 'linkedIn',
-  OAuthProvider.microsoft: 'microsoft',
-  OAuthProvider.notion: 'notion',
-  OAuthProvider.okta: 'okta',
-  OAuthProvider.salesforce: 'salesforce',
-  OAuthProvider.slack: 'slack',
-  OAuthProvider.spotify: 'spotify',
-  OAuthProvider.twitch: 'twitch',
-  OAuthProvider.workOS: 'workOS',
-  OAuthProvider.zoom: 'zoom',
+const _$StudioOAuthProviderEnumMap = {
+  StudioOAuthProvider.apple: 'apple',
+  StudioOAuthProvider.discord: 'discord',
+  StudioOAuthProvider.dropbox: 'dropbox',
+  StudioOAuthProvider.facebook: 'facebook',
+  StudioOAuthProvider.github: 'github',
+  StudioOAuthProvider.google: 'google',
+  StudioOAuthProvider.microsoft: 'microsoft',
+  StudioOAuthProvider.spotify: 'spotify',
+  StudioOAuthProvider.twitch: 'twitch',
+  StudioOAuthProvider.x: 'x',
 };

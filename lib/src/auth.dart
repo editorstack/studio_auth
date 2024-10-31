@@ -6,10 +6,15 @@ import 'package:dio/dio.dart';
 import 'package:isar/isar.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:studio_auth/src/api/auth.dart';
-import 'package:studio_auth/src/api/request.dart';
-import 'package:studio_auth/src/model/auth.dart';
+import 'package:studio_auth/src/create_user.dart';
+import 'package:studio_auth/src/factors.dart';
 import 'package:studio_auth/src/model/device.dart';
 import 'package:studio_auth/src/model/session.dart';
+import 'package:studio_auth/src/model/user.dart';
+import 'package:studio_auth/src/session.dart';
+import 'package:studio_auth/src/sign_in.dart';
+import 'package:studio_auth/src/totp.dart';
+import 'package:studio_auth/src/user.dart';
 
 /// A singleton class for managing studio authentication.
 class StudioAuthentication {
@@ -37,25 +42,42 @@ class StudioAuthentication {
   /// The AuthApi instance used for authentication-related API calls.
   AuthApi? _authApi;
 
-  Auth? _auth;
+  StudioUser? _user;
 
   /// The current user's authentication information.
-  Auth? get auth => _auth;
+  StudioUser? get user => _user;
 
-  Session? _session;
+  StudioSession? _session;
 
   /// The current user's session information.
-  Session? get session => _session;
+  StudioSession? get session => _session;
 
-  StreamSubscription<Auth?>? _authSubscription;
-  StreamSubscription<Session?>? _sessionSubscription;
+  /// Functions to get and delete sessions of the current logged in user.
+  late final StudioSessions sessions;
 
-  Timer? _sessionTimer;
+  /// Functions to create a new user.
+  late final StudioCreateUser createUser;
+
+  /// Functions to log in a user.
+  late final StudioSignIn signIn;
+
+  /// Functions to get, create and delete factors that are available for a user
+  /// to sign in with.
+  late final StudioFactors factors;
+
+  /// Functions to create a TOTP secret for two factor authentication.
+  late final StudioTOTP totp;
+
+  /// Functions to get, update and delete the current user.
+  late final StudioUserDetails userDetails;
+
+  StreamSubscription<StudioUser?>? _authSubscription;
+  StreamSubscription<StudioSession?>? _sessionSubscription;
 
   /// The socket instance used for real-time communication.
   late io.Socket socket;
 
-  void _initSocket(Session session) {
+  void _initSocket(StudioSession session) {
     socket.io.options?['extraHeaders'] = {
       'authtoken': 'Bearer ${session.token}',
       'appid': session.appID,
@@ -63,21 +85,21 @@ class StudioAuthentication {
 
     socket
       ..on('auth:save', (data) {
-        final auth = Auth.fromJson(data as Map<String, dynamic>);
+        final auth = StudioUser.fromJson(data as Map<String, dynamic>);
         _isar!.write((isar) {
-          isar.auth.put(auth.toIsar());
+          isar.studioUsers.put(auth.toIsar());
         });
       })
       ..on('auth:delete', (_) {
         _isar!.write((isar) {
-          isar.auth.where().deleteAll();
-          isar.sessions.where().deleteAll();
+          isar.studioUsers.where().deleteAll();
+          isar.studioSessions.where().deleteAll();
         });
       })
       ..on('error', (_) {
         _isar!.write((isar) {
-          isar.sessions.where().deleteAll();
-          isar.auth.where().deleteAll();
+          isar.studioSessions.where().deleteAll();
+          isar.studioUsers.where().deleteAll();
         });
       })
       ..connect();
@@ -88,9 +110,9 @@ class StudioAuthentication {
   /// This method watches the Isar database for any changes to the Auth
   /// collection,
   /// and immediately emits the current state when subscribed to.
-  Stream<Auth?> authChanges() {
+  Stream<StudioUser?> authChanges() {
     _validate();
-    return _isar!.auth
+    return _isar!.studioUsers
         .where()
         .watch(fireImmediately: true)
         .map((event) => event.firstOrNull?.toObject());
@@ -101,9 +123,9 @@ class StudioAuthentication {
   /// This method watches the Isar database for any changes to the Session
   /// collection,
   /// and immediately emits the current state when subscribed to.
-  Stream<Session?> sessionChanges() {
+  Stream<StudioSession?> sessionChanges() {
     _validate();
-    return _isar!.sessions
+    return _isar!.studioSessions
         .where()
         .watch(fireImmediately: true)
         .map((event) => event.firstOrNull?.toObject());
@@ -119,6 +141,13 @@ class StudioAuthentication {
     _isar = isar;
     _authApi = AuthApi(dio);
 
+    sessions = StudioSessions(_authApi!);
+    createUser = StudioCreateUser(_authApi!, _isar!);
+    signIn = StudioSignIn(_authApi!, _isar!);
+    factors = StudioFactors(_authApi!);
+    totp = StudioTOTP(_authApi!);
+    userDetails = StudioUserDetails(_authApi!, _isar!);
+
     socket = io.io(
       _dio!.options.baseUrl,
       io.OptionBuilder()
@@ -128,28 +157,19 @@ class StudioAuthentication {
           .build(),
     );
 
-    _session = _isar!.sessions.where().findFirst()?.toObject();
-    _auth = _isar!.auth.where().findFirst()?.toObject();
+    _session = _isar!.studioSessions.where().findFirst()?.toObject();
+    _user = _isar!.studioUsers.where().findFirst()?.toObject();
 
     _updateToken(_session?.token);
 
     if (_session != null) {
       try {
-        final session = await _authApi!.newSession();
-        _isar!.write((isar) {
-          isar.sessions.put(session.toIsar());
-        });
-        _session = session;
-
-        final auth = await _authApi!.getAuth();
-        _isar!.write((isar) {
-          isar.auth.put(auth.toIsar());
-        });
-        _auth = auth;
+        _session = await sessions.getSession('current');
+        _user = await userDetails.getUserDetails();
       } catch (e) {
         _isar!.write((isar) {
-          isar.auth.where().deleteAll();
-          isar.sessions.where().deleteAll();
+          isar.studioUsers.where().deleteAll();
+          isar.studioSessions.where().deleteAll();
         });
       }
     }
@@ -160,7 +180,7 @@ class StudioAuthentication {
       _initSocket(_session!);
     }
 
-    _authSubscription = authChanges().listen((auth) => _auth = auth);
+    _authSubscription = authChanges().listen((auth) => _user = auth);
     _sessionSubscription = sessionChanges().listen((session) {
       if (_session?.token != session?.token) {
         if (session == null) {
@@ -172,31 +192,7 @@ class StudioAuthentication {
       }
       _updateToken(session?.token);
       _session = session;
-
-      _sessionTimer?.cancel();
-      if (session != null && session.expiresAt != null) {
-        _sessionTimer = Timer.periodic(
-          const Duration(minutes: 3),
-          (_) => _refreshSession(),
-        );
-      }
     });
-  }
-
-  Future<void> _refreshSession() async {
-    if (_session != null && _session!.expiresAt != null) {
-      final now = DateTime.now();
-      final expiresAt = _session!.expiresAt!;
-      final difference = expiresAt.difference(now);
-
-      // Check if the session expires in 4 minutes or less
-      if (difference <= const Duration(minutes: 4)) {
-        final session = await _authApi!.extendSession();
-        _isar!.write((isar) {
-          isar.sessions.put(session.toIsar());
-        });
-      }
-    }
   }
 
   /// Disposes of the StudioAuthentication instance by cancelling any active
@@ -204,7 +200,6 @@ class StudioAuthentication {
   void dispose() {
     _authSubscription?.cancel();
     _sessionSubscription?.cancel();
-    _sessionTimer?.cancel();
     socket.dispose();
   }
 
@@ -228,143 +223,48 @@ class StudioAuthentication {
       throw Exception('StudioAuthentication not initialized');
     }
   }
-
-  /// Creates a new email token for login. By default the token will expire in
-  /// 10 minutes. You can override this value in the Studio Dashboard.
-  Future<void> createEmailToken({
-    required EmailToken type,
-    required String email,
-    String? redirectUrl,
-  }) async {
-    _validate();
-    if (type == EmailToken.otp) {
-      await _authApi!
-          .createEmailToken(CreateEmailTokenBody.emailOTP(email: email));
-    } else {
-      if (redirectUrl == null) {
-        throw Exception('A redirect URL is required for magic link tokens');
-      }
-
-      await _authApi!.createEmailToken(
-        CreateEmailTokenBody.magicLink(
-          email: email,
-          redirectUrl: redirectUrl,
-        ),
-      );
-    }
-  }
-
-  /// Confirms an email token and logs in the user.
-  Future<AuthSession> confirmEmailToken({
-    required String email,
-    required String token,
-  }) async {
-    _validate();
-    final response = await _authApi!.createEmailTokenSession(
-      EmailTokenSessionBody(
-        email: email,
-        token: token,
-        device: await _device(),
-      ),
-    );
-
-    _isar!.write((isar) {
-      isar.sessions.put(response.toSession().toIsar());
-      isar.auth.put(response.auth.toIsar());
-    });
-
-    if (!response.valid) {
-      throw Exception('mfa_required');
-    }
-
-    return response;
-  }
-
-  /// Updates user's first and last name. Last name is optional.
-  Future<Auth> updateUserDetails({
-    required String firstName,
-    String? lastName,
-  }) async {
-    _validate();
-    final auth = await _authApi!.updateUser(
-      UpdateUserBody.details(firstName: firstName, lastName: lastName),
-    );
-
-    _isar!.write((isar) => isar.auth.put(auth.toIsar()));
-    return auth;
-  }
-
-  /// Signs the user out of the app.
-  Future<void> signOut([String? sessionID]) async {
-    _validate();
-
-    sessionID ??= session?.id;
-
-    try {
-      if (sessionID != null) {
-        await _authApi!.signOut(SignOutBody.session(sessionID: session!.id));
-      }
-    } catch (e) {
-      rethrow;
-    } finally {
-      _isar!.write((isar) {
-        isar.sessions.where().deleteAll();
-        isar.auth.where().deleteAll();
-      });
-    }
-  }
-
-  Future<StudioDevice> _device() async {
-    final deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      final androidInfo = await deviceInfo.androidInfo;
-      return StudioDevice(
-        id: 'device_${androidInfo.id}',
-        name: androidInfo.product,
-        type: DeviceType.android,
-      );
-    } else if (Platform.isIOS) {
-      final iosInfo = await deviceInfo.iosInfo;
-      return StudioDevice(
-        id: 'device_${iosInfo.identifierForVendor}',
-        name: iosInfo.localizedModel,
-        type: DeviceType.ios,
-      );
-    } else if (Platform.isWindows) {
-      final windowsInfo = await deviceInfo.windowsInfo;
-      return StudioDevice(
-        id: 'device_${windowsInfo.deviceId}',
-        name: windowsInfo.computerName,
-        type: DeviceType.windows,
-      );
-    } else if (Platform.isMacOS) {
-      final macOsInfo = await deviceInfo.macOsInfo;
-      return StudioDevice(
-        id: 'device_${macOsInfo.systemGUID}',
-        name: macOsInfo.computerName,
-        type: DeviceType.macos,
-      );
-    } else if (Platform.isLinux) {
-      final linuxInfo = await deviceInfo.linuxInfo;
-      return StudioDevice(
-        id: 'device_${linuxInfo.machineId}',
-        name: linuxInfo.prettyName,
-        type: DeviceType.linux,
-      );
-    } else {
-      throw Exception('Unsupported platform');
-    }
-  }
 }
 
-/// The type of email token to create.
-enum EmailToken {
-  /// A one-time password (OTP) token that can be used to log in to the app.
-  /// It will be sent to the user's email address.
-  otp,
+/// Returns the current device's information
+Future<StudioDeviceRequest> deviceInfo() async {
+  final deviceInfo = DeviceInfoPlugin();
 
-  /// A magic link that can be used to log in to the app.
-  /// It will be sent to the user's email address.
-  magicLink
+  if (Platform.isAndroid) {
+    final androidInfo = await deviceInfo.androidInfo;
+    return StudioDeviceRequest(
+      deviceID: androidInfo.id,
+      name: androidInfo.product,
+      type: StudioDeviceType.android,
+    );
+  } else if (Platform.isIOS) {
+    final iosInfo = await deviceInfo.iosInfo;
+    return StudioDeviceRequest(
+      deviceID: iosInfo.identifierForVendor!,
+      name: iosInfo.localizedModel,
+      type: StudioDeviceType.ios,
+    );
+  } else if (Platform.isWindows) {
+    final windowsInfo = await deviceInfo.windowsInfo;
+    return StudioDeviceRequest(
+      deviceID: windowsInfo.deviceId,
+      name: windowsInfo.computerName,
+      type: StudioDeviceType.windows,
+    );
+  } else if (Platform.isMacOS) {
+    final macOsInfo = await deviceInfo.macOsInfo;
+    return StudioDeviceRequest(
+      deviceID: macOsInfo.systemGUID!,
+      name: macOsInfo.computerName,
+      type: StudioDeviceType.macos,
+    );
+  } else if (Platform.isLinux) {
+    final linuxInfo = await deviceInfo.linuxInfo;
+    return StudioDeviceRequest(
+      deviceID: linuxInfo.machineId!,
+      name: linuxInfo.prettyName,
+      type: StudioDeviceType.linux,
+    );
+  } else {
+    throw Exception('unsupported_device');
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
-import 'package:studio_auth/src/model/auth.dart';
+import 'package:studio_auth/src/model/user.dart';
 
 part 'session.freezed.dart';
 part 'session.g.dart';
@@ -11,23 +11,41 @@ part 'session.g.dart';
 /// for the session, identity, device, and user, as well as the authentication
 /// token and expiration time.
 @freezed
-class Session with _$Session {
+class StudioSession with _$StudioSession {
   /// Creates a new Session instance.
-  const factory Session({
+  const factory StudioSession({
     required String id,
-    required String identityID,
-    required String? deviceID,
-    required String authID,
-    required String token,
     required String appID,
-    required bool valid,
-    required DateTime? expiresAt,
+    required String userID,
+    required String deviceID,
+    required String factorID,
+    required SessionStatus status,
+    required String token,
     required String? ipAddress,
-  }) = _Session;
+    required String? city,
+    required String? state,
+    required String? country,
+    required DateTime? expiresAt,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _StudioSession;
 
-  /// Used to serialize [Session] object to and from JSON.
-  factory Session.fromJson(Map<String, Object?> json) =>
-      _$SessionFromJson(json);
+  /// Used to serialize [StudioSession] object to and from JSON.
+  factory StudioSession.fromJson(Map<String, Object?> json) =>
+      _$StudioSessionFromJson(json);
+}
+
+/// Represents the status of a user's session.
+enum SessionStatus {
+  /// The user is logged in but the identifier has to be verified.
+  verification,
+
+  /// The user is logged in but has to be verified using a second factor such as
+  /// phoneCode, emailCode or totp.
+  needsSecondFactor,
+
+  /// The user is logged in and has a valid session.
+  active,
 }
 
 /// Represents a user session with additional user authentication information.
@@ -35,130 +53,191 @@ class Session with _$Session {
 /// Extends the Session class by including the full Auth object associated
 /// with the user, providing more comprehensive session data.
 @freezed
-class AuthSession with _$AuthSession {
+class StudioUserSession with _$StudioUserSession {
   /// Creates a new AuthSession instance.
-  const factory AuthSession({
+  const factory StudioUserSession({
     required String id,
-    required String identityID,
-    required String? deviceID,
-    required String authID,
-    required String token,
     required String appID,
-    required bool valid,
-    required DateTime? expiresAt,
+    required String userID,
+    required String deviceID,
+    required String factorID,
+    required SessionStatus status,
+    required String token,
     required String? ipAddress,
-    required Auth auth,
-  }) = _AuthSession;
+    required String? city,
+    required String? state,
+    required String? country,
+    required DateTime? expiresAt,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required StudioUser user,
+  }) = _StudioUserSession;
 
-  /// Used to serialize [AuthSession] object to and from JSON.
-  factory AuthSession.fromJson(Map<String, Object?> json) =>
-      _$AuthSessionFromJson(json);
+  /// Used to serialize [StudioUserSession] object to and from JSON.
+  factory StudioUserSession.fromJson(Map<String, Object?> json) =>
+      _$StudioUserSessionFromJson(json);
 }
 
 /// Represents a user session in the Isar database.
 ///
 /// This class is used to store session information in the Isar database,
 /// allowing for efficient querying and persistence of session data.
-@Collection(accessor: 'sessions')
-class ISession {
+@Collection(accessor: 'studioSessions')
+class IStudioSession {
+  /// Creates a new [IStudioSession] instance.
+  const IStudioSession({
+    required this.id,
+    required this.appID,
+    required this.userID,
+    required this.deviceID,
+    required this.factorID,
+    required this.status,
+    required this.token,
+    required this.ipAddress,
+    required this.city,
+    required this.state,
+    required this.country,
+    required this.expiresAt,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
   /// Unique identifier for the session.
   @Index(unique: true)
-  late String id;
-
-  /// Identifier for the user's identity.
-  late String identityID;
-
-  /// Identifier for the device used in the session, if available.
-  String? deviceID;
-
-  /// Identifier for the user associated with the session.
-  late String authID;
-
-  /// Authentication token for the session.
-  late String token;
+  final String id;
 
   /// Application ID associated with the session.
-  late String appID;
+  final String appID;
 
-  /// Indicates whether the session is valid or MFA is required.
-  late bool valid;
+  /// Identifier for the user associated with the session.
+  final String userID;
+
+  /// Identifier for the device used in the session, if available.
+  final String deviceID;
+
+  /// Factor using which the user has created this session.
+  final String factorID;
+
+  /// Status of the session
+  @enumValue
+  final SessionStatus status;
+
+  /// Authentication token for the session.
+  final String token;
+
+  /// IP address associated with the session, if available.
+  final String? ipAddress;
+
+  /// City of the user from where the session is created.
+  final String? city;
+
+  /// State of the user from where the session is created.
+  final String? state;
+
+  /// Country of the user from where the session is created.
+  final String? country;
 
   /// Expiration date and time for the session, if applicable.
   @utc
-  DateTime? expiresAt;
+  final DateTime? expiresAt;
 
-  /// IP address associated with the session, if available.
-  String? ipAddress;
+  /// Date and time at which the session has been created.
+  @utc
+  final DateTime createdAt;
+
+  /// Date and time at which the session has been last updated.
+  @utc
+  final DateTime updatedAt;
 
   /// Computed Isar ID based on the session's unique identifier.
   @Id()
   int get isarID => Isar.fastHash(id);
 }
 
-/// Extension on [Session] to provide conversion to [ISession].
-extension SessionConverter on Session {
-  /// Converts a [Session] instance to an [ISession] instance.
+/// Extension on [StudioSession] to provide conversion to [IStudioSession].
+extension SessionConverter on StudioSession {
+  /// Converts a [StudioSession] instance to an [IStudioSession] instance.
   ///
-  /// This method creates a new [ISession] object and populates it with
-  /// the data from the current [Session] instance.
+  /// This method creates a new [IStudioSession] object and populates it with
+  /// the data from the current [StudioSession] instance.
   ///
-  /// Returns an [ISession] object that can be stored in the Isar database.
-  ISession toIsar() {
-    return ISession()
-      ..id = this.id
-      ..identityID = identityID
-      ..deviceID = deviceID
-      ..authID = authID
-      ..token = token
-      ..appID = appID
-      ..valid = valid
-      ..expiresAt = expiresAt
-      ..ipAddress = ipAddress;
-  }
-}
-
-/// Extension on [ISession] to provide conversion to [Session].
-extension ISessionConverter on ISession {
-  /// Converts an [ISession] instance to a [Session] instance.
-  ///
-  /// This method creates a new [Session] object using the data
-  /// from the current [ISession] instance.
-  ///
-  /// Returns a [Session] object that can be used in the application logic.
-  Session toObject() {
-    return Session(
+  /// Returns an [IStudioSession] object that can be stored in the Isar
+  /// database.
+  IStudioSession toIsar() {
+    return IStudioSession(
       id: this.id,
-      identityID: identityID,
-      deviceID: deviceID,
-      authID: authID,
-      token: token,
       appID: appID,
-      valid: valid,
-      expiresAt: expiresAt,
+      userID: userID,
+      deviceID: deviceID,
+      factorID: factorID,
+      status: status,
+      token: token,
       ipAddress: ipAddress,
+      city: city,
+      state: state,
+      country: country,
+      expiresAt: expiresAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 }
 
-/// Extension on [AuthSession] to provide conversion to [Session].
-extension AuthSessionConverter on AuthSession {
-  /// Converts an [AuthSession] instance to a [Session] instance.
+/// Extension on [IStudioSession] to provide conversion to [StudioSession].
+extension ISessionConverter on IStudioSession {
+  /// Converts an [IStudioSession] instance to a [StudioSession] instance.
   ///
-  /// This method creates a new [Session] object using the data
-  /// from the current [AuthSession] instance, excluding the [Auth] object.
+  /// This method creates a new [StudioSession] object using the data
+  /// from the current [IStudioSession] instance.
   ///
-  /// Returns a [Session] object that contains only the session-specific information.
-  Session toSession() {
-    return Session(
+  /// Returns a [StudioSession] object that can be used in the application
+  /// logic.
+  StudioSession toObject() {
+    return StudioSession(
       id: this.id,
-      identityID: identityID,
-      deviceID: deviceID,
-      authID: authID,
-      token: token,
       appID: appID,
-      valid: valid,
-      expiresAt: expiresAt,
+      userID: userID,
+      deviceID: deviceID,
+      factorID: factorID,
+      status: status,
+      token: token,
       ipAddress: ipAddress,
+      city: city,
+      state: state,
+      country: country,
+      expiresAt: expiresAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+}
+
+/// Extension on [StudioUserSession] to provide conversion to [StudioSession].
+extension AuthSessionConverter on StudioUserSession {
+  /// Converts an [StudioUserSession] instance to a [StudioSession] instance.
+  ///
+  /// This method creates a new [StudioSession] object using the data
+  /// from the current [StudioUserSession] instance, excluding the [StudioUser]
+  /// object.
+  ///
+  /// Returns a [StudioSession] object that contains only the session-specific
+  /// information.
+  StudioSession toSession() {
+    return StudioSession(
+      id: this.id,
+      appID: appID,
+      userID: userID,
+      deviceID: deviceID,
+      factorID: factorID,
+      status: status,
+      token: token,
+      ipAddress: ipAddress,
+      city: city,
+      state: state,
+      country: country,
+      expiresAt: expiresAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 }

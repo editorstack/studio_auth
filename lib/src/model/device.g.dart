@@ -10,13 +10,17 @@ part of 'device.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const IDeviceSchema = IsarGeneratedSchema(
+const IStudioDeviceSchema = IsarGeneratedSchema(
   schema: IsarSchema(
-    name: 'IDevice',
+    name: 'IStudioDevice',
     embedded: true,
     properties: [
       IsarPropertySchema(
         name: 'id',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'deviceID',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -36,7 +40,7 @@ const IDeviceSchema = IsarGeneratedSchema(
         },
       ),
       IsarPropertySchema(
-        name: 'authID',
+        name: 'userID',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -50,74 +54,89 @@ const IDeviceSchema = IsarGeneratedSchema(
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, IDevice>(
-    serialize: serializeIDevice,
-    deserialize: deserializeIDevice,
+  converter: IsarObjectConverter<void, IStudioDevice>(
+    serialize: serializeIStudioDevice,
+    deserialize: deserializeIStudioDevice,
   ),
 );
 
 @isarProtected
-int serializeIDevice(IsarWriter writer, IDevice object) {
+int serializeIStudioDevice(IsarWriter writer, IStudioDevice object) {
   IsarCore.writeString(writer, 1, object.id);
-  IsarCore.writeString(writer, 2, object.name);
-  IsarCore.writeByte(writer, 3, object.type.index);
-  IsarCore.writeString(writer, 4, object.authID);
+  IsarCore.writeString(writer, 2, object.deviceID);
+  IsarCore.writeString(writer, 3, object.name);
+  IsarCore.writeByte(writer, 4, object.type.index);
+  IsarCore.writeString(writer, 5, object.userID);
   IsarCore.writeLong(
-      writer, 5, object.createdAt.toUtc().microsecondsSinceEpoch);
+      writer, 6, object.createdAt.toUtc().microsecondsSinceEpoch);
   IsarCore.writeLong(
-      writer, 6, object.lastSignedInAt.toUtc().microsecondsSinceEpoch);
+      writer, 7, object.lastSignedInAt.toUtc().microsecondsSinceEpoch);
   return 0;
 }
 
 @isarProtected
-IDevice deserializeIDevice(IsarReader reader) {
-  final object = IDevice();
-  object.id = IsarCore.readString(reader, 1) ?? '';
-  object.name = IsarCore.readString(reader, 2) ?? '';
+IStudioDevice deserializeIStudioDevice(IsarReader reader) {
+  final String _id;
+  _id = IsarCore.readString(reader, 1) ?? '';
+  final String _deviceID;
+  _deviceID = IsarCore.readString(reader, 2) ?? '';
+  final String _name;
+  _name = IsarCore.readString(reader, 3) ?? '';
+  final StudioDeviceType _type;
   {
-    if (IsarCore.readNull(reader, 3)) {
-      object.type = DeviceType.android;
+    if (IsarCore.readNull(reader, 4)) {
+      _type = StudioDeviceType.android;
     } else {
-      object.type =
-          _iDeviceType[IsarCore.readByte(reader, 3)] ?? DeviceType.android;
+      _type = _iStudioDeviceType[IsarCore.readByte(reader, 4)] ??
+          StudioDeviceType.android;
     }
   }
-  object.authID = IsarCore.readString(reader, 4) ?? '';
-  {
-    final value = IsarCore.readLong(reader, 5);
-    if (value == -9223372036854775808) {
-      object.createdAt =
-          DateTime.fromMillisecondsSinceEpoch(0, isUtc: true).toLocal();
-    } else {
-      object.createdAt =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
-    }
-  }
+  final String _userID;
+  _userID = IsarCore.readString(reader, 5) ?? '';
+  final DateTime _createdAt;
   {
     final value = IsarCore.readLong(reader, 6);
     if (value == -9223372036854775808) {
-      object.lastSignedInAt =
+      _createdAt =
           DateTime.fromMillisecondsSinceEpoch(0, isUtc: true).toLocal();
     } else {
-      object.lastSignedInAt =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
+      _createdAt = DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
     }
   }
+  final DateTime _lastSignedInAt;
+  {
+    final value = IsarCore.readLong(reader, 7);
+    if (value == -9223372036854775808) {
+      _lastSignedInAt =
+          DateTime.fromMillisecondsSinceEpoch(0, isUtc: true).toLocal();
+    } else {
+      _lastSignedInAt = DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true);
+    }
+  }
+  final object = IStudioDevice(
+    id: _id,
+    deviceID: _deviceID,
+    name: _name,
+    type: _type,
+    userID: _userID,
+    createdAt: _createdAt,
+    lastSignedInAt: _lastSignedInAt,
+  );
   return object;
 }
 
-const _iDeviceType = {
-  0: DeviceType.android,
-  1: DeviceType.ios,
-  2: DeviceType.web,
-  3: DeviceType.macos,
-  4: DeviceType.windows,
-  5: DeviceType.linux,
+const _iStudioDeviceType = {
+  0: StudioDeviceType.android,
+  1: StudioDeviceType.ios,
+  2: StudioDeviceType.web,
+  3: StudioDeviceType.macos,
+  4: StudioDeviceType.windows,
+  5: StudioDeviceType.linux,
 };
 
-extension IDeviceQueryFilter
-    on QueryBuilder<IDevice, IDevice, QFilterCondition> {
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idEqualTo(
+extension IStudioDeviceQueryFilter
+    on QueryBuilder<IStudioDevice, IStudioDevice, QFilterCondition> {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> idEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -132,7 +151,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      idGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -147,7 +167,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idGreaterThanOrEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      idGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -162,7 +183,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idLessThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> idLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -177,7 +198,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idLessThanOrEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      idLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -192,7 +214,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idBetween(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> idBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -209,7 +231,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idStartsWith(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      idStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -224,7 +247,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idEndsWith(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> idEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -239,7 +262,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idContains(String value,
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> idContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -252,7 +276,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idMatches(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> idMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -266,7 +290,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -277,7 +302,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -288,7 +314,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -303,7 +330,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameGreaterThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -318,7 +346,186 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 2,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 2,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      deviceIDIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 2,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> nameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       nameGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -326,7 +533,7 @@ extension IDeviceQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -334,14 +541,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameLessThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -349,14 +557,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameLessThanOrEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -364,7 +573,7 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameBetween(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> nameBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -372,7 +581,7 @@ extension IDeviceQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 2,
+          property: 3,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -381,14 +590,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameStartsWith(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -396,14 +606,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameEndsWith(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -411,13 +622,12 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -425,13 +635,13 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameMatches(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 2,
+          property: 3,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -439,102 +649,107 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameIsEmpty() {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 2,
+          property: 3,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> nameIsNotEmpty() {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 2,
+          property: 3,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> typeEqualTo(
-    DeviceType value,
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> typeEqualTo(
+    StudioDeviceType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 3,
+          property: 4,
           value: value.index,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> typeGreaterThan(
-    DeviceType value,
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      typeGreaterThan(
+    StudioDeviceType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 3,
+          property: 4,
           value: value.index,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       typeGreaterThanOrEqualTo(
-    DeviceType value,
+    StudioDeviceType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 3,
+          property: 4,
           value: value.index,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> typeLessThan(
-    DeviceType value,
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      typeLessThan(
+    StudioDeviceType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 3,
+          property: 4,
           value: value.index,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> typeLessThanOrEqualTo(
-    DeviceType value,
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      typeLessThanOrEqualTo(
+    StudioDeviceType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 3,
+          property: 4,
           value: value.index,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> typeBetween(
-    DeviceType lower,
-    DeviceType upper,
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition> typeBetween(
+    StudioDeviceType lower,
+    StudioDeviceType upper,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 3,
+          property: 4,
           lower: lower.index,
           upper: upper.index,
         ),
@@ -542,14 +757,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -557,14 +773,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDGreaterThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -572,15 +789,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
-      authIDGreaterThanOrEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -588,14 +805,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDLessThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -603,14 +821,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDLessThanOrEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -618,7 +837,8 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDBetween(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -626,7 +846,7 @@ extension IDeviceQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 4,
+          property: 5,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -635,14 +855,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDStartsWith(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -650,14 +871,15 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDEndsWith(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -665,13 +887,12 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 4,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -679,13 +900,12 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 4,
+          property: 5,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -693,103 +913,109 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDIsEmpty() {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 4,
+          property: 5,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> authIDIsNotEmpty() {
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      userIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 4,
+          property: 5,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> createdAtEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      createdAtEqualTo(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> createdAtGreaterThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      createdAtGreaterThan(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       createdAtGreaterThanOrEqualTo(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      createdAtLessThan(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       createdAtLessThanOrEqualTo(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      createdAtBetween(
     DateTime lower,
     DateTime upper,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 5,
+          property: 6,
           lower: lower,
           upper: upper,
         ),
@@ -797,82 +1023,85 @@ extension IDeviceQueryFilter
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> lastSignedInAtEqualTo(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      lastSignedInAtEqualTo(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       lastSignedInAtGreaterThan(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       lastSignedInAtGreaterThanOrEqualTo(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> lastSignedInAtLessThan(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      lastSignedInAtLessThan(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition>
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
       lastSignedInAtLessThanOrEqualTo(
     DateTime value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 6,
+          property: 7,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<IDevice, IDevice, QAfterFilterCondition> lastSignedInAtBetween(
+  QueryBuilder<IStudioDevice, IStudioDevice, QAfterFilterCondition>
+      lastSignedInAtBetween(
     DateTime lower,
     DateTime upper,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 6,
+          property: 7,
           lower: lower,
           upper: upper,
         ),
@@ -881,37 +1110,40 @@ extension IDeviceQueryFilter
   }
 }
 
-extension IDeviceQueryObject
-    on QueryBuilder<IDevice, IDevice, QFilterCondition> {}
+extension IStudioDeviceQueryObject
+    on QueryBuilder<IStudioDevice, IStudioDevice, QFilterCondition> {}
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$DeviceImpl _$$DeviceImplFromJson(Map<String, dynamic> json) => _$DeviceImpl(
+_$StudioDeviceImpl _$$StudioDeviceImplFromJson(Map<String, dynamic> json) =>
+    _$StudioDeviceImpl(
       id: json['id'] as String,
+      deviceID: json['deviceID'] as String,
       name: json['name'] as String,
-      type: $enumDecode(_$DeviceTypeEnumMap, json['type']),
-      authID: json['authID'] as String,
+      type: $enumDecode(_$StudioDeviceTypeEnumMap, json['type']),
+      userID: json['userID'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       lastSignedInAt: DateTime.parse(json['lastSignedInAt'] as String),
     );
 
-Map<String, dynamic> _$$DeviceImplToJson(_$DeviceImpl instance) =>
+Map<String, dynamic> _$$StudioDeviceImplToJson(_$StudioDeviceImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'deviceID': instance.deviceID,
       'name': instance.name,
-      'type': _$DeviceTypeEnumMap[instance.type]!,
-      'authID': instance.authID,
+      'type': _$StudioDeviceTypeEnumMap[instance.type]!,
+      'userID': instance.userID,
       'createdAt': instance.createdAt.toIso8601String(),
       'lastSignedInAt': instance.lastSignedInAt.toIso8601String(),
     };
 
-const _$DeviceTypeEnumMap = {
-  DeviceType.android: 'android',
-  DeviceType.ios: 'ios',
-  DeviceType.web: 'web',
-  DeviceType.macos: 'macos',
-  DeviceType.windows: 'windows',
-  DeviceType.linux: 'linux',
+const _$StudioDeviceTypeEnumMap = {
+  StudioDeviceType.android: 'android',
+  StudioDeviceType.ios: 'ios',
+  StudioDeviceType.web: 'web',
+  StudioDeviceType.macos: 'macos',
+  StudioDeviceType.windows: 'windows',
+  StudioDeviceType.linux: 'linux',
 };

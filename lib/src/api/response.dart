@@ -1,80 +1,93 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'auth.dart';
 
-part 'response.g.dart';
-part 'response.freezed.dart';
-
-/// Represents an empty response from an API call.
+/// Represents the response for the user's factors.
 @freezed
-class EmptyResponse with _$EmptyResponse {
-  /// Creates an instance of EmptyResponse.
-  ///
-  /// This constructor doesn't take any parameters as it represents an empty
-  /// response.
-  const factory EmptyResponse() = _EmptyResponse;
+class UserFactorsResponse with _$UserFactorsResponse {
+  /// Creates a new instance of [UserFactorsResponse] with the specified
+  /// parameters.
+  const factory UserFactorsResponse({
+    required List<FirstFactor> firstFactors,
+    required List<SecondFactor> secondFactors,
+  }) = _UserFactorsResponse;
 
-  /// Creates an EmptyResponse instance from a JSON map.
-  ///
-  /// This factory constructor is used for deserialization from JSON.
-  factory EmptyResponse.fromJson(Map<String, dynamic> json) =>
-      _$EmptyResponseFromJson(json);
+  /// Used to serialize [UserFactorsResponse] object to and from JSON.
+  factory UserFactorsResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserFactorsResponseFromJson(json);
 }
 
-/// Represents the available Multi-Factor Authentication factors.
-@freezed
-class MFAFactors with _$MFAFactors {
-  /// Creates an instance of MFAFactors.
-  ///
-  /// [email]: Indicates if email factor is available.
-  /// [phone]: Indicates if phone factor is available.
-  /// [totp]: Indicates if Time-based One-Time Password (TOTP) factor is
-  /// available.
-  const factory MFAFactors({
-    required bool email,
-    required bool phone,
-    required bool totp,
-  }) = _MFAFactors;
+/// Represents the different types of first factors supported by the system.
+enum FirstFactor {
+  /// Password-based authentication
+  password,
 
-  /// Creates an MFAFactors instance from a JSON map.
-  factory MFAFactors.fromJson(Map<String, dynamic> json) =>
-      _$MFAFactorsFromJson(json);
+  /// Email-code based authentication
+  emailCode,
+
+  /// Email-link based authentication
+  emailLink,
+
+  /// Phone-code based authentication
+  phoneCode,
+
+  /// Apple oAuth based authentication
+  apple,
+
+  /// Discord oAuth based authentication
+  discord,
+
+  /// Dropbox oAuth based authentication
+  dropbox,
+
+  /// Facebook oAuth based authentication
+  facebook,
+
+  /// GitHub oAuth based authentication
+  github,
+
+  /// Google oAuth based authentication
+  google,
+
+  /// Microsoft oAuth based authentication
+  microsoft,
+
+  /// Spotify oAuth based authentication
+  spotify,
+
+  /// Twitch oAuth based authentication
+  twitch,
+
+  /// X oAuth based authentication
+  x,
 }
 
-/// Represents a Multi-Factor Authentication challenge.
-@freezed
-class MFAChallenge with _$MFAChallenge {
-  /// Creates an instance of MFAChallenge.
-  ///
-  /// [challengeID]: Unique identifier for the challenge.
-  /// [userID]: Identifier of the user associated with the challenge.
-  /// [createdAt]: Timestamp when the challenge was created.
-  /// [expiresAt]: Timestamp when the challenge expires.
-  const factory MFAChallenge({
-    required String challengeID,
-    required String userID,
-    required DateTime createdAt,
-    required DateTime expiresAt,
-  }) = _MFAChallenge;
+/// Represents the different types of second factors supported by the system.
+enum SecondFactor {
+  /// Email-code based second factor
+  emailCode,
 
-  /// Creates an MFAChallenge instance from a JSON map.
-  factory MFAChallenge.fromJson(Map<String, dynamic> json) =>
-      _$MFAChallengeFromJson(json);
+  /// Phone-code based second factor
+  phoneCode,
+
+  /// TOTP based second factor
+  totp,
+
+  /// Backup code based second factor
+  backupCode,
 }
 
-/// Represents a Multi-Factor Authentication type with associated data.
+/// Represents the response for the TOTP request.
 @freezed
-class MFAType with _$MFAType {
-  /// Creates an instance of MFAType.
-  ///
-  /// [secret]: The secret key associated with this MFA type.
-  /// [uri]: The URI for configuring this MFA type (e.g., for TOTP setup).
-  /// [recoveryCodes]: A list of recovery codes for this MFA type.
-  const factory MFAType({
+class TOTPResponse with _$TOTPResponse {
+  /// Creates a new instance of [TOTPResponse] with the specified parameters.
+  const factory TOTPResponse({
+    required String id,
     required String secret,
     required String uri,
-    required List<String> recoveryCodes,
-  }) = _MFAType;
+    required bool verified,
+    required List<String> backupCodes,
+  }) = _TOTPResponse;
 
-  /// Creates an MFAType instance from a JSON map.
-  factory MFAType.fromJson(Map<String, dynamic> json) =>
-      _$MFATypeFromJson(json);
+  /// Used to serialize [TOTPResponse] object to and from JSON.
+  factory TOTPResponse.fromJson(Map<String, dynamic> json) =>
+      _$TOTPResponseFromJson(json);
 }
